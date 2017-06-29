@@ -13,6 +13,7 @@
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
+          <encoding>utf8</encoding>    
         </configuration>
       </plugin>
       <plugin>
@@ -74,6 +75,16 @@
   		<groupId>mysql</groupId>
   		<artifactId>mysql-connector-java</artifactId>
   		<version>5.1.39</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.poi</groupId>
+  		<artifactId>poi</artifactId>
+  		<version>3.9</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>javax.servlet</groupId>
+  		<artifactId>javax.servlet-api</artifactId>
+  		<version>3.1.0</version>
   	</dependency>
   </dependencies>
 </project>
