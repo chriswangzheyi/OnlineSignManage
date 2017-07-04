@@ -3,7 +3,7 @@ package com.hpf.model;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ForgetPasswordModel {
+public class ChangePasswordModel {
 
 	private String originalPassword;
 	private String newPassword;
