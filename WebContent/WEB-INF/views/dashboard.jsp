@@ -120,10 +120,10 @@
                 <c:forEach var="var" items="${formInfo}" > 
 	                <tr>
 	                    <td><p>${var.restaurantName}</p></td>
-	                    <td><p>{var.restaurantProvince}-{var.restaurantCity}-{var.restaurantDistrict}</p></td>
-	                    <td>{var. restaurantType}</td>
-	                    <td>{var. restaurantTel}</td>
-	                    <td>{var. submitTime}</td>
+	                    <td><p>${var.restaurantProvince}-${var.restaurantCity}-${var.restaurantDistrict}</p></td>
+	                    <td>${var. restaurantType}</td>
+	                    <td>${var. restaurantTel}</td>
+	                    <td>${var. submitTime}</td>
 	                    <td class="Not_Pass">未通过<div class="Not_Pass_help"></div></td>
 	                    <td class="table_btns">
 	                        <a class="details_btn">详情</a><a class="examine_btn">审核</a>
