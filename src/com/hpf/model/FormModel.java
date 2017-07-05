@@ -12,6 +12,7 @@ public class FormModel {
 	private String submitTime;
 	private String examineStatus;
 	private String examiner;
+	private String operation;
 	
 	//getter and setter
 	public String getRestaurantName() {
@@ -55,6 +56,12 @@ public class FormModel {
 	}
 	public void setExaminer(String examiner) {
 		this.examiner = examiner;
+	}
+	public String getOperation() {
+		return operation;
+	}
+	public void setOperation(String operation) {
+		this.operation = operation;
 	}
 	
 	

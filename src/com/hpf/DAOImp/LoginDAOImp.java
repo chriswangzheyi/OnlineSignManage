@@ -1,5 +1,8 @@
 package com.hpf.DAOImp;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,29 +18,24 @@ public class LoginDAOImp implements LoginDAO {
 	@Autowired
 	DataSource DataSource;
 	
-	
-	String password=null;
-	String status=null;
+	List<Map<String, Object>> restaurantTypeList=null;
+
 
 	@Override
-	public String loginValidation(LoginModel loginModel) {
-	
-		String sqlForPassword ="select password from DATABASENAME where username="+ loginModel.getUsername();		
-		String sqlForAccountStatus="select status from DATABASENAME where username="+ loginModel.getUsername();
+	public List<Map<String, Object>> loginValidation(LoginModel loginModel) {
+			
+		String sql ="select password, status, authLevel from ec_online_sign_user where username="+ "'"+loginModel.getUsername()+ "'";		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSource);
 		
+	
 		try {
-			password = jdbcTemplate.queryForObject(sqlForPassword, java.lang.String.class);
-			status = jdbcTemplate.queryForObject(sqlForAccountStatus, java.lang.String.class);
+			restaurantTypeList=jdbcTemplate.queryForList(sql);
 		} catch (Exception e) {
-			// TODO: handle exception
+
 		}
+	
 		
-		//如果账户冻结
-		if ( !status.equals("0") ){return "-1";}
-		
-		//返回密码
-		return password;
+		return restaurantTypeList;
 	}
 
 }

@@ -1,5 +1,8 @@
 package com.hpf.DAO;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Component;
 
 import com.hpf.model.LoginModel;
@@ -7,6 +10,6 @@ import com.hpf.model.LoginModel;
 @Component
 public interface LoginDAO {
 	
-	public String loginValidation(LoginModel loginModel);
+	public List<Map<String, Object>> loginValidation(LoginModel loginModel);
 	
 }

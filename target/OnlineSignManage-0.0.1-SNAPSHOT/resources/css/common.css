@@ -1,0 +1,526 @@
+/*********/
+/*公用样式*/
+/*********/
+
+/*样式初始化*/
+*{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+body,h1,h2,h3,p,dl,dd,ol,ul,th,td,form,fieldset,input,button,textarea{margin:0;padding:0;}
+body,input{font-family:"Microsoft YaHei", arial;  font-size: 14px;}
+input,textarea{  color:#333; resize:none;}
+ol,ul,li{list-style: none;}
+table{border-collapse:collapse;}
+em,s,i,b{font-style:normal;}
+a,input,textarea{text-decoration:none;outline:0;}
+li,img,label,input{vertical-align:middle;}
+img{display:block;border:0;}
+body{background: #fff;}
+
+
+/********************placeholder样式修改颜色********************/
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #ccc; opacity:1;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #ccc;opacity:1;
+}
+
+input:-ms-input-placeholder{
+    color: #ccc;opacity:1;
+}
+
+input::-webkit-input-placeholder{
+    color: #ccc;opacity:1;
+}
+/************************************************************/
+
+/********************laydate样式修改颜色********************/
+#laydate_box,
+#laydate_box *{
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+/************************************************************/
+.content{
+    min-width: 800px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/*************************************************************/
+/*************************************************************/
+/*************************************************************/
+#header{
+    width: 100%;
+    height: 70px;
+    background-color: #d73938;
+}
+#logo{
+    float: left;
+    display: block;
+    padding-left: 80px;
+    width: 320px;
+    height: 70px;
+    background: url('../img/logoImg.png') no-repeat 10px center;
+    line-height: 70px;
+    font-size: 20px;
+    color: #fff;
+    overflow: hidden;
+}
+#header_nav{
+    width: 480px;
+    height: 70px;
+    float: right;
+}
+.nav{
+    color: #fff;
+    float: right;
+    
+}
+.nav>li{
+    display: inline-block;*display: inline;*zoom: 1;
+    height: 70px;
+    line-height: 70px;
+}
+.nav>li>a{
+    display: block;
+    width: 100px;
+    text-align: center;
+    height: 70px;
+    line-height: 70px;
+    color: #eee;
+    font-size: 16px;
+    position: relative;
+}
+.nav>li>a.act{
+    font-size: 18px;
+    font-weight: bold;
+}
+.nav>li>a.act:after{
+    content: "";
+    display: block;
+    width: 16px;
+    height: 10px;
+    position: absolute;
+    background: url("../img/nav_act_arr.png") no-repeat;
+    bottom: -1px;
+    left: 50%;
+    margin-left: -8px;
+}
+
+#main{
+    min-width: 800px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px 10px;
+}
+
+.searchBox{
+    line-height: 35px;
+    overflow: hidden;
+}
+
+.searchBox>div[class*="search_"]{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.searchBox input,
+.searchBox select{
+    height: 35px;
+    line-height: 33px;
+    padding: 0 5px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+}
+.search_time{
+    float: left;
+}
+.search_time span,.search_time input{
+    float: left;
+}
+.search_time input{
+    border: 1px solid #ccc;
+    width: 160px;
+    padding: 0 5px;
+}
+.laydate_icon{
+    cursor: pointer;
+    background-image: url("../img/icon-date.png");
+    background-repeat: no-repeat;
+    background-position:right;
+}
+.searchLable{
+    float: left;
+    font-weight: bold;
+    font-size: 16px;
+}
+.search_ip{
+    float: left;
+    width: calc(100% - 391px);
+    padding-left: 30px;
+}
+.search_ip select{
+    width: calc((100% - 20px - 48px) / 3);
+    float: left;
+}
+#ip_DQ{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.search_state{
+    float: left;
+}
+.search_state select{
+    float: left;
+    width: 80px;
+}
+.search_state select option{text-align: center;}
+.search_input{
+    float: left;
+    width: calc(100% - 128px);
+    padding-left: 30px;
+}
+.searchText{
+    float: left;
+    width: calc(100% - 48px);
+    position: relative;
+}
+.searchText input{
+    float: left;
+    width: 100%;
+}
+.icon_seach{
+    display: block;
+    width: 35px;
+    height: 35px;
+    background: url("../img/icon-search.png") no-repeat center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+/*首页列表*/
+.listBox{
+    width: 100%;
+    table-layout:fixed ;
+    margin-top: 30px;
+}
+.listBox thead th{
+    height: 35px;
+    line-height: 35px;
+    background-color: #ddd;
+    border: 1px solid #ccc;
+}
+.listBox tr{
+    background-color: #fff;
+}
+.listBox tr:active{
+    background-color: #eee;
+}
+.listBox td{
+    line-height: 20px;
+    padding:5px;
+    border: 1px solid #ddd;
+    font-size: 12px;
+}
+
+
+.indexTable th:first-of-type{  width: 19%;  }/*1*/
+.indexTable th:first-of-type+th{  width: 17%;  }/*2*/
+.indexTable th:first-of-type+th+th{  width: 7.875%;  }/*3*/
+.indexTable th:first-of-type+th+th+th{  width: 12.625%;  }/*4*/
+.indexTable th:first-of-type+th+th+th+th{  width: 17.25%; }/*5*/
+.indexTable th:first-of-type+th+th+th+th+th{  width: 8.375%;  }/*6*/
+.indexTable th:first-of-type+th+th+th+th+th+th{  width: 10.875%;}/*7*/
+.indexTable th:first-of-type+th+th+th+th+th+th+th{  width: 7%;  }/*8*/
+
+.listBox td>p{
+    width: 100%;
+    line-height: 20px;
+    padding: 5px 0;
+    overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+    text-overflow:ellipsis;/* 当对象内文本溢出时显示省略标记(...) */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+.listBox td:last-of-type,
+.listBox td:first-of-type+td+td+td+td+td {
+    text-align: center;
+}
+.listBox td:first-of-type p,
+.listBox td:first-of-type+td p{
+    width: 100%;
+}
+
+.table_btns{text-align: center;line-height: 24px;}
+.details_btn,.examine_btn{
+    padding: 0 5px;
+    cursor: pointer;
+    display: inline-block;*display: inline;*zoom: 1;
+}
+.details_btn{
+    color: #3574E6;
+}
+.examine_btn{
+    color: #333;
+    position: relative;
+}
+.examine_btn:before{
+    content: "";
+    display: block;
+    width: 1px;
+    height: 14px;
+    background-color: #999;;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin-top: -7px;
+}
+.Audited{  color: #2CBF51;}/*已审核*/
+.Not_Audited{  color: #d73938;}/*未审核*/
+.Not_Pass{  color: #999;cursor: pointer;}/*未通过*/
+
+.Not_Pass_help{
+    width: 16px;
+    height: 16px;
+    display: inline-block;*display: inline;*zoom: 1;
+    background-image: url("../img/icon-help.png");
+    background-size: 14px;
+    background-position: center;
+    background-repeat: no-repeat;
+    line-height: 20px;
+    vertical-align: top;
+    margin-top: 2px;
+    cursor: pointer;
+}
+/*** 分页 ***/
+/*登录-店铺选择-分页*/
+.pagingbox{
+    width: 100%;
+    overflow: hidden;
+    padding: 40px 0;
+    background-color: #fff;
+}
+.jumppag{
+    float: right;
+    font-size:14px;
+    margin-right: 15px;
+}
+.jumppag>form,.jumppag>a{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    line-height: 30px;
+}
+.jumppag>form label{
+    color: #343434;
+    margin-right: 5px;
+}
+.jumppag>form input{
+    width: 78px;
+    height: 28px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background: #fff;
+    padding-left: 10px;
+    line-height: 30px;
+    vertical-align: middle;
+}
+.jumppag>form input:focus{
+    background: #f7f7f7;
+}
+.jumppagBtn{
+    width: 50px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: #d73938;
+    color: #fff;
+    text-align: center ;
+    margin-left: 20px;
+    vertical-align: middle;
+}
+.paging{
+    overflow: hidden;
+    float: right;
+    margin-right: 10px;
+}
+.paging a,
+.paging span{
+    float: left;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    background-color:#eee;
+    border-radius: 4px;
+    padding: 0 10px;
+    margin: 0 5px;
+    vertical-align: middle;
+    color: #343434;
+}
+.paging a{cursor: pointer}
+
+span.ellipsis{
+    background-color:#fff;
+}
+.paging .active{
+    background-color:#d73938;
+    color: #fff;
+}
+.prevpag,.nextpag{
+    cursor: pointer;
+}
+.prevpag:hover,.nextpag:hover,
+.prevpag:focus,.nextpag:focus{
+    background-color: #e5e5e5;
+}
+.prevpag i,
+.nextpag i{
+    display: inline-block;  *display: inline;  *zoom: 1;
+    width: 6px;
+    height: 10px;
+    background-image: url(../img/icon-page.png);
+    background-repeat: no-repeat;
+
+}
+.prevpag i{ background-position: 0 0; }
+.nextpag i{ background-position: 0 -10px; }
+
+
+/*用户管理*/
+.btns_topBox{
+    margin: 20px 0;
+}
+.btn_add{
+    cursor: pointer;
+    padding: 6px 10px;
+    font-size: 14px;
+    color: #fff;
+    border-radius: 4px;
+    background-color: #d73938;
+}
+.btn_add:active{
+    background-color: #b32e2e;
+}
+
+.userTable th:first-of-type{  width: 5%;  }/*1*/
+.userTable th:first-of-type+th{  width: 15%;  }/*2*/
+.userTable th:first-of-type+th+th{  width: 15%;  }/*3*/
+.userTable th:first-of-type+th+th+th{  width: 20%;  }/*4*/
+.userTable th:first-of-type+th+th+th+th{  width: 20%; }/*5*/
+.userTable th:first-of-type+th+th+th+th+th{  width: 10%;  }/*6*/
+.userTable th:first-of-type+th+th+th+th+th+th{  width: 10%;}/*7*/
+
+.userStatus_normal{
+    color: #d73938;
+}
+.fro_btn{color: #333;}
+.fro_btn.unlock{  color: #d73938;}
+.fro_btn, .del_btn {
+    padding: 0 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+.del_btn {
+    color: #666;
+    position: relative;
+}
+.del_btn:before {
+    content: "";
+    display: block;
+    width: 1px;
+    height: 14px;
+    background-color: #999;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin-top: -7px;
+}
+
+
+/*新增用户弹层*/
+#addUser{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.7);
+    display: none;
+}
+#addUser form{
+    background-color: #fff;
+    width: 300px;
+    height: 300px;
+    padding: 20px;
+    border-radius: 4px;
+    position: absolute;
+    top: 0;
+    bottom:0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    
+}
+#addUser h2{
+    text-align: center;
+    font-weight: normal;
+    font-size: 18px;
+    padding: 10px 0;
+    font-size: 333;
+}
+#addUser label{
+    line-height: 30px;
+    width: 70px;
+    float: left;
+    margin: 10px 0;
+    font-size: 14px;
+    color: #333;
+}
+#addUser input{
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    padding: 0 5px;
+    width: 190px;
+    float: left;
+    margin: 10px 0;
+    color: #333;
+}
+.addUserBtn{
+    float: left;
+    width: 100%;
+    text-align: center;
+    height: 28px;
+    margin-top: 30px;
+}
+.addUserBtn a{
+    display: inline-block; *display: inline;*zoom: 1;
+    height: 28px;
+    line-height: 28px;
+    margin: 0 6px;
+    padding: 0 15px;
+    border: 1px #dedede solid;
+    background-color: #f1f1f1;
+    color: #333;
+    border-radius: 2px;
+    font-weight: 400;
+    cursor: pointer;
+    text-decoration: none;
+}
+.addUserBtn a:active{
+    opacity: 0.9;
+}
+.addUserBtn .yesADD{
+    background-color: #d73938;
+    border-color: #d73938;
+    color: #ffffff;
+}
