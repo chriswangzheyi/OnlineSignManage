@@ -1,6 +1,8 @@
 package com.hpf.service;
 
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +48,13 @@ public class LoginService {
 		if(statusInDB.equals("0")){
 			return "-2";
 		}
-							
+		
+		
+		//记录登录时间
+		Date date=new Date();
+		DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		loginModel.setLoginTime(format.format(date));					
+		loginDAO.updateLastLoginTime(loginModel);
 		
 		return authLevel;
 	}

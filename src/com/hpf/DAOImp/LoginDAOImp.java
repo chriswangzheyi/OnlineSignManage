@@ -38,4 +38,15 @@ public class LoginDAOImp implements LoginDAO {
 		return restaurantTypeList;
 	}
 
+
+	@Override
+	public void updateLastLoginTime(LoginModel loginModel) {
+		String sql="update ec_online_sign_user set lastLoginTime = ? "
+				+ "where username =?";
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSource);
+		
+		jdbcTemplate.update(sql,loginModel.getLoginTime(),loginModel.getUsername());
+		
+	}
+
 }

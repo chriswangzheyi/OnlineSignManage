@@ -7,6 +7,7 @@ public class LoginModel {
 	
 	private String username;
 	private String password;
+	private String loginTime;
 	
 	
 	//getter and setter
@@ -22,9 +23,11 @@ public class LoginModel {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getLoginTime() {
+		return loginTime;
+	}
+	public void setLoginTime(String loginTime) {
+		this.loginTime = loginTime;
+	}
 	
-	
-	
-	
-
 }

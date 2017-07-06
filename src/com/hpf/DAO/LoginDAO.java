@@ -12,4 +12,6 @@ public interface LoginDAO {
 	
 	public List<Map<String, Object>> loginValidation(LoginModel loginModel);
 	
+	public void updateLastLoginTime (LoginModel loginModel);
+	
 }

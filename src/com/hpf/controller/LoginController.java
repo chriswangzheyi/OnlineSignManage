@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hpf.model.DashboardModel;
 import com.hpf.service.LoginService;
 import com.hpf.service.ReadFormInfoService;
 
@@ -22,6 +23,9 @@ public class LoginController {
 	
 	@Autowired
 	private ReadFormInfoService ReadFormInfoService;
+	
+	@Autowired
+	DashboardModel DashboardModel;
 	
 	
 	@RequestMapping(value="/login")
@@ -49,10 +53,10 @@ public class LoginController {
 		
 			//读取商户信息
 			List<Map<String, Object>> formInfo=ReadFormInfoService.readForm();
-			System.out.println("formInfo="+formInfo);
 			request.setAttribute("formInfo", formInfo);
 			
-										
+			DashboardModel.setFormInfoList(formInfo);						
+			
 			request.setAttribute("authLevel",accountInfo);
 			return "dashboard";
 

@@ -12,8 +12,10 @@ public class UserManagementModel {
 	private String password;
 	private String phone;
 	private Date creatTime;
-	private Date LastLoginTime;
+	private Date lastLoginTime;
 	private String status;
+	private String blockid;
+	private String deleteid;
 	
 	//setter and getter
 	public String getId() {
@@ -46,17 +48,29 @@ public class UserManagementModel {
 	public void setCreatTime(Date creatTime) {
 		this.creatTime = creatTime;
 	}
-	public Date getLastLoginTime() {
-		return LastLoginTime;
-	}
-	public void setLastLoginTime(Date lastLoginTime) {
-		LastLoginTime = lastLoginTime;
-	}
 	public String getStatus() {
 		return status;
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public Date getLastLoginTime() {
+		return lastLoginTime;
+	}
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
+	public String getBlockid() {
+		return blockid;
+	}
+	public void setBlockid(String blockid) {
+		this.blockid = blockid;
+	}
+	public String getDeleteid() {
+		return deleteid;
+	}
+	public void setDeleteid(String deleteid) {
+		this.deleteid = deleteid;
 	}
 	
 	
