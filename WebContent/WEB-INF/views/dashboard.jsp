@@ -182,7 +182,7 @@
                 <span class="nextpag"><i></i></span>
             </div>
         </div>
-        <textarea style="width: 80%; height: 200px;"></textarea>
+
     </div>
 </div>
 <script>
@@ -362,7 +362,8 @@
                 layer.open({
                     type: 1,
                     title:false,
-                    content: '<h2 style="text-align: center;font-size: 18px;font-weight: 400;margin: 0;padding-top: 10px;">信息审核</h2><div style="padding:10px;">'+helpText+'</div>'
+                    area: '280px',
+                    content: '<h2 style="text-align: center;font-size: 18px;font-weight: 400;margin: 0;padding-top: 10px;padding-bottom: 5px;">信息审核</h2><div style="padding:10px;">'+helpText+'</div>'
                 });
             }
         });
