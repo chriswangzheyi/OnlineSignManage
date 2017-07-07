@@ -33,4 +33,11 @@ public class UserManagementService {
 		return returnStatus;
 	}
 	
+	
+	public String deleteUser(UserManagementModel userManagementModel){
+		
+		
+		return null;		
+	}
+	
 }

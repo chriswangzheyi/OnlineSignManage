@@ -141,6 +141,47 @@
 			        }	       	        
 				})  
 		}
+		
+		
+		//删除用户
+		function blockuser(id){
+			
+			var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致   
+		    params.id =id;
+			 		
+				$.ajax({
+			        type: "POST",
+			        async:false,
+			        data: params,
+			        url: "deleteAccount",
+			        datatype:"json",  
+			        success: function(data) {
+			        	var blockuser= data;
+			        	alert("成功，返回="+data);
+			        }	       	        
+				})  
+		}
+		
+		
+		//新增用户
+		function blockuser(id){
+			
+			var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致   
+		    params.id =id;
+			 		
+				$.ajax({
+			        type: "POST",
+			        async:false,
+			        data: params,
+			        url: "newAccount",
+			        datatype:"json",  
+			        success: function(data) {
+			        	var blockuser= data;
+			        	alert("成功，返回="+data);
+			        }	       	        
+				})  
+		}
+		
 
 
     $(function () {

@@ -16,6 +16,9 @@ public class UserManagementModel {
 	private String status;
 	private String blockid;
 	private String deleteid;
+	private String newAccountUsername;
+	private String newAccountPassword;
+	private String newAccountPhone;
 	
 	//setter and getter
 	public String getId() {
@@ -72,7 +75,24 @@ public class UserManagementModel {
 	public void setDeleteid(String deleteid) {
 		this.deleteid = deleteid;
 	}
-	
+	public String getNewAccountUsername() {
+		return newAccountUsername;
+	}
+	public void setNewAccountUsername(String newAccountUsername) {
+		this.newAccountUsername = newAccountUsername;
+	}
+	public String getNewAccountPassword() {
+		return newAccountPassword;
+	}
+	public void setNewAccountPassword(String newAccountPassword) {
+		this.newAccountPassword = newAccountPassword;
+	}
+	public String getNewAccountPhone() {
+		return newAccountPhone;
+	}
+	public void setNewAccountPhone(String newAccountPhone) {
+		this.newAccountPhone = newAccountPhone;
+	}
 	
 	
 }

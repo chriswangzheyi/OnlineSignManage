@@ -16,4 +16,8 @@ public interface UserManagementDAO {
 	
 	public String deleteUser(UserManagementModel userManagementModel);
 	
+	public String newUser(UserManagementModel userManagementModel);
+	
+	public boolean isUserExisted(UserManagementModel userManagementModel);
+	
 }

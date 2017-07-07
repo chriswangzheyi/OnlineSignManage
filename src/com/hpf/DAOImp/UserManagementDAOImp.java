@@ -45,7 +45,54 @@ public class UserManagementDAOImp implements UserManagementDAO {
 
 	@Override
 	public String deleteUser(UserManagementModel userManagementModel) {
+		String sql="delete from ec_online_sign_user set where id=? ";
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		try {
+			jdbcTemplate.update(sql, userManagementModel.getDeleteid());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 		return null;
+	}
+
+	@Override
+	public String newUser(UserManagementModel userManagementModel) {
+		String sql="insert into ec_online_sign_user(username,password,phone)values(?,?,?) ";
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		try {
+			jdbcTemplate.update(sql, userManagementModel.getNewAccountUsername(),
+					userManagementModel.getNewAccountPassword(),userManagementModel.getNewAccountPhone());
+		} catch (Exception e) {
+				
+		}
+		
+		return null;
+	}
+
+	@Override
+	public boolean isUserExisted(UserManagementModel userManagementModel) {
+		int idInDB;
+		String sql="select id from ec_online_sign_user where username=?";
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		try {
+			
+			idInDB=jdbcTemplate.update(sql,userManagementModel.getNewAccountUsername());
+			
+			if ( (Integer)idInDB!=null){return true;}
+			else {
+				return false;
+			}
+			
+		} catch (Exception e) {
+			
+		}
+		
+		
+		return false;
 	}
 
 }

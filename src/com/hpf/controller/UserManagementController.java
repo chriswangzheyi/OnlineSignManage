@@ -33,19 +33,30 @@ public class UserManagementController {
 	}
 	
 	
+	//冻结账户
 	@RequestMapping(value="/blockAccount")
 	@ResponseBody
 	public String  blcokAccount(String id){
 		
-		UserManagementModel.setBlockid(id);
-				
+		UserManagementModel.setBlockid(id);			
 		return UserManagementService.blockUser(UserManagementModel);
 	}
 	
 	
+	//删除账户
 	@RequestMapping(value="/deleteAccount")
 	@ResponseBody
-	public String  deleteAccount(){
+	public String  deleteAccount(String id){
+		
+		UserManagementModel.setDeleteid(id);
+				
+		return null;
+	}
+		
+	//新增账户
+	@RequestMapping(value="/newAccount")
+	@ResponseBody
+	public String  newAccount(){
 				
 		return null;
 	}
