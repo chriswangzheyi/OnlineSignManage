@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  
     pageEncoding="UTF-8"%>  
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
      <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html>
 <html>
@@ -16,12 +17,14 @@
     <link rel="shortcut icon" href="resources/img/favicon.ico" type="image/x-icon" />
     <title>点餐猫商家网签管理后台</title>
     <script type="text/javascript" src="resources/js/jquery.min.js"></script>
+    <script type="text/javascript" src="resources/js/jquery.page.js"></script>
     <script type="text/javascript" src="resources/js/jquery.placeholder.js"></script>
 
     <script type="text/javascript" src="resources/css/layui/layer.js"></script><!--弹层-->
     <link rel="stylesheet" href="resources/css/layer_Style.css"/><!--layer弹层样式修改-->
     <script type="text/javascript" src="resources/css/laydate/laydate.js"></script><!--时间插件-->
 
+	<link rel="stylesheet" href="resources/css/jquery.page.css"/>
     <link rel="stylesheet" href="resources/css/common.css"/>
     <script type="text/javascript" src="resources/js/common.js"></script>
 
@@ -118,6 +121,7 @@
                 </tr> -->
                 
                 <c:forEach var="var" items="${formInfo}" > 
+              
 	                <tr>
 	                    <td><p>${var.restaurantName}</p></td>
 	                    <td><p>${var.restaurantProvince}-${var.restaurantCity}-${var.restaurantDistrict}</p></td>
@@ -161,35 +165,44 @@
                 </tr> -->
             </tbody>
         </table>
+        
+        <div class="pagediv"></div>
 
-        <div class="pagingbox">
-            <div class="jumppag">
-                <form class="inputpag">
-                    <label for="pagNum">跳至</label>
-                    <input id="pagNum" type='text' onkeyup="this.value=this.value.replace(/[^0-9-]+/,'');" />
-                </form>
-                <a class="jumppagBtn" href="javascript:;">跳转</a>
-            </div>
-            <div class="paging">
-                <span class="prevpag"><i></i></span>
-                <a class="active">1</a>
-                <a>2</a>
-                <a>3</a>
-                <a>4</a>
-                <a>5</a>
-                <span class="ellipsis">…</span>
-                <a>100</a>
-                <span class="nextpag"><i></i></span>
-            </div>
-        </div>
 
-    </div>
 </div>
 <script>
 
     $(function () {
-   //TODO laytate时间组件
+    	
+    	$(".pagediv").createPage({
+            pageNum : 15,//总页数
+            current : 1,//当前页数
+            shownum: 9,//最多显示的页数项
+            activepage: "current",//activepage当前页选中样式
+            activepaf: "",//默认class是“nextpage”//activepaf下一页选中样式
+            backFn:function(p){
+                console.log(p);
+            }
+        });
 
+
+    	var formInfo = '${formInfo}';
+    
+    	/*
+    	 $.ajax({
+             type: "POST",
+             url: 'formInfo',
+             data: "json",
+             success: function(data){
+               console.log(1234);
+             
+             }
+         });
+    	*/
+    	
+    	
+    	
+   //TODO laytate时间组件
         var start = {
             elem: '#startTime',
             istime: true, //是否开启时间选择
@@ -222,12 +235,14 @@
 
     //TODO 地区三级联动 （数据来至“data/cityJson.json”）
         //ajax加载省市
+        
         $.ajax({
             type: "POST",
             url: "resources/data/cityJson.json",
             data: "json",
             success: function(data){
-                $.each(data, function(idx, obj) {
+
+                $.each(JSON.parse(data), function(idx, obj) {
                     if(obj.regLevel == 1){
                         var optionEL = $('<option data-id="'
                                 +obj.id+'" '
@@ -238,8 +253,10 @@
                         $('#ip_SS').append(optionEL);
                     }
                 });
+            
             }
         });
+    
 
         $('#ip_SS').on('change', function () {
             $('#ip_DQ').html('<option value="-1">全部</option>');//清空城市
@@ -255,7 +272,7 @@
                     url: "resources/data/cityJson.json",
                     data: "json",
                     success: function(data){
-                        $.each(data, function(idx, obj) {
+                        $.each(JSON.parse(data), function(idx, obj) {
                             if(obj.pid == datPid){
                                 optionHTML +=
                                         '<option data-id="'
@@ -286,7 +303,7 @@
                     url: "resources/data/cityJson.json",
                     data: "json",
                     success: function(data){
-                        $.each(data, function(idx, obj) {
+                        $.each(JSON.parse(data), function(idx, obj) {
                             if(obj.pid == datPid){
                                 optionHTML +=
                                         '<option data-id="'

@@ -1,6 +1,7 @@
 /**
  * 公用脚本(基于jQuery.js)
  */
+<<<<<<< HEAD
 
 //决定定位的div 可以通过drag() 拖动元素。（封装到$）
 $.fn.extend({
@@ -55,6 +56,8 @@ function imgWidthHeigthSET(imgEL,boxw,boxh){
     });
 }
 
+=======
+>>>>>>> 155201b9927f5c541ce585f7612b8673f05841d0
 //获取今天的日期
 function getNowFormatDate() {
     var date = new Date();

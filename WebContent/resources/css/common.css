@@ -302,6 +302,7 @@ input::-webkit-input-placeholder{
     margin-top: 2px;
     cursor: pointer;
 }
+<<<<<<< HEAD
 /*** 分页 ***/
 /*登录-店铺选择-分页*/
 .pagingbox{
@@ -395,6 +396,8 @@ span.ellipsis{
 .nextpag i{ background-position: 0 -10px; }
 
 
+=======
+>>>>>>> 155201b9927f5c541ce585f7612b8673f05841d0
 /*用户管理*/
 .btns_topBox{
     margin: 20px 0;
