@@ -83,7 +83,7 @@
                    	</td>
                     <td class="table_btns">
                         <a class="fro_btn" href="javascript:void(0);" onclick="blockuser(${var.id})">冻结</a>
-                        <a class="del_btn">删除</a>
+                        <a class="del_btn" href="javascript:void(0);" onclick="deleteuser(${var.id})">删除</a>
                     </td>
 	                
 	                </tr>
@@ -137,14 +137,13 @@
 			        datatype:"json",  
 			        success: function(data) {
 			        	var blockuser= data;
-			        	alert("成功，返回="+data);
 			        }	       	        
 				})  
 		}
 		
 		
 		//删除用户
-		function blockuser(id){
+		function deleteuser(id){
 			
 			var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致   
 		    params.id =id;
@@ -157,17 +156,17 @@
 			        datatype:"json",  
 			        success: function(data) {
 			        	var blockuser= data;
-			        	alert("成功，返回="+data);
 			        }	       	        
 				})  
 		}
 		
 		
 		//新增用户
-		function blockuser(id){
-			
+		function newuser(username,password,phone){
 			var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致   
-		    params.id =id;
+		    params.username =username;
+		    params.password =password;
+		    params.phone =phone;
 			 		
 				$.ajax({
 			        type: "POST",
@@ -177,7 +176,7 @@
 			        datatype:"json",  
 			        success: function(data) {
 			        	var blockuser= data;
-			        	alert("成功，返回="+data);
+	
 			        }	       	        
 				})  
 		}
@@ -245,7 +244,7 @@
 
                     '<div class="addUserBtn">'+
                     '<a class="noADD">取消</a>'+
-                    '<a class="yesADD">添加</a>'+
+                    '<a class="yesADD" href="javascript:void(0);" onclick="newuser{"11","22","33")">添加</a>'+
                     '</div>'+
 
                     '</form>'+
@@ -265,6 +264,8 @@
             var user = $('.add_user').val();
             var pwd = $('.add_pwd').val();
             var phone = $('.add_phone').val();
+            //呼叫后台增加用户
+            newuser(user,pwd,phone)
 
             /*****************/
             //编号(建议后台给ID 赋值给编号)

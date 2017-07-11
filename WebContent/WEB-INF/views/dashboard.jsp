@@ -40,7 +40,7 @@
         <div id="header_nav">
             <ul class="nav">
                 <li><a href="userManagement">用户管理</a></li>
-                <li><a href="">用户密码</a></li>
+                <li><a href="changePassword">修改密码</a></li>
                 |
                 <li><a href="">数据导出</a></li>
                 <li><a href="">退出登录</a></li>

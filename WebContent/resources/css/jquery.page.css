@@ -1,0 +1,72 @@
+div.pagediv{
+	text-align: center;
+	color: #999999;
+    padding: 20px 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+div.pagediv a{
+	text-decoration: none;
+	
+}
+div.pagediv span,div.pagediv a{
+	display: inline-block;
+	box-sizing: border-box;
+}
+span.disabled{
+	height: 35px;
+	width: 65px;
+	line-height: 33px;
+	background: #f2f2f2;
+	margin: 0 5px;
+}
+.jQPagenum{
+	color: #999999;
+	background: #FFFFFF;
+	width: 35px;
+	height: 35px;
+	line-height: 33px;
+	border: 1px solid #ccc;
+	margin: 0 5px;
+}
+.jQPagenum:active{
+    opacity: 0.9;
+}
+.nextbtn{
+    margin-right: 10px;
+}
+.nextbtn,.prebtn{
+	color: #999999;
+	background: #FFFFFF;
+	width: 65px;
+	height: 35px;
+	line-height: 33px;
+	border: 1px solid #ccc;
+}
+.jQinput{
+	width: 35px;
+	height: 35px;
+	text-align: center;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	margin: 0 5px;
+}
+.jQokbtn{
+	width: 45px;
+	height: 35px;
+	margin-left: 15px;
+	line-height: 33px;
+	border: 1px solid #ccc;
+	cursor: pointer;
+}
+.nextpage{
+	color: #d73938;
+	margin: 0 5px;
+	border: 1px solid #d73938;
+}
+.current{
+	color: #ffffff;
+	background: #d73938;
+	border: none;
+}

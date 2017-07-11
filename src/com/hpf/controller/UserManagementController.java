@@ -47,19 +47,31 @@ public class UserManagementController {
 	@RequestMapping(value="/deleteAccount")
 	@ResponseBody
 	public String  deleteAccount(String id){
-		
+				
 		UserManagementModel.setDeleteid(id);
 				
-		return null;
+		return UserManagementService.deleteUser(UserManagementModel);
 	}
 		
+	
 	//新增账户
 	@RequestMapping(value="/newAccount")
 	@ResponseBody
-	public String  newAccount(){
+	public String  newAccount(String username, String password, String phone){
+		
+		UserManagementModel.setNewAccountUsername(username);
+		UserManagementModel.setNewAccountPassword(password);
+		UserManagementModel.setNewAccountPhone(phone);
+		
 				
-		return null;
+		if(UserManagementService.isUserExisted(UserManagementModel)==false){
+			UserManagementService.newUser(UserManagementModel);
+			return "1";
+		}
+		
+		return "0";
 	}
+	
 	
 	
 }

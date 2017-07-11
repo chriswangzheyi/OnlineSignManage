@@ -1,10 +1,23 @@
 package com.hpf.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.hpf.model.ChangePasswordModel;
+import com.hpf.service.ChangePasswordService;
 
 @Controller
 public class ChangePasswordController {
+	
+	@Autowired
+	ChangePasswordService changePasswordService;	
+	
+	@Autowired
+	ChangePasswordModel changePasswordModel;
 
 	@RequestMapping(value="/changePassword")
 	public String forgetPassword(){
@@ -12,5 +25,26 @@ public class ChangePasswordController {
 		return "changePassword";
 	}
 	
+	
+	
+	@RequestMapping(value="/changePasswordSubmit")
+	public String changePasswordsubmit(
+			@RequestParam("originalPwdTyped") String originalPwdTyped,
+			@RequestParam("newPwdTyped") String newPwdTyped,
+			@RequestParam("newPwdConfirmed") String newPwdConfirmed,
+			HttpServletRequest request
+			){
+		
+		if(!newPwdTyped.equals(newPwdConfirmed)){
+			
+			request.setAttribute("failreason", "您两次输入的密码不同");
+			return "changePassword";
+			}
+		
+		changePasswordModel.setOriginalPassword(originalPwdTyped);
+		changePasswordModel.setNewPassword(newPwdTyped);
+		
+		return null;
+	}
 	
 }

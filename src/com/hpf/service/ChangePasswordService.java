@@ -23,6 +23,7 @@ public class ChangePasswordService {
 	LoginModel loginModel;
 	
 	
+
 	public String changePassword(){
 
 		
@@ -37,7 +38,7 @@ public class ChangePasswordService {
 	
 	//修改密码
 	changePasswordDAO.changePassword(changePasswordModel, loginModel);
-	return "成功";
+	return "密码修改成功";
 	
 	}
 

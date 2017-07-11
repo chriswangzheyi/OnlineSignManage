@@ -45,16 +45,18 @@ public class UserManagementDAOImp implements UserManagementDAO {
 
 	@Override
 	public String deleteUser(UserManagementModel userManagementModel) {
-		String sql="delete from ec_online_sign_user set where id=? ";
+		String sql="delete from ec_online_sign_user where id=? ";
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
 		try {
 			jdbcTemplate.update(sql, userManagementModel.getDeleteid());
+			return "1";
 		} catch (Exception e) {
-			// TODO: handle exception
+			return "0";
+
 		}
 		
-		return null;
+	
 	}
 
 	@Override
@@ -65,34 +67,32 @@ public class UserManagementDAOImp implements UserManagementDAO {
 		try {
 			jdbcTemplate.update(sql, userManagementModel.getNewAccountUsername(),
 					userManagementModel.getNewAccountPassword(),userManagementModel.getNewAccountPhone());
+			return "1";
 		} catch (Exception e) {
-				
+			return "0";
 		}
 		
-		return null;
 	}
 
 	@Override
 	public boolean isUserExisted(UserManagementModel userManagementModel) {
-		int idInDB;
-		String sql="select id from ec_online_sign_user where username=?";
+		
+		String sql="select id from ec_online_sign_user where username="+ userManagementModel.getNewAccountUsername();
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		
-		try {
+				
 			
-			idInDB=jdbcTemplate.update(sql,userManagementModel.getNewAccountUsername());
-			
-			if ( (Integer)idInDB!=null){return true;}
-			else {
-				return false;
-			}
-			
-		} catch (Exception e) {
-			
+	try {
+		if((Integer)jdbcTemplate.queryForObject(sql, java.lang.Integer.class)!=null){ 
+		return true;}
+		else {
+			return false;
 		}
-		
-		
+	} catch (Exception e) {
 		return false;
 	}
+			
+	}
+
+	
 
 }
