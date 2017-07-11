@@ -37,14 +37,15 @@ public class ChangePasswordController {
 		
 		if(!newPwdTyped.equals(newPwdConfirmed)){
 			
-			request.setAttribute("failreason", "您两次输入的密码不同");
-			return "changePassword";
+			return "您两次输入的新密码不同";
 			}
 		
 		changePasswordModel.setOriginalPassword(originalPwdTyped);
 		changePasswordModel.setNewPassword(newPwdTyped);
 		
-		return null;
+		
+		
+		return changePasswordService.changePassword(changePasswordModel);
 	}
 	
 }

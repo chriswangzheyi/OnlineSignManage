@@ -30,26 +30,33 @@ public class ChangePasswordDAOImp implements ChangePasswordDAO {
 					sql, changePasswordModel.getNewPassword(),loginModel.getUsername());
 			 return "success";
 		} catch (Exception e) {
-			return "fail";
+			return "error";
 		}
 		
 	}
 
 	@Override
-	public String checkOriginalPassword(ChangePasswordModel changePasswordModel, LoginModel loginmodel) {
+	public boolean checkOriginalPassword(ChangePasswordModel changePasswordModel, LoginModel loginmodel) {
 
-		String passwordInDB = null;
 		String sql="Select password where username="+ loginmodel.getUsername();
 		JdbcTemplate jdbcTemplate= new JdbcTemplate(dataSource);
 		
 		
 		try {
-			passwordInDB=jdbcTemplate.queryForObject(sql, java.lang.String.class);
+
+			if(jdbcTemplate.queryForObject(sql, java.lang.String.class).equals(
+					changePasswordModel.getOriginalPassword() )){
+				return true;
+			}else {
+				return false;
+			}
+			
+			
 		} catch (Exception e) {
 			
 		}
 		
-		return passwordInDB;
+		return false;
 	}
 	
 	

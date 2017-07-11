@@ -12,4 +12,6 @@ public interface ReadFormInfoDAO {
 
 	public List<Map<String,Object>> ReadFormInfo(FormModel formModel);
 	
+	public int ReadNumofPages();
+	
 }

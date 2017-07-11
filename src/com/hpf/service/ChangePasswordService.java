@@ -24,13 +24,10 @@ public class ChangePasswordService {
 	
 	
 
-	public String changePassword(){
-
-		
+	public String changePassword(ChangePasswordModel changePasswordModel){
 	
 	//检查原密码
-	if(!changePasswordDAO.checkOriginalPassword(changePasswordModel, loginModel).equals(
-			changePasswordModel.getOriginalPassword() ) ){
+	if(changePasswordDAO.checkOriginalPassword(changePasswordModel, loginModel)== false ){
 		
 		return "原密码错误";
 	} 
@@ -39,7 +36,6 @@ public class ChangePasswordService {
 	//修改密码
 	changePasswordDAO.changePassword(changePasswordModel, loginModel);
 	return "密码修改成功";
-	
 	}
 
 }

@@ -10,6 +10,6 @@ public interface ChangePasswordDAO {
 	
 	public String changePassword(ChangePasswordModel changePasswordModel, LoginModel loginmodel);
 	
-	public String checkOriginalPassword(ChangePasswordModel changePasswordModel, LoginModel loginmodel);
+	public boolean checkOriginalPassword(ChangePasswordModel changePasswordModel, LoginModel loginmodel);
 
 }
