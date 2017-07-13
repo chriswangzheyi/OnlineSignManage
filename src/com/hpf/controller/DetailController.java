@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class DetailController {
 	
-	@RequestMapping(value="detail")
+	@RequestMapping(value="/details")
 	public String detailPage(){
 		
-		return null;
+		return "details";
 	}
 
 }
