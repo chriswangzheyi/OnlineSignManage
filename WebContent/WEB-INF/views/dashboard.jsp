@@ -118,7 +118,7 @@
 	                    <td>${var. submitTime}</td>
 	                    <td class="Not_Pass">未通过<div class="Not_Pass_help"></div></td>
 	                    <td class="table_btns">
-	                        <a href="details" class="details_btn">详情</a><a class="examine_btn">审核</a>
+	                        <a href="details?name=${var.restaurantName}" class="details_btn">详情</a><a class="examine_btn">审核</a>
 	                    </td>
 	                    <td>张三</td>                    
 	                </tr>               

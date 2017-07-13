@@ -24,9 +24,18 @@ public class MerchantModel {
 	private String bankAccountName;
 	private String bankAccountBank;
 	private String bankAccountAccount;
-	
-	// setter and getter
-
+	public String getRestaurantName() {
+		return restaurantName;
+	}
+	public void setRestaurantName(String restaurantName) {
+		this.restaurantName = restaurantName;
+	}
+	public String getRestaurantType() {
+		return restaurantType;
+	}
+	public void setRestaurantType(String restaurantType) {
+		this.restaurantType = restaurantType;
+	}
 	public String getRestaurantProvince() {
 		return restaurantProvince;
 	}
@@ -56,6 +65,18 @@ public class MerchantModel {
 	}
 	public void setRestaurantAddress(String restaurantAddress) {
 		this.restaurantAddress = restaurantAddress;
+	}
+	public String getRestaurantOpenTime() {
+		return restaurantOpenTime;
+	}
+	public void setRestaurantOpenTime(String restaurantOpenTime) {
+		this.restaurantOpenTime = restaurantOpenTime;
+	}
+	public String getRestaurantCloseTime() {
+		return restaurantCloseTime;
+	}
+	public void setRestaurantCloseTime(String restaurantCloseTime) {
+		this.restaurantCloseTime = restaurantCloseTime;
 	}
 	public String getRestaurantIndroduction() {
 		return restaurantIndroduction;
@@ -117,31 +138,8 @@ public class MerchantModel {
 	public void setBankAccountAccount(String bankAccountAccount) {
 		this.bankAccountAccount = bankAccountAccount;
 	}
-	public String getRestaurantName() {
-		return restaurantName;
-	}
-	public void setRestaurantName(String restaurantName) {
-		this.restaurantName = restaurantName;
-	}
-	public String getRestaurantType() {
-		return restaurantType;
-	}
-	public void setRestaurantType(String restaurantType) {
-		this.restaurantType = restaurantType;
-	}
-	public String getRestaurantOpenTime() {
-		return restaurantOpenTime;
-	}
-	public void setRestaurantOpenTime(String restaurantOpenTime) {
-		this.restaurantOpenTime = restaurantOpenTime;
-	}
-	public String getRestaurantCloseTime() {
-		return restaurantCloseTime;
-	}
-	public void setRestaurantCloseTime(String restaurantCloseTime) {
-		this.restaurantCloseTime = restaurantCloseTime;
-	}
 	
-	
+	// setter and getter
+
 
 }
