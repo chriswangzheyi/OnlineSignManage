@@ -34,8 +34,11 @@ public class ChangePasswordService {
 	
 	
 	//修改密码
-	changePasswordDAO.changePassword(changePasswordModel, loginModel);
+	if(changePasswordDAO.changePassword(changePasswordModel, loginModel).equals("success") ){
 	return "密码修改成功";
+	}
+	
+	return "错误";
 	}
 
 }

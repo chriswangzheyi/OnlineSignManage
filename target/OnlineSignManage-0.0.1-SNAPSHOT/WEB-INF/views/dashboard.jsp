@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  
     pageEncoding="UTF-8"%>  
-<%--     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> --%>
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
+     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -16,12 +17,14 @@
     <link rel="shortcut icon" href="resources/img/favicon.ico" type="image/x-icon" />
     <title>点餐猫商家网签管理后台</title>
     <script type="text/javascript" src="resources/js/jquery.min.js"></script>
+    <script type="text/javascript" src="resources/js/jquery.page.js"></script>
     <script type="text/javascript" src="resources/js/jquery.placeholder.js"></script>
 
     <script type="text/javascript" src="resources/css/layui/layer.js"></script><!--弹层-->
     <link rel="stylesheet" href="resources/css/layer_Style.css"/><!--layer弹层样式修改-->
     <script type="text/javascript" src="resources/css/laydate/laydate.js"></script><!--时间插件-->
 
+	<link rel="stylesheet" href="resources/css/jquery.page.css"/>
     <link rel="stylesheet" href="resources/css/common.css"/>
     <script type="text/javascript" src="resources/js/common.js"></script>
 
@@ -36,11 +39,11 @@
 <!--顶部导航-->
 <div id="header">
     <div class="content">
-        <a id="logo" href="index.html">点餐猫商家网签管理后台</a>
+        <a id="logo" href="dashboard">点餐猫商家网签管理后台</a>
         <div id="header_nav">
             <ul class="nav">
-                <li><a href="01_userManagement.html">用户管理</a></li>
-                <li><a href="">用户密码</a></li>
+                <li><a href="userManagement">用户管理</a></li>
+                <li><a href="changePassword">修改密码</a></li>
                 |
                 <li><a href="">数据导出</a></li>
                 <li><a href="">退出登录</a></li>
@@ -50,14 +53,7 @@
 </div>
 
 
-                <select>
-                    <c:forEach var="value" items="${formInfo}">  
-                                <option value="${formInfo.name}">  
-                                ${value.restaurantName.name}  
-                                </option>  
-                                </c:forEach>  
-                   
-                </select>
+
 
 <!--主体内容-->
 <div id="main">
@@ -111,75 +107,74 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><p>商家名称一定要长才好赚钱</p></td>
-                    <td><p>重庆-渝北区-金山街道</p></td>
-                    <td>火锅</td>
-                    <td>023-66668888</td>
-                    <td>2016-06-20 13:28:24</td>
-                    <td class="Not_Pass">未通过<div class="Not_Pass_help"></div></td>
-                    <td class="table_btns">
-                        <a class="details_btn">详情</a><a class="examine_btn">审核</a>
-                    </td>
-                    <td>张三</td>
-                </tr>
-
-                <tr>
-                    <td><p>德克士（叠彩城店）</p></td>
-                    <td><p>重庆-渝北区-叠彩城</p></td>
-                    <td>快餐</td>
-                    <td>023-66668888</td>
-                    <td>2016-06-20 13:28:24</td>
-                    <td>已审核</td>
-                    <td class="table_btns">
-                        <a class="details_btn">详情</a>
-                    </td>
-                    <td>李四</td>
-                </tr>
-
-                <tr>
-                    <td><p>亿唐</p></td>
-                    <td><p>重庆-渝北区-叠彩城</p></td>
-                    <td>快餐</td>
-                    <td>023-66668888</td>
-                    <td>2016-06-20 13:28:24</td>
-                    <td class="Not_Audited">未审核</td>
-                    <td class="table_btns">
-                        <a class="details_btn">详情</a><a class="examine_btn">审核</a>
-                    </td>
-                    <td>王麻子</td>
-                </tr>
+                
+                <c:forEach var="var" items="${formInfo}" > 
+              
+	                <tr>
+	                    <td><p>${var.restaurantName}</p></td>
+	                    <td><p>${var.restaurantProvince}-${var.restaurantCity}-${var.restaurantDistrict}</p></td>
+	                    <td>${var. restaurantType}</td>
+	                    <td>${var. restaurantTel}</td>
+	                    <td>${var. submitTime}</td>
+	                    <td class="Not_Pass">未通过<div class="Not_Pass_help"></div></td>
+	                    <td class="table_btns">
+	                        <a class="details_btn">详情</a><a class="examine_btn">审核</a>
+	                    </td>
+	                    <td>张三</td>                    
+	                </tr>               
+                </c:forEach>  
+                
             </tbody>
         </table>
+        
+        <a href="javascript:void(0);" onclick="changePage(2)">换</a>
+        
+        
+        <div class="pagediv"></div>
 
-        <div class="pagingbox">
-            <div class="jumppag">
-                <form class="inputpag">
-                    <label for="pagNum">跳至</label>
-                    <input id="pagNum" type='text' onkeyup="this.value=this.value.replace(/[^0-9-]+/,'');" />
-                </form>
-                <a class="jumppagBtn" href="javascript:;">跳转</a>
-            </div>
-            <div class="paging">
-                <span class="prevpag"><i></i></span>
-                <a class="active">1</a>
-                <a>2</a>
-                <a>3</a>
-                <a>4</a>
-                <a>5</a>
-                <span class="ellipsis">…</span>
-                <a>100</a>
-                <span class="nextpag"><i></i></span>
-            </div>
-        </div>
-        <textarea style="width: 80%; height: 200px;"></textarea>
-    </div>
+
 </div>
 <script>
 
-    $(function () {
-   //TODO laytate时间组件
+//换页
+function changePage(p){
+	
+	var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致  
+	params.targetPage=p
+	 		
+		$.ajax({
+	        type: "POST",
+	        data: params,
+	        url: "changeFormPage",
+	        /* dataType:"json",   */
+	        success: function(data) {
+	  alert("data="+data);
+	        }	       	        
+		})  
+}
 
+
+
+    $(function () {
+    	
+    	$(".pagediv").createPage({
+            pageNum : ${numberOfPages},//总页数
+            current : 1,//当前页数
+            shownum: 9,//最多显示的页数项
+            activepage: "current",//activepage当前页选中样式
+            activepaf: "",//默认class是“nextpage”//activepaf下一页选中样式
+            backFn:function(p){
+            	changePage(p);
+                console.log(p);
+            }
+        });
+
+    	var formInfo = '${formInfo}';
+    
+    	
+   	
+    	
+   //TODO laytate时间组件
         var start = {
             elem: '#startTime',
             istime: true, //是否开启时间选择
@@ -212,11 +207,13 @@
 
     //TODO 地区三级联动 （数据来至“data/cityJson.json”）
         //ajax加载省市
+        
         $.ajax({
             type: "POST",
             url: "resources/data/cityJson.json",
             data: "json",
             success: function(data){
+
                 $.each(data, function(idx, obj) {
                     if(obj.regLevel == 1){
                         var optionEL = $('<option data-id="'
@@ -228,8 +225,10 @@
                         $('#ip_SS').append(optionEL);
                     }
                 });
+            
             }
         });
+    
 
         $('#ip_SS').on('change', function () {
             $('#ip_DQ').html('<option value="-1">全部</option>');//清空城市
@@ -352,7 +351,8 @@
                 layer.open({
                     type: 1,
                     title:false,
-                    content: '<h2 style="text-align: center;font-size: 18px;font-weight: 400;margin: 0;padding-top: 10px;">信息审核</h2><div style="padding:10px;">'+helpText+'</div>'
+                    area: '280px',
+                    content: '<h2 style="text-align: center;font-size: 18px;font-weight: 400;margin: 0;padding-top: 10px;padding-bottom: 5px;">信息审核</h2><div style="padding:10px;">'+helpText+'</div>'
                 });
             }
         });

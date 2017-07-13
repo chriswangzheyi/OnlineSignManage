@@ -23,11 +23,11 @@ public class ChangePasswordDAOImp implements ChangePasswordDAO {
 
 
 		//修改密码
-		String sql = "UPDATE DATABASENAME SET password =?"+
+		String sql = "UPDATE ec_online_sign_user SET password =?"+
 				"where username=?";		
+		
 		try {
-			 jdbcTemplate.update(
-					sql, changePasswordModel.getNewPassword(),loginModel.getUsername());
+			 jdbcTemplate.update(sql, changePasswordModel.getNewPassword(),loginModel.getUsername());
 			 return "success";
 		} catch (Exception e) {
 			return "error";
@@ -38,10 +38,9 @@ public class ChangePasswordDAOImp implements ChangePasswordDAO {
 	@Override
 	public boolean checkOriginalPassword(ChangePasswordModel changePasswordModel, LoginModel loginmodel) {
 
-		String sql="Select password where username="+ loginmodel.getUsername();
+		String sql="Select password from ec_online_sign_user where username= '"+ loginmodel.getUsername()+"'";
 		JdbcTemplate jdbcTemplate= new JdbcTemplate(dataSource);
-		
-		
+				
 		try {
 
 			if(jdbcTemplate.queryForObject(sql, java.lang.String.class).equals(

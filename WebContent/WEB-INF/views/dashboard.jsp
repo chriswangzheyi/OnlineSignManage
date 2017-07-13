@@ -107,18 +107,6 @@
                 </tr>
             </thead>
             <tbody>
-<!--                 <tr>
-                    <td><p>商家名称一定要长才好赚钱</p></td>
-                    <td><p>重庆-渝北区-金山街道</p></td>
-                    <td>火锅</td>
-                    <td>023-66668888</td>
-                    <td>2016-06-20 13:28:24</td>
-                    <td class="Not_Pass">未通过<div class="Not_Pass_help"></div></td>
-                    <td class="table_btns">
-                        <a class="details_btn">详情</a><a class="examine_btn">审核</a>
-                    </td>
-                    <td>张三</td>                    
-                </tr> -->
                 
                 <c:forEach var="var" items="${formInfo}" > 
               
@@ -136,35 +124,11 @@
 	                </tr>               
                 </c:forEach>  
                 
-                
-
-              <!--   <tr>
-                    <td><p>德克士（叠彩城店）</p></td>
-                    <td><p>重庆-渝北区-叠彩城</p></td>
-                    <td>快餐</td>
-                    <td>023-66668888</td>
-                    <td>2016-06-20 13:28:24</td>
-                    <td>已审核</td>
-                    <td class="table_btns">
-                        <a class="details_btn">详情</a>
-                    </td>
-                    <td>李四</td>
-                </tr>
-
-                <tr>
-                    <td><p>亿唐</p></td>
-                    <td><p>重庆-渝北区-叠彩城</p></td>
-                    <td>快餐</td>
-                    <td>023-66668888</td>
-                    <td>2016-06-20 13:28:24</td>
-                    <td class="Not_Audited">未审核</td>
-                    <td class="table_btns">
-                        <a class="details_btn">详情</a><a class="examine_btn">审核</a>
-                    </td>
-                    <td>王麻子</td>
-                </tr> -->
             </tbody>
         </table>
+        
+        <a href="javascript:void(0);" onclick="changePage(2)">换</a>
+        
         
         <div class="pagediv"></div>
 
@@ -172,35 +136,43 @@
 </div>
 <script>
 
+//换页
+function changePage(p){
+	
+	var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致  
+	params.targetPage=p
+	 		
+		$.ajax({
+	        type: "POST",
+	        data: params,
+	        url: "changeFormPage",
+	        /* dataType:"json",   */
+	        success: function(data) {
+	  alert("data="+data);
+	        }	       	        
+		})  
+}
+
+
+
     $(function () {
     	
     	$(".pagediv").createPage({
-            pageNum : 15,//总页数
+            pageNum : ${numberOfPages},//总页数
             current : 1,//当前页数
             shownum: 9,//最多显示的页数项
             activepage: "current",//activepage当前页选中样式
             activepaf: "",//默认class是“nextpage”//activepaf下一页选中样式
             backFn:function(p){
+            	changePage(p);
                 console.log(p);
             }
         });
 
-
     	var formInfo = '${formInfo}';
     
-    	/*
-    	 $.ajax({
-             type: "POST",
-             url: 'formInfo',
-             data: "json",
-             success: function(data){
-               console.log(1234);
-             
-             }
-         });
-    	*/
     	
-    	
+   	
     	
    //TODO laytate时间组件
         var start = {
@@ -242,7 +214,7 @@
             data: "json",
             success: function(data){
 
-                $.each(JSON.parse(data), function(idx, obj) {
+                $.each(data, function(idx, obj) {
                     if(obj.regLevel == 1){
                         var optionEL = $('<option data-id="'
                                 +obj.id+'" '
@@ -272,7 +244,7 @@
                     url: "resources/data/cityJson.json",
                     data: "json",
                     success: function(data){
-                        $.each(JSON.parse(data), function(idx, obj) {
+                        $.each(data, function(idx, obj) {
                             if(obj.pid == datPid){
                                 optionHTML +=
                                         '<option data-id="'
@@ -303,7 +275,7 @@
                     url: "resources/data/cityJson.json",
                     data: "json",
                     success: function(data){
-                        $.each(JSON.parse(data), function(idx, obj) {
+                        $.each(data, function(idx, obj) {
                             if(obj.pid == datPid){
                                 optionHTML +=
                                         '<option data-id="'

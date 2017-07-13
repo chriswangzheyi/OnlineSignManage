@@ -27,13 +27,15 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 		String sql ="select restaurantName, restaurantProvince, "
 				+ "restaurantCity,restaurantDistrict,"
 				+ "restaurantType,restaurantTel,submitTime,"
-				+ "examineStatus from ec_online_sign";		
+				+ "examineStatus from ec_online_sign limit "+ 
+				(formModel.getCurrentPage()-1)*10+
+				" ,10";		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
 		try {
 			FormInfo=jdbcTemplate.queryForList(sql);
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 		
 		return FormInfo;
@@ -55,6 +57,8 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 		
 		return numOfPages;
 	}
+	
+	
 	
 	
 

@@ -18,9 +18,15 @@ public class ReadFormInfoService {
 	@Autowired
 	FormModel formModel;
 	
-	
-	public List<Map<String, Object>> readForm(){
+	public int numOfPages(){
 		
+		return readFormInfoDAO.ReadNumofPages();
+	}
+	
+	
+	
+	public List<Map<String, Object>> readForm(int currentPage){
+		formModel.setCurrentPage(currentPage);		
 		return readFormInfoDAO.ReadFormInfo(formModel);		
 	}
 

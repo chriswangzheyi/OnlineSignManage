@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hpf.model.DashboardModel;
+import com.hpf.model.FormModel;
+import com.hpf.model.LoginModel;
 import com.hpf.service.LoginService;
 import com.hpf.service.ReadFormInfoService;
 
@@ -26,6 +28,9 @@ public class LoginController {
 	
 	@Autowired
 	DashboardModel DashboardModel;
+	
+	@Autowired
+	FormModel FormModel;
 	
 	
 	
@@ -53,12 +58,19 @@ public class LoginController {
 			
 		
 			//读取商户信息
-			List<Map<String, Object>> formInfo=ReadFormInfoService.readForm();
+			List<Map<String, Object>> formInfo=ReadFormInfoService.readForm(1);
+			int numberOfPages = ReadFormInfoService.numOfPages();
+			
+			
+			DashboardModel.setFormInfoList(formInfo);	
+			FormModel.setTotalPage(numberOfPages);
+		
+			
 			request.setAttribute("formInfo", formInfo);
-			
-			DashboardModel.setFormInfoList(formInfo);						
-			
+			request.setAttribute("numberOfPages", numberOfPages);
 			request.setAttribute("authLevel",accountInfo);
+			
+			
 			return "dashboard";
 
 	}	

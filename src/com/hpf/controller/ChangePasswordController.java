@@ -34,18 +34,15 @@ public class ChangePasswordController {
 			@RequestParam("newPwdConfirmed") String newPwdConfirmed,
 			HttpServletRequest request
 			){
-		
-		if(!newPwdTyped.equals(newPwdConfirmed)){
-			
-			return "您两次输入的新密码不同";
-			}
-		
+
 		changePasswordModel.setOriginalPassword(originalPwdTyped);
 		changePasswordModel.setNewPassword(newPwdTyped);
+				
 		
+		String returnMsg =changePasswordService.changePassword(changePasswordModel);
+		request.setAttribute("statusMsg", returnMsg);
 		
-		
-		return changePasswordService.changePassword(changePasswordModel);
+		return "changePassword";
 	}
 	
 }

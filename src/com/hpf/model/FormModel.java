@@ -13,6 +13,8 @@ public class FormModel {
 	private String examineStatus;
 	private String examiner;
 	private String operation;
+	private int currentPage;
+	private int totalPage;
 	
 	//getter and setter
 	public String getRestaurantName() {
@@ -63,8 +65,17 @@ public class FormModel {
 	public void setOperation(String operation) {
 		this.operation = operation;
 	}
+	public int getCurrentPage() {
+		return currentPage;
+	}
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+	public int getTotalPage() {
+		return totalPage;
+	}
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
+	}
 	
-	
-	
-
 }

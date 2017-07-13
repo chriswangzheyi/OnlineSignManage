@@ -47,7 +47,7 @@
 </div>
 <!--主体内容-->
 <div id="main">
-    <form id="setPwd" action="changePasswordSubmit" method="post" enctype="multipart/form-data">
+    <form id="setPwd" method="post" action="changePasswordSubmit">
         <p class="tsT">密码由数字和英文字母组成，且最少6个字符，最多12个字符。</p>
         <label>原密码：</label>
         <input class="old_pwd" name="originalPwdTyped" type="text"/><br/>
@@ -57,33 +57,17 @@
 
         <label>确认密码：</label>
         <input class="news_pwd" name="newPwdConfirmed" type="password"/><br/>
+        <font color="red">${statusMsg}</font>
 
         <div class="PwdBtns">
             <a class="setPwdBtn">提交</a>
         </div>
+        
+        
     </form>
 </div>
 
 <script>
-
-	//提交表单
-	function submitform(){
-		
-		var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致   
-		 		
-			$.ajax({
-		        type: "POST",
-		        async:false,
-		        data: params,
-		        url: "changePasswordSubmit",
-		        datatype:"json",  
-		        success: function(data) {
-		  alert("data="+data);
-		        }	       	        
-			})  
-	}
-
-
 
     $(function () {
 
@@ -139,7 +123,6 @@
             if(!pwdAddFun()){
                 return false;
             }
-            submitform();
             $('#setPwd').submit();//提交表单
 
         });
