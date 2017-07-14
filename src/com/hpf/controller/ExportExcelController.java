@@ -1,77 +1,54 @@
 package com.hpf.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.io.OutputStream;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.hpf.ExcelUtil.ExcelWriter;
+import com.hpf.ExcelUtil.SimpleExcelWriter;
+import com.hpf.model.FormModel;
 
 @Controller
 public class ExportExcelController {
 	
-	
-	@RequestMapping(value="exportExcel")
-	public void test(){
+	@Autowired
+	FormModel FormModel;
+
+	@RequestMapping("/export")
+	public void exportPayInfo(HttpServletRequest request,HttpServletResponse response){
 		
-		System.out.println("11111111111111111");
+		String exportHeader[] = new String[]{"餐厅名称","所在地区","餐厅类别","餐厅电话","提交时间","状态","审核人"};
 		
-		//Blank workbook
-		XSSFWorkbook workbook = new XSSFWorkbook(); 
+		String title = "导出诗句-"+System.currentTimeMillis();
 		
-		//Create a blank sheet
-		XSSFSheet sheet = workbook.createSheet("Employee Data");
-		 
-		//This data needs to be written (Object[])
-		Map<String, Object[]> data = new TreeMap<String, Object[]>();
-		data.put("1", new Object[] {"ID", "NAME", "LASTNAME"});
-		data.put("2", new Object[] {1, "Amit", "Shukla"});
-		data.put("3", new Object[] {2, "Lokesh", "Gupta"});
-		data.put("4", new Object[] {3, "John", "Adwards"});
-		data.put("5", new Object[] {4, "Brian", "Schultz"});
-		 
-		//Iterate over data and write to sheet
-		Set<String> keyset = data.keySet();
-		int rownum = 0;
-		for (String key : keyset)
-		{
-		    Row row = sheet.createRow(rownum++);
-		    Object [] objArr = data.get(key);
-		    int cellnum = 0;
-		    for (Object obj : objArr)
-		    {
-		       Cell cell = row.createCell(cellnum++);
-		       if(obj instanceof String)
-		            cell.setCellValue((String)obj);
-		        else if(obj instanceof Integer)
-		            cell.setCellValue((Integer)obj);
-		    }
+
+		ExcelWriter writer = new SimpleExcelWriter();
+		
+		writer.fillSheet(exportHeader, FormModel.getFormList());
+		// 设置字符集与流文件名称
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("application/xls;charset=utf-8");
+		response.reset();
+		String fName;
+		try {
+			fName = new String(title.getBytes("GBK"),"ISO-8859-1");
+			response.setHeader("Content-Disposition", "attachment;filename="
+					+ fName + ".xls");
+			// 获取输出流
+			OutputStream out = response.getOutputStream();
+			writer.write(out);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		try 
-		{
-			//Write the workbook in file system
-		    FileOutputStream out = new FileOutputStream(new File("howtodoinjava_demo.xlsx"));
-		    workbook.write(out);
-		    out.close();
-		    
-		    System.out.println("howtodoinjava_demo.xlsx written successfully on disk.");
-		     
-		} 
-		catch (Exception e) 
-		{
-		    e.printStackTrace();
-		}
-	
-	
-		
-		
-		
-		
 	}
+	
+	
+	
+	
+	
 }

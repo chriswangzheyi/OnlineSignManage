@@ -1,10 +1,13 @@
 package com.hpf.model;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Component;
 
 @Component
 public class FormModel {
-	
+	private List<Map<String, Object>> FormList;
 	private String restaurantName;
 	private String restaurantLocation;
 	private String restaurantType;
@@ -76,6 +79,12 @@ public class FormModel {
 	}
 	public void setTotalPage(int totalPage) {
 		this.totalPage = totalPage;
+	}
+	public List<Map<String, Object>> getFormList() {
+		return FormList;
+	}
+	public void setFormList(List<Map<String, Object>> formList) {
+		FormList = formList;
 	}
 	
 }

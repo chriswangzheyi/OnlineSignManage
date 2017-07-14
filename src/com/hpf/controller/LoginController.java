@@ -65,6 +65,8 @@ public class LoginController {
 		
 			//读取商户信息
 			List<Map<String, Object>> formInfo=ReadFormInfoService.readForm(1);
+			FormModel.setFormList(formInfo);
+			
 			int numberOfPages = ReadFormInfoService.numOfPages();
 			
 			
