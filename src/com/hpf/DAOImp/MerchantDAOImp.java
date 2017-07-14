@@ -27,7 +27,7 @@ public class MerchantDAOImp implements MerchantDAO {
 		List<Map<String, Object>> detailForm = null;
 		
 		String sql ="select restaurantName, restaurantProvince, "
-				+ "restaurantCity,restaurantDistrict, restaurantAddress,"
+				+ "restaurantCity,restaurantDistrict, restaurantStreet, restaurantAddress,"
 				+ "restaurantType,restaurantTel,restaurantOpenTime,"
 				+ "restaurantCloseTime,restaurantIndroduction,"
 				+ "viewURL,managerPhone,bossPhone,licenseURL,"
@@ -43,6 +43,23 @@ public class MerchantDAOImp implements MerchantDAO {
 		}		
 		
 		return detailForm;
+	}
+
+
+	@Override
+	public List<Map<String, Object>> getRestaurantType(MerchantModel merchantModel) {
+		String sql ="select name from ec_bus_shop_type";
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		try {
+			List<Map<String, Object>> restaurantTypeList = jdbcTemplate.queryForList(sql); 
+					   
+			   return restaurantTypeList;
+		} catch (Exception e) {
+	
+		}
+
+		return null;
 	}
 
 }

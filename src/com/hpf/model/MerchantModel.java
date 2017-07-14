@@ -1,10 +1,15 @@
 package com.hpf.model;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Component;
 
 @Component
 public class MerchantModel {
 	
+	private List<Map<String, Object>> merchantInfo;
+	private List<Map<String, Object>> allRestaurantType;
 	private String restaurantName;
 	private String restaurantType;
 	private String restaurantProvince;
@@ -24,6 +29,9 @@ public class MerchantModel {
 	private String bankAccountName;
 	private String bankAccountBank;
 	private String bankAccountAccount;
+	
+	
+	// setter and getter
 	public String getRestaurantName() {
 		return restaurantName;
 	}
@@ -138,8 +146,17 @@ public class MerchantModel {
 	public void setBankAccountAccount(String bankAccountAccount) {
 		this.bankAccountAccount = bankAccountAccount;
 	}
+	public List<Map<String, Object>> getMerchantInfo() {
+		return merchantInfo;
+	}
+	public void setMerchantInfo(List<Map<String, Object>> merchantInfo) {
+		this.merchantInfo = merchantInfo;
+	}
+	public List<Map<String, Object>> getAllRestaurantType() {
+		return allRestaurantType;
+	}
+	public void setAllRestaurantType(List<Map<String, Object>> allRestaurantType) {
+		this.allRestaurantType = allRestaurantType;
+	}
 	
-	// setter and getter
-
-
 }

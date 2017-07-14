@@ -35,7 +35,7 @@
 <!--顶部导航-->
 <div id="header">
     <div class="content">
-        <a id="logo" href="index.html">点餐猫商家网签管理后台</a>
+        <a id="logo" href="dashboard">点餐猫商家网签管理后台</a>
         <div id="header_nav">
             <ul class="nav">
                 <li><a class="act" href="userManagement">用户管理</a></li>
@@ -49,26 +49,27 @@
 </div>
 <!--主体内容-->
 <div id="main">
+	<c:forEach var="detailform" items="${detailform}" >
     <div id="details_Content">
 
         <div class="det_item">
             <span class="det_label">餐厅名称：</span>
             <div class="det_text">
-                <p>餐厅名称餐厅名称餐厅名称</p>
+                <p>${detailform.restaurantName}</p>
             </div>
         </div>
 
         <div class="det_item">
             <span class="det_label">所在地区：</span>
             <div class="det_text">
-                <p>重庆市 渝北区 金山街道</p>
+                <p>${detailform.restaurantCity} ${detailform.restaurantDistrict} ${detailform.restaurantStreet}</p>
             </div>
         </div>
 
         <div class="det_item">
             <span class="det_label">餐厅类别：</span>
             <div class="det_text">
-                <p>火锅</p>
+                <p>${detailform.restaurantType}</p>
             </div>
         </div>
 
@@ -77,7 +78,7 @@
         <div class="det_item">
             <span class="det_label">餐厅地址：</span>
             <div class="det_text">
-                <p data-lng="106.576547" data-lat="29.646387" class="det_ip">重庆市渝北区金童路叠彩城H2栋</p><a title="点击查看地图中所在位置" class="map_icon"></a>
+                <p data-lng="106.576547" data-lat="29.646387" class="det_ip">${detailform.restaurantAddress}</p><a title="点击查看地图中所在位置" class="map_icon"></a>
                 <div id="allMapMask">
                     <div id="allMap"><span class="map_loading">地图加载中…</span></div>
                     <div class="closeMap"></div>
@@ -88,26 +89,26 @@
         <div class="det_item">
             <span class="det_label">餐厅电话：</span>
             <div class="det_text">
-                <p>023-66668888</p>
+                <p>${detailform.restaurantAddress}</p>
             </div>
         </div>
 
         <div class="det_item">
             <span class="det_label">营业时间：</span>
             <div class="det_text">
-                <p>09:00 - 22:00</p>
+                <p>${detailform.restaurantOpenTime} - ${detailform.restaurantCloseTime} </p>
             </div>
         </div>
 
         <div class="det_item">
             <span class="det_label">餐厅介绍：</span>
             <div class="det_text">
-                <p>餐厅介绍说明文字餐厅介绍说明文字餐厅介绍说明文字餐厅介绍说明文字餐厅介绍说明文字餐厅介绍说明文字餐厅介绍说明文字餐厅介绍说明文字餐厅介绍说明文字餐厅介绍说明文字</p>
+                <p>${detailform.restaurantIndroduction}</p>
             </div>
         </div>
 
         <div class="det_item">
-            <span class="det_label">餐厅实拍：</span>
+            <span class="det_label">餐厅实拍：</span>  
             <div class="det_text">
                 <div class="det_imgBox">
                     <img src="resources/img/images/IMG_3563.JPG"/>
@@ -132,14 +133,14 @@
         <div class="det_item">
             <span class="det_label">店长手机：</span>
             <div class="det_text">
-                <p>18612345678</p>
+                <p>${detailform.managerPhone}</p>
             </div>
         </div>
 
         <div class="det_item">
             <span class="det_label">老板手机：</span>
             <div class="det_text">
-                <p>18666668888</p>
+                <p>${detailform.bossPhone}</p>
             </div>
         </div>
 
@@ -168,21 +169,21 @@
         <div class="det_item">
             <span class="det_label">开户名称：</span>
             <div class="det_text">
-                <p>李老板</p>
+                <p>${detailform.bankAccountName}</p>
             </div>
         </div>
 
         <div class="det_item">
             <span class="det_label">开户银行：</span>
             <div class="det_text">
-                <p>建设银行</p>
+                <p>${detailform.bankAccountBank}</p>
             </div>
         </div>
 
         <div class="det_item">
             <span class="det_label">银行账号：</span>
             <div class="det_text">
-                <p>6000 1234 5678 88888</p>
+                <p>${detailform.bankAccountAccount}</p>
             </div>
         </div>
 
@@ -198,9 +199,10 @@
     </div>
     <div style="width: 100%;text-align: center;">
         <a class="returnPageBtn" onclick="history.go(-1)">返回</a>
-        <a class="hrefBtn" href="details_set.html">信息更正</a>
+        <a class="hrefBtn" href="detailsModify">信息更正</a>
     </div>
 
+</c:forEach>
 </div>
 
 

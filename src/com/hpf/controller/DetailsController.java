@@ -1,6 +1,8 @@
 package com.hpf.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.Map;
 import java.util.jar.Attributes.Name;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,10 +35,29 @@ public class DetailsController {
 			e.printStackTrace();
 		}
 		
-		MerchantModel.setRestaurantName(name);		
-		request.setAttribute("detailform", MerchantDAO.detailsForm(MerchantModel));
+		MerchantModel.setRestaurantName(name);	
 		
+		List <Map<String, Object>> merchantList= MerchantDAO.detailsForm(MerchantModel);
+		
+		
+		MerchantModel.setMerchantInfo(merchantList);		
+		request.setAttribute("detailform",merchantList);
+				
 		return "details";
+	}
+	
+	
+	@RequestMapping(value="/detailsModify")
+	public String detailModifyPage(HttpServletRequest request){
+
+		//餐厅种类
+		request.setAttribute("allRestaurantType", MerchantDAO.getRestaurantType(MerchantModel));
+		
+		//表格信息
+		request.setAttribute("detailform", MerchantModel.getMerchantInfo());
+		
+		
+		return "detailsModify";
 	}
 
 }
