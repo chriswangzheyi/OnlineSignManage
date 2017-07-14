@@ -51,7 +51,7 @@ public class DetailsController {
 	public String detailModifyPage(HttpServletRequest request){
 
 		//餐厅种类
-		request.setAttribute("allRestaurantType", MerchantDAO.getRestaurantType(MerchantModel));
+		request.setAttribute("allRestaurantType", MerchantModel.getAllRestaurantType());
 		
 		//表格信息
 		request.setAttribute("detailform", MerchantModel.getMerchantInfo());

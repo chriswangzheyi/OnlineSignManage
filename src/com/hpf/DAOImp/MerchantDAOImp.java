@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 import com.hpf.DAO.MerchantDAO;
 import com.hpf.model.MerchantModel;
 
+import net.sf.json.JSONArray;
+
 @Repository("MerchantDAO")
 public class MerchantDAOImp implements MerchantDAO {
 	
@@ -59,6 +61,27 @@ public class MerchantDAOImp implements MerchantDAO {
 	
 		}
 
+		return null;
+	}
+
+
+	@Override
+	public List<Map<String, Object>> getRegion(MerchantModel merchantModel) {
+		
+		String sql ="select id, name, pid,regLevel from ec_sys_region"; 
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		
+		try {
+			//读取地区信息并存入Json
+			List<Map<String, Object>> regionList=jdbcTemplate.queryForList(sql);
+	        String regionJson =JSONArray.fromObject(regionList).toString();
+	        
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 		return null;
 	}
 

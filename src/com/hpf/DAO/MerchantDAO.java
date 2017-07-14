@@ -13,4 +13,6 @@ public interface MerchantDAO {
 	public List<Map<String, Object>> detailsForm (MerchantModel merchantModel);
 	
 	public List<Map<String, Object>> getRestaurantType (MerchantModel merchantModel);
+	
+	public List<Map<String, Object>> getRegion(MerchantModel merchantModel);
 }

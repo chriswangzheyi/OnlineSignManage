@@ -10,9 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hpf.DAO.MerchantDAO;
 import com.hpf.model.DashboardModel;
 import com.hpf.model.FormModel;
-import com.hpf.model.LoginModel;
+import com.hpf.model.MerchantModel;
 import com.hpf.service.LoginService;
 import com.hpf.service.ReadFormInfoService;
 
@@ -33,6 +34,11 @@ public class LoginController {
 	FormModel FormModel;
 	
 	
+	@Autowired
+	MerchantDAO MerchantDAO;
+	
+	@Autowired
+	MerchantModel MerchantModel;
 	
 	@RequestMapping(value="/login")
 	public String login(
@@ -69,6 +75,10 @@ public class LoginController {
 			request.setAttribute("formInfo", formInfo);
 			request.setAttribute("numberOfPages", numberOfPages);
 			request.setAttribute("authLevel",accountInfo);
+			
+			//读取地区
+			List<Map<String, Object>>regionList= MerchantDAO.getRestaurantType(MerchantModel);
+			MerchantModel.setAllRestaurantType(regionList);
 			
 			
 			return "dashboard";

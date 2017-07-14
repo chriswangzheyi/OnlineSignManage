@@ -90,7 +90,21 @@
                 <span class="det_label">餐厅类别：</span>
                 <div class="det_text">
                     <select id="shop_class" >
-                        <option>${detailform.restaurantType}</option>
+                        
+                    <c:forEach var="value" items="${allRestaurantType}">  
+                        <option  value="${value.name}" 
+                        
+                         <c:if test="${value.name==detailform.restaurantType}">
+    
+                          selected="selected" 
+         
+                        </c:if>
+                        
+                          >  
+                        ${value.name}  
+                        </option>  
+                    </c:forEach> 
+                        
 
                     </select>
                 </div>
@@ -383,7 +397,7 @@ $(function () {
     var JD_init =$('#shopIp_JD').attr('data-initVal');
     $.ajax({
         type: "POST",
-        url: "data/cityJson.json",
+        url: "resources/data/cityJson.json",
         data: "json",
         success: function(data){
             $.each(data, function(idx, obj) {
@@ -476,7 +490,7 @@ $(function () {
             var optionHTML = '<option value="-1">全部</option>';
             $.ajax({
                 type: "POST",
-                url: "data/cityJson.json",
+                url: "resources/data/cityJson.json",
                 data: "json",
                 success: function(data){
                     $.each(data, function(idx, obj) {
@@ -509,7 +523,7 @@ $(function () {
             var optionHTML = '<option value="-1">区/县</option>';
             $.ajax({
                 type: "POST",
-                url: "data/cityJson.json",
+                url: "resources/data/cityJson.json",
                 data: "json",
                 success: function(data){
                     $.each(data, function(idx, obj) {
@@ -541,7 +555,7 @@ $(function () {
             var optionHTML = '<option value="-1">街道</option>';
             $.ajax({
                 type: "POST",
-                url: "data/cityJson.json",
+                url: "resources/data/cityJson.json",
                 data: "json",
                 success: function(data){
                     $.each(data, function(idx, obj) {
