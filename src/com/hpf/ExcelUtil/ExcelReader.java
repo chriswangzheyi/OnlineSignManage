@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.stereotype.Component;
 
 /**
  * excel 读取

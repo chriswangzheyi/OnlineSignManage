@@ -19,6 +19,8 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 	DataSource dataSource;
 	
 	List<Map<String, Object>> FormInfo;
+	List<FormModel> FormModelinfo;
+	
 
 	
 	@Override
@@ -32,8 +34,12 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 				" ,10";		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
+
+		
 		try {
 			FormInfo=jdbcTemplate.queryForList(sql);
+
+			
 		} catch (Exception e) {
 			
 		}

@@ -10,7 +10,7 @@ import com.hpf.model.FormModel;
 @Component
 public interface ReadFormInfoDAO {
 
-	public List<Map<String,Object>> ReadFormInfo(FormModel formModel);
+	public List<Map<String, Object>> ReadFormInfo(FormModel formModel);
 	
 	public int ReadNumofPages();
 	

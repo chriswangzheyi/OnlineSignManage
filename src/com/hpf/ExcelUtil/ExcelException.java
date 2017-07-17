@@ -1,5 +1,6 @@
 package com.hpf.ExcelUtil;
 
+import org.springframework.stereotype.Component;
 
 /**
  * 
@@ -10,6 +11,7 @@ package com.hpf.ExcelUtil;
  * @changesSum: 
  * 
  */
+@Component
 public class ExcelException extends RuntimeException {
 	
 	/** Comment for <code>serialVersionUID</code> */

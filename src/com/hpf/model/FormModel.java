@@ -5,9 +5,13 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import com.hpf.ExcelUtil.Title;
+
 @Component
 public class FormModel {
 	private List<Map<String, Object>> FormList;
+	
+	@Title(value = "餐厅名称")
 	private String restaurantName;
 	private String restaurantLocation;
 	private String restaurantType;
