@@ -116,11 +116,23 @@
 	                    <td>${var. restaurantType}</td>
 	                    <td>${var. restaurantTel}</td>
 	                    <td>${var. submitTime}</td>
-	                    <td class="Not_Pass">未通过<div class="Not_Pass_help"></div></td>
+	                    <td class="Not_Pass">                
+	                    <c:if test="${var.examineStatus == 0}">
+	  					未审核
+	  					</c:if>                  
+	                    <c:if test="${var.examineStatus == 1}">
+	  					已审核
+	  					</c:if>
+	  					<c:if test="${var.examineStatus == 2}">
+	  					审核未通过
+	  					</c:if>    	                    
+	                    <div class="Not_Pass_help"></div></td>
 	                    <td class="table_btns">
-	                        <a href="details?name=${var.restaurantName}" class="details_btn">详情</a><a class="examine_btn">审核</a>
+	                        <a href="details?name=${var.restaurantName}" class="details_btn">详情</a>
+	                        <a class="examine_btn">审核</a><a href="javascript:void(0);" 
+	                        onclick="setExminer(${var.id},0,'test fail reason')">测试用审核</a>
 	                    </td>
-	                    <td>张三</td>                    
+	                    <td>${var.exinemer}</td>                    
 	                </tr>               
                 </c:forEach>  
                 
@@ -136,6 +148,27 @@
 
 </div>
 <script>
+
+
+
+//审核Ajax
+function setExminer(id,examineStatus,failreason){
+
+	var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致  
+	params.id=id
+	params.examineStatus=examineStatus; //0为未审核，1为已审核 2为审核不通过
+	params.failreason= failreason
+	
+	$.ajax({
+      type: "POST",
+      data: params,
+      url: "setExaminer",
+      success: function(data) {
+      }	       	        
+	})  
+	
+}
+
 
 //换页
 function changePage(p){

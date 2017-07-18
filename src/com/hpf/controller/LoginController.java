@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.hpf.DAO.MerchantDAO;
 import com.hpf.model.DashboardModel;
 import com.hpf.model.FormModel;
+import com.hpf.model.LoginModel;
 import com.hpf.model.MerchantModel;
 import com.hpf.service.LoginService;
 import com.hpf.service.ReadFormInfoService;
@@ -40,6 +41,9 @@ public class LoginController {
 	@Autowired
 	MerchantModel MerchantModel;
 	
+	@Autowired
+	LoginModel LoginModel;
+	
 	@RequestMapping(value="/login")
 	public String login(
 			@RequestParam("username") String username, 
@@ -61,6 +65,9 @@ public class LoginController {
 				request.setAttribute("loginfail","您的账号已经被冻结");
 				return "login";
 			}
+			
+			//设置用户名
+			LoginModel.setUsername(username);
 			
 		
 			//读取商户信息

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hpf.model.DashboardModel;
 import com.hpf.model.ExportDataModel;
 import com.hpf.model.FormModel;
+import com.hpf.model.LoginModel;
 import com.hpf.service.ReadFormInfoService;
 
 import net.sf.json.JSONArray;
@@ -30,6 +31,9 @@ public class DashboardController {
 	
 	@Autowired
 	FormModel FormModel;
+	
+	@Autowired
+	LoginModel LoginModel;
 	
 	@Autowired
 	ReadFormInfoService ReadFormInfoService;
@@ -59,8 +63,7 @@ public class DashboardController {
 	public String changePage(int targetPage){
 			
 		List<Map<String, Object>> formInfoList=ReadFormInfoService.readForm(targetPage);
-
-		System.out.println("111="+JSONArray.fromObject(formInfoList).toString());		
+	
 		return JSONArray.fromObject(formInfoList).toString();
 					 
 	}
@@ -71,6 +74,21 @@ public class DashboardController {
 		
 		return ReadFormInfoService.numOfPages();
 	
+	}
+	
+	
+	//设置审核人和审核状态
+	@RequestMapping(value="/setExaminer")
+	public String setExaminer(int id, int examineStatus, String failreason){
+
+		
+		FormModel.setExaminedRestaurantId(id);
+		FormModel.setExaminedStatus(examineStatus);
+		FormModel.setFailReason(failreason);
+		FormModel.setExaminer(LoginModel.getUsername());
+		ReadFormInfoService.updateExaminer();
+		
+		return null;	
 	}
 	
 }

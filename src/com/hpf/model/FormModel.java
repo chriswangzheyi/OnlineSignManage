@@ -17,13 +17,30 @@ public class FormModel {
 	private String restaurantType;
 	private String restaurantPhone;
 	private String submitTime;
-	private String examineStatus;
+	private int examineStatus;
 	private String examiner;
 	private String operation;
 	private int currentPage;
 	private int totalPage;
+	private String examinedExaminer;
+	private int examinedRestaurantId;
+	private String failReason;
+	private int examinedStatus;
 	
-	//getter and setter
+
+	//getter and setter	
+	public List<Map<String, Object>> getFormList() {
+		return FormList;
+	}
+	public void setFormList(List<Map<String, Object>> formList) {
+		FormList = formList;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getRestaurantName() {
 		return restaurantName;
 	}
@@ -54,10 +71,10 @@ public class FormModel {
 	public void setSubmitTime(String submitTime) {
 		this.submitTime = submitTime;
 	}
-	public String getExamineStatus() {
+	public int getExamineStatus() {
 		return examineStatus;
 	}
-	public void setExamineStatus(String examineStatus) {
+	public void setExamineStatus(int examineStatus) {
 		this.examineStatus = examineStatus;
 	}
 	public String getExaminer() {
@@ -84,17 +101,32 @@ public class FormModel {
 	public void setTotalPage(int totalPage) {
 		this.totalPage = totalPage;
 	}
-	public List<Map<String, Object>> getFormList() {
-		return FormList;
+	public String getExaminedExaminer() {
+		return examinedExaminer;
 	}
-	public void setFormList(List<Map<String, Object>> formList) {
-		FormList = formList;
+	public void setExaminedExaminer(String examinedExaminer) {
+		this.examinedExaminer = examinedExaminer;
 	}
-	public int getId() {
-		return id;
+	public int getExaminedRestaurantId() {
+		return examinedRestaurantId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setExaminedRestaurantId(int examinedRestaurantId) {
+		this.examinedRestaurantId = examinedRestaurantId;
 	}
+	public String getFailReason() {
+		return failReason;
+	}
+	public void setFailReason(String failReason) {
+		this.failReason = failReason;
+	}
+	public int getExaminedStatus() {
+		return examinedStatus;
+	}
+	public void setExaminedStatus(int examinedStatus) {
+		this.examinedStatus = examinedStatus;
+	}
+	
+	
+
 	
 }

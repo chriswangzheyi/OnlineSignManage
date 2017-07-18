@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.hpf.DAO.ReadFormInfoDAO;
 import com.hpf.model.FormModel;
+import com.hpf.model.LoginModel;
 
 @Component
 public class ReadFormInfoService {
@@ -18,16 +19,24 @@ public class ReadFormInfoService {
 	@Autowired
 	FormModel formModel;
 	
+	@Autowired
+	LoginModel loginModel;
+	
 	public int numOfPages(){
 		
 		return readFormInfoDAO.ReadNumofPages();
 	}
-	
-	
+		
 	
 	public List<Map<String, Object>> readForm(int currentPage){
 		formModel.setCurrentPage(currentPage);		
 		return readFormInfoDAO.ReadFormInfo(formModel);		
+	}
+	
+	
+	public String updateExaminer(){
+		
+		return readFormInfoDAO.setExaminer(formModel,loginModel);
 	}
 
 }

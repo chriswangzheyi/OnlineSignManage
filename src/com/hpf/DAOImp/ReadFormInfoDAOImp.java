@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.hpf.DAO.ReadFormInfoDAO;
 import com.hpf.model.FormModel;
+import com.hpf.model.LoginModel;
 
 @Repository("ReadFormInfoDAO")
 public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
@@ -29,7 +30,7 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 		String sql ="select id, restaurantName, restaurantProvince, "
 				+ "restaurantCity,restaurantDistrict,"
 				+ "restaurantType,restaurantTel,submitTime,"
-				+ "examineStatus from ec_online_sign limit "+ 
+				+ "examineStatus,examiner, failReason from ec_online_sign limit "+ 
 				(formModel.getCurrentPage()-1)*10+
 				" ,10";		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -61,6 +62,27 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 		}
 		
 		return numOfPages;
+	}
+
+
+	@Override
+	public String setExaminer(FormModel formModel, LoginModel loginModel) {
+		
+		String sql = "UPDATE ec_online_sign SET examiner =?, examineStatus=?, failReason=?"+
+				"where id=?";	
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+
+	
+		jdbcTemplate.update(sql,loginModel.getUsername(),formModel.getExaminedStatus(),formModel.getFailReason(),
+				formModel.getExaminedRestaurantId());
+		
+		System.out.println("loginModel.getUsername()="+loginModel.getUsername());
+		System.out.println("formModel.getExaminedStatus()="+formModel.getExaminedStatus());
+		System.out.println("formModel.getFailReason()="+formModel.getFailReason());
+		System.out.println("formModel.getExaminedRestaurantId()"+formModel.getExaminedRestaurantId());
+		
+
+		return null;
 	}
 	
 	
