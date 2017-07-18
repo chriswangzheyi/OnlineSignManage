@@ -46,7 +46,7 @@
                 <li><a href="changePassword">修改密码</a></li>
                 |
                 <li><a href="export">数据导出</a></li>
-                <li><a href="">退出登录</a></li>
+                <li><a href="logout">退出登录</a></li>
             </ul>
         </div>
     </div>
@@ -127,6 +127,7 @@
             </tbody>
         </table>
         
+        	测试用：模拟用，方法中修改changePage(n)的数字即可
         <a href="javascript:void(0);" onclick="changePage(2)">换</a>
         
         
@@ -145,6 +146,7 @@ function changePage(p){
 		$.ajax({
 	        type: "POST",
 	        data: params,
+	        contentType:"application/x-www-form-urlencoded;charset=utf-8", 
 	        url: "changeFormPage",
 	        /* dataType:"json",   */
 	        success: function(data) {

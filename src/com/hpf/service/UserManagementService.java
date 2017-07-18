@@ -1,5 +1,8 @@
 package com.hpf.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +19,11 @@ public class UserManagementService {
 	
 	@Autowired
 	UserManagementModel userManagementModel;
+	
+	
+	//记录登录时间
+	Date date=new Date();
+	DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 
 	//读取用户信息
@@ -47,7 +55,9 @@ public class UserManagementService {
 	
 	//新建账户
 	public String newUser(UserManagementModel userManagementModel){
+		
 		//成功状态1 未成功状态0
+		userManagementModel.setNewAccountCreateTime(format.format(date));
 		String returnStatus= userManagementDAO.newUser(userManagementModel);
 		
 		

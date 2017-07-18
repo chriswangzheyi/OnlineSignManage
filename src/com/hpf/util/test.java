@@ -1,27 +1,24 @@
 package com.hpf.util;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 public class test {
-	
+
 	public static void main(String[] args) {
-		
-		Map<String, String> m = new HashMap<String, String>();
-		m.put("Hello", "World");
-		m.put("Apple", "3.14");
-		m.put("Another", "Element");
-		
-
-		List<String> list = new ArrayList<String>(m.values());
-
-		System.out.println(list);
-		
 	
+		
+		
+	    String jsonStr = "[{'id':'11','parentId':'root','refObj':"
+	    		+ "{'existType':'exist','deptType':'emp','treeNodeType':'dept'}}]";
+        List<JSONObject> list = JSON.parseArray(jsonStr, JSONObject.class);
+        for (JSONObject object : list) {
+            System.out.println(object.getJSONObject("refObj").getString("id"));
 
-}
+	}
+        
+	}
 
 }

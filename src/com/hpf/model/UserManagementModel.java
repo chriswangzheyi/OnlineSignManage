@@ -19,7 +19,16 @@ public class UserManagementModel {
 	private String newAccountUsername;
 	private String newAccountPassword;
 	private String newAccountPhone;
+	private String newAccountCreateTime;
+	private int totalPageNum;
+	private int currentPage;
 	
+	public int getTotalPageNum() {
+		return totalPageNum;
+	}
+	public void setTotalPageNum(int totalPageNum) {
+		this.totalPageNum = totalPageNum;
+	}
 	//setter and getter
 	public String getId() {
 		return id;
@@ -93,6 +102,18 @@ public class UserManagementModel {
 	public void setNewAccountPhone(String newAccountPhone) {
 		this.newAccountPhone = newAccountPhone;
 	}
-	
+	public String getNewAccountCreateTime() {
+		return newAccountCreateTime;
+	}
+	public void setNewAccountCreateTime(String newAccountCreateTime) {
+		this.newAccountCreateTime = newAccountCreateTime;
+	}
+	public int getCurrentPage() {
+		return currentPage;
+	}
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+
 	
 }

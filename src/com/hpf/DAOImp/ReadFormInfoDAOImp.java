@@ -26,7 +26,7 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 	@Override
 	public List<Map<String, Object>> ReadFormInfo(FormModel formModel) {
 		
-		String sql ="select restaurantName, restaurantProvince, "
+		String sql ="select id, restaurantName, restaurantProvince, "
 				+ "restaurantCity,restaurantDistrict,"
 				+ "restaurantType,restaurantTel,submitTime,"
 				+ "examineStatus from ec_online_sign limit "+ 
@@ -34,7 +34,6 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 				" ,10";		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
-
 		
 		try {
 			FormInfo=jdbcTemplate.queryForList(sql);

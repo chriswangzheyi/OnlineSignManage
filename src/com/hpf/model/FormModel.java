@@ -11,7 +11,7 @@ import com.hpf.ExcelUtil.Title;
 public class FormModel {
 	private List<Map<String, Object>> FormList;
 	
-	@Title(value = "餐厅名称")
+	private int id;
 	private String restaurantName;
 	private String restaurantLocation;
 	private String restaurantType;
@@ -89,6 +89,12 @@ public class FormModel {
 	}
 	public void setFormList(List<Map<String, Object>> formList) {
 		FormList = formList;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }

@@ -11,7 +11,7 @@ import com.hpf.model.UserManagementModel;
 public interface UserManagementDAO {
 
 	public List<Map<String, Object>> UserList(UserManagementModel userManagementModel);
-	
+		
 	public String blockUser(UserManagementModel userManagementModel);
 	
 	public String deleteUser(UserManagementModel userManagementModel);

@@ -39,8 +39,8 @@
                 <li><a class="act" href="userManagement">用户管理</a></li>
                 <li><a href="">用户密码</a></li>
                 |
-                <li><a href="">数据导出</a></li>
-                <li><a href="">退出登录</a></li>
+                <li><a href="export">数据导出</a></li>
+                <li><a href="logout">退出登录</a></li>
             </ul>
         </div>
     </div>

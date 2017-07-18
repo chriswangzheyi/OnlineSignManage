@@ -11,11 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.hpf.model.DashboardModel;
 import com.hpf.model.ExportDataModel;
 import com.hpf.model.FormModel;
 import com.hpf.service.ReadFormInfoService;
+
+import net.sf.json.JSONArray;
+
 
 
 
@@ -44,22 +46,23 @@ public class DashboardController {
 	}
 	
 	
+	@RequestMapping(value="/logout")
+	public String logout (){
+		
+		return "logout";
+	}
+	
+	
 	@RequestMapping(value="/changeFormPage")
 	@ResponseBody
 	
-	public List<Map<String, Object>> changePage(int targetPage){
+	public String changePage(int targetPage){
 			
 		List<Map<String, Object>> formInfoList=ReadFormInfoService.readForm(targetPage);
-	/*			for(int i = 0 ; i < test.size() ; i++) {
-					  System.out.println(test.get(i));
-					}*/
-				 
-		//jsonJSONArray.fromObject(formInfoList);
-				
-		
-		
-		return formInfoList;	
-				 
+
+		System.out.println("111="+JSONArray.fromObject(formInfoList).toString());		
+		return JSONArray.fromObject(formInfoList).toString();
+					 
 	}
 	
 	@RequestMapping(value="/readNewPageNum")

@@ -20,12 +20,16 @@ public class UserManagementDAOImp implements UserManagementDAO {
 	
 	@Override
 	public List<Map<String, Object>> UserList(UserManagementModel userManagementModel) {
-		
-		String sql="select id, username, phone, createTime, lastLoginTime,status from ec_online_sign_user";
+		//获取用户信息
+		String sql="select id, username, phone, createTime, lastLoginTime,status"
+				+ " from ec_online_sign_user limit"+(userManagementModel.getCurrentPage()-1)*10+" ,10";
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		List<Map<String, Object>> userList =jdbcTemplate.queryForList(sql);
 		
-		
+		//获取用户信息页总页数
+		String sqlForTotalPage=" select count(id) from ec_online_sign_user";
+		userManagementModel.setTotalPageNum(jdbcTemplate.queryForObject(sqlForTotalPage, int.class)/10);
+				
 		return userList;
 	}
 
@@ -61,12 +65,13 @@ public class UserManagementDAOImp implements UserManagementDAO {
 
 	@Override
 	public String newUser(UserManagementModel userManagementModel) {
-		String sql="insert into ec_online_sign_user(username,password,phone)values(?,?,?) ";
+		String sql="insert into ec_online_sign_user(username,password,phone,createTime)values(?,?,?,?) ";
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
 		try {
 			jdbcTemplate.update(sql, userManagementModel.getNewAccountUsername(),
-					userManagementModel.getNewAccountPassword(),userManagementModel.getNewAccountPhone());
+					userManagementModel.getNewAccountPassword(),userManagementModel.getNewAccountPhone(),
+					userManagementModel.getNewAccountCreateTime());
 			return "1";
 		} catch (Exception e) {
 			return "0";
