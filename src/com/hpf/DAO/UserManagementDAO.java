@@ -14,6 +14,8 @@ public interface UserManagementDAO {
 		
 	public String blockUser(UserManagementModel userManagementModel);
 	
+	public String unblockUser(UserManagementModel userManagementModel);
+	
 	public String deleteUser(UserManagementModel userManagementModel);
 	
 	public String newUser(UserManagementModel userManagementModel);

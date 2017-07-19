@@ -15,6 +15,7 @@ public class UserManagementModel {
 	private Date lastLoginTime;
 	private String status;
 	private String blockid;
+	private String unBlockId;
 	private String deleteid;
 	private String newAccountUsername;
 	private String newAccountPassword;
@@ -114,6 +115,13 @@ public class UserManagementModel {
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
 	}
+	public String getUnBlockId() {
+		return unBlockId;
+	}
+	public void setUnBlockId(String unBlockId) {
+		this.unBlockId = unBlockId;
+	}
+
 
 	
 }

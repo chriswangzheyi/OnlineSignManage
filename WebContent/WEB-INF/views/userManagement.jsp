@@ -142,6 +142,27 @@
 		}
 		
 		
+		
+		//解冻用户
+		function blockuser(id){
+			
+			var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致   
+		    params.id =id;
+			 		
+				$.ajax({
+			        type: "POST",
+			        async:false,
+			        data: params,
+			        url: "unblockAccount",
+			        datatype:"json",  
+			        success: function(data) {
+			        	var blockuser= data;
+			        }	       	        
+				})  
+		}
+		
+		
+		
 		//删除用户
 		function deleteuser(id){
 			
@@ -181,6 +202,24 @@
 				})  
 		}
 		
+		
+		//换页
+		function changePage(p){
+			
+			var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致  
+			params.targetPage=p
+			 		
+				$.ajax({
+			        type: "POST",
+			        data: params,
+			        contentType:"application/x-www-form-urlencoded;charset=utf-8", 
+			        url: "changeUserPage",
+			        /* dataType:"json",   */
+			        success: function(data) {
+			        		
+			        }	       	        
+				})  
+		}
 
 
     $(function () {

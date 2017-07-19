@@ -141,7 +141,7 @@
                 
                 <c:forEach var="var" items="${formInfo}" > 
               
-	                <tr>
+	                <tr data-id="${var.id}">
 	                    <td><p>${var.restaurantName}</p></td>
 	                    <td><p>${var.restaurantProvince}-${var.restaurantCity}-${var.restaurantDistrict}</p></td>
 	                    <td>${var. restaurantType}</td>

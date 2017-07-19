@@ -24,9 +24,6 @@ public class UserManagementDAOImp implements UserManagementDAO {
 		String sql="select id, username, phone, createTime, lastLoginTime,status"
 				+ " from ec_online_sign_user limit "+(userManagementModel.getCurrentPage()-1)*10+" ,10";
 		
-		System.out.println("userManagementModel.getCurrentPage()="+userManagementModel.getCurrentPage());
-		System.out.println("(userManagementModel.getCurrentPage()-1)*10="+(userManagementModel.getCurrentPage()-1)*10);
-		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		List<Map<String, Object>> userList =jdbcTemplate.queryForList(sql);
 		
@@ -100,6 +97,20 @@ public class UserManagementDAOImp implements UserManagementDAO {
 		return false;
 	}
 			
+	}
+
+	@Override
+	public String unblockUser(UserManagementModel userManagementModel) {
+		String sql="update ec_online_sign_user set status = 1 "
+				+ "where id =?";
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		try {
+			jdbcTemplate.update(sql, userManagementModel.getUnBlockId());
+			return "1";
+		} catch (Exception e) {
+			return "0";
+		}
 	}
 
 	

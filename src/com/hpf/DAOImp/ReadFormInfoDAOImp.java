@@ -74,13 +74,7 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 
 	
 		jdbcTemplate.update(sql,loginModel.getUsername(),formModel.getExaminedStatus(),formModel.getFailReason(),
-				formModel.getExaminedRestaurantId());
-		
-		System.out.println("loginModel.getUsername()="+loginModel.getUsername());
-		System.out.println("formModel.getExaminedStatus()="+formModel.getExaminedStatus());
-		System.out.println("formModel.getFailReason()="+formModel.getFailReason());
-		System.out.println("formModel.getExaminedRestaurantId()"+formModel.getExaminedRestaurantId());
-		
+				formModel.getExaminedRestaurantId());	
 
 		return null;
 	}

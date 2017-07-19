@@ -27,8 +27,8 @@ public class UserManagementService {
 	
 
 	//读取用户信息
-	public List<Map<String, Object>>getUserInfo(){
-			
+	public List<Map<String, Object>>getUserInfo(int currentPage){
+			userManagementModel.setCurrentPage(currentPage);
 				
 		return userManagementDAO.UserList(userManagementModel);		
 	}
@@ -36,6 +36,15 @@ public class UserManagementService {
 	
 	//冻结账户
 	public String blockUser(UserManagementModel userManagementModel){
+		//成功状态1 未成功状态0
+		String returnStatus=userManagementDAO.blockUser(userManagementModel);
+				
+		return returnStatus;
+	}
+	
+	
+	//解冻账户
+	public String unblockUser(UserManagementModel userManagementModel){
 		//成功状态1 未成功状态0
 		String returnStatus=userManagementDAO.blockUser(userManagementModel);
 				

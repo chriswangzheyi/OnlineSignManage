@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hpf.model.UserManagementModel;
 import com.hpf.service.UserManagementService;
 
+import net.sf.json.JSONArray;
+
 @Controller
 public class UserManagementController {
 	
@@ -24,11 +26,9 @@ public class UserManagementController {
 
 	@RequestMapping(value="/userManagement")
 	public String Administration(HttpServletRequest request){
-		//设置默认为首页
-		UserManagementModel.setCurrentPage(1);
 		
 		//读取用户信息
-		List<Map<String, Object>> userInfoList=UserManagementService.getUserInfo();
+		List<Map<String, Object>> userInfoList=UserManagementService.getUserInfo(1);
 		request.setAttribute("userInfoList",userInfoList);
 		
 		
@@ -44,6 +44,16 @@ public class UserManagementController {
 		
 		UserManagementModel.setBlockid(id);			
 		return UserManagementService.blockUser(UserManagementModel);
+	}
+	
+	
+	//解冻账户
+	@RequestMapping(value="/unblockAccount")
+	@ResponseBody
+	public String  unblcokAccount(String id){
+		
+		UserManagementModel.setUnBlockId(id);			
+		return UserManagementService.unblockUser(UserManagementModel);
 	}
 	
 	
@@ -74,6 +84,18 @@ public class UserManagementController {
 		}
 		
 		return "0";
+	}
+	
+	
+	//换页
+	@RequestMapping(value="/changeUserPage")
+	@ResponseBody
+	public String changePage(int targetPage){
+			
+		List<Map<String, Object>> userInfoList=UserManagementService.getUserInfo(targetPage);
+	
+		return JSONArray.fromObject(userInfoList).toString();
+					 
 	}
 
 	
