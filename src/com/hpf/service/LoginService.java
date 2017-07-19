@@ -39,7 +39,7 @@ public class LoginService {
 		passwordInDB=(String) LoginInfo.get(0).get("password");
 		statusInDB=(String) LoginInfo.get(0).get("status");
 		authLevel=(String) LoginInfo.get(0).get("authLevel");
-		
+		loginModel.setAuthLevel(authLevel);
 				
 		if(!passwordInDB.equals(passwordInput)){	
 			return "-1";
@@ -56,6 +56,7 @@ public class LoginService {
 		loginModel.setLoginTime(format.format(date));					
 		loginDAO.updateLastLoginTime(loginModel);
 		
+		//超级管理员为2，普通为0
 		return authLevel;
 	}
 		

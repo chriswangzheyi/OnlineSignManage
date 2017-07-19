@@ -43,8 +43,7 @@ public class DashboardController {
 		
 		request.setAttribute("formInfo", DashboardModel.getFormInfoList());
 		request.setAttribute("numberOfPages",FormModel.getTotalPage() );
-			
-		
+		request.setAttribute("authLevel",LoginModel.getAuthLevel());
 		
 		return "dashboard";		
 	}

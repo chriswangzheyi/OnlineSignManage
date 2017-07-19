@@ -35,7 +35,7 @@ public class MerchantDAOImp implements MerchantDAO {
 				+ "viewURL,managerPhone,bossPhone,licenseURL,"
 				+ "contractURL,bankAccountName,bankAccountBank,"
 				+ "bankAccountAccount,attorneyURL "
-				+ "from ec_online_sign where restaurantName='"+MerchantDAO.getRestaurantName()+"'";	
+				+ "from ec_online_sign where id='"+MerchantDAO.getId()+"'";	
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 			
 		try {

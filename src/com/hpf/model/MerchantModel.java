@@ -3,6 +3,7 @@ package com.hpf.model;
 import java.util.List;
 import java.util.Map;
 
+import org.codehaus.jackson.annotate.JsonTypeInfo.Id;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -29,6 +30,7 @@ public class MerchantModel {
 	private String bankAccountName;
 	private String bankAccountBank;
 	private String bankAccountAccount;
+	private int id;
 	
 	
 	// setter and getter
@@ -157,6 +159,12 @@ public class MerchantModel {
 	}
 	public void setAllRestaurantType(List<Map<String, Object>> allRestaurantType) {
 		this.allRestaurantType = allRestaurantType;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }

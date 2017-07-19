@@ -42,7 +42,10 @@
         <a id="logo" href="dashboard">点餐猫商家网签管理后台</a>
         <div id="header_nav">
             <ul class="nav">
-                <li><a href="userManagement">用户管理</a></li>
+
+            <c:if test="${authLevel == 2}">
+                            <li><a href="userManagement">用户管理</a></li>
+            </c:if>
                 <li><a href="changePassword">修改密码</a></li>
                 |
                 <li><a href="export">数据导出</a></li>
@@ -128,7 +131,7 @@
 	  					</c:if>    	                    
 	                    <div class="Not_Pass_help"></div></td>
 	                    <td class="table_btns">
-	                        <a href="details?name=${var.restaurantName}" class="details_btn">详情</a>
+	                        <a href="details?id=${var.id}" class="details_btn">详情</a>
 	                        <a class="examine_btn">审核</a><a href="javascript:void(0);" 
 	                        onclick="setExminer(${var.id},0,'test fail reason')">测试用审核</a>
 	                    </td>
@@ -183,9 +186,26 @@ function changePage(p){
 	        url: "changeFormPage",
 	        /* dataType:"json",   */
 	        success: function(data) {
-	  alert("data="+data);
+	        	var pageNewHtml = '';
+	        	console.log(JSON.parse(data));
+                $.each(JSON.parse(data), function(idx, obj) {
+                	pageNewHtml += '<tr data-id="'+obj.id+'">'+
+	                    '<td><p>'+obj.restaurantName+'</p></td>'+
+	                    '<td><p>'+obj.restaurantProvince+'-'+obj.restaurantCity+'-'+obj.restaurantDistrict+'</p></td>'+
+	                    '<td>'+obj.restaurantType+'</td>'+
+	                    '<td>'+obj.restaurantTel+'</td>'+
+	                    '<td>'+obj.submitTime+'</td>'+
+	                    '<td class="Not_Pass">未通过<div class="Not_Pass_help"></div></td>'+
+	                    '<td class="table_btns">'+
+	                        '<a href="details?name='+obj.restaurantName+'" class="details_btn">详情</a><a class="examine_btn">审核</a>'+
+	                    '</td>'+
+	                    '<td>张三</td>'+                  
+	                '</tr>';
+                });
+                $('.indexTable tbody').html(pageNewHtml);
+	               	        
 	        }	       	        
-		})  
+		}); 
 }
 
 
@@ -198,16 +218,14 @@ function changePage(p){
             shownum: 9,//最多显示的页数项
             activepage: "current",//activepage当前页选中样式
             activepaf: "",//默认class是“nextpage”//activepaf下一页选中样式
-            backFn:function(p){
-            	changePage(p);
-                console.log(p);
+            backfun:function(p){
+            	changePage(p.current);
             }
         });
 
     	var formInfo = '${formInfo}';
     
     	
-   	
     	
    //TODO laytate时间组件
         var start = {

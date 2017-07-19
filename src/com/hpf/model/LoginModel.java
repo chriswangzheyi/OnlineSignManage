@@ -8,6 +8,7 @@ public class LoginModel {
 	private String username;
 	private String password;
 	private String loginTime;
+	private String authLevel;
 	
 	
 	//getter and setter
@@ -29,5 +30,13 @@ public class LoginModel {
 	public void setLoginTime(String loginTime) {
 		this.loginTime = loginTime;
 	}
+	public String getAuthLevel() {
+		return authLevel;
+	}
+	public void setAuthLevel(String authLevel) {
+		this.authLevel = authLevel;
+	}
+	
+	
 	
 }
