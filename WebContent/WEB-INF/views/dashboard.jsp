@@ -33,6 +33,27 @@
     <script type="text/javascript" src="resources/js/respond.min.js"></script>
     <![endif]-->
 
+    <script>
+    //审核Ajax
+    function setExminer(id,examineStatus,failreason){
+
+        var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致
+        params.id=id
+        params.examineStatus=examineStatus; //0为未审核，1为已审核 2为审核不通过
+        params.failreason= failreason
+
+        $.ajax({
+            type: "POST",
+            data: params,
+            url: "setExaminer",
+            success: function(data) {
+                console.log(data);
+            }
+        });
+
+    }
+    </script>
+
 </head>
 <body>
 
@@ -119,58 +140,42 @@
 	                    <td>${var. restaurantType}</td>
 	                    <td>${var. restaurantTel}</td>
 	                    <td>${var. submitTime}</td>
-	                    <td class="Not_Pass">                
+
 	                    <c:if test="${var.examineStatus == 0}">
-	  					未审核
-	  					</c:if>                  
+                            <td class="Not_Audited">未审核</td>
+	  					</c:if>  
+	  					                
 	                    <c:if test="${var.examineStatus == 1}">
-	  					已审核
+	  					    <td>已审核</td>
 	  					</c:if>
+	  					
 	  					<c:if test="${var.examineStatus == 2}">
-	  					审核未通过
+                            <td class="Not_Pass" data-help="${var.failReason}">未通过<div class="Not_Pass_help"></div></td>
 	  					</c:if>    	                    
-	                    <div class="Not_Pass_help"></div></td>
+
 	                    <td class="table_btns">
 	                        <a href="details?id=${var.id}" class="details_btn">详情</a>
-	                        <a class="examine_btn">审核</a><a href="javascript:void(0);" 
-	                        onclick="setExminer(${var.id},0,'test fail reason')">测试用审核</a>
+
+                            <c:if test="${var.examineStatus == 0}">
+                                <a class="examine_btn">审核</a>
+                            </c:if>
+                            <c:if test="${var.examineStatus == 2}">
+                                <a class="examine_btn">重审</a>
+                            </c:if>
+                            <a href="javascript:void(0);" onclick="setExminer(${var.id},0,'test fail reason')">测试用审核</a>
 	                    </td>
-	                    <td>${var.exinemer}</td>                    
+	                    <td>${var.examiner}</td>                    
 	                </tr>               
                 </c:forEach>  
                 
             </tbody>
         </table>
         
-        	测试用：模拟用，方法中修改changePage(n)的数字即可
-        <a href="javascript:void(0);" onclick="changePage(2)">换</a>
-        
-        
         <div class="pagediv"></div>
 
 
 </div>
 <script>
-
-
-
-//审核Ajax
-function setExminer(id,examineStatus,failreason){
-
-	var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致  
-	params.id=id
-	params.examineStatus=examineStatus; //0为未审核，1为已审核 2为审核不通过
-	params.failreason= failreason
-	
-	$.ajax({
-      type: "POST",
-      data: params,
-      url: "setExaminer",
-      success: function(data) {
-      }	       	        
-	})  
-	
-}
 
 
 //换页
@@ -187,23 +192,46 @@ function changePage(p){
 	        /* dataType:"json",   */
 	        success: function(data) {
 	        	var pageNewHtml = '';
-	        	console.log(JSON.parse(data));
                 $.each(JSON.parse(data), function(idx, obj) {
+                    var state = obj.examineStatus //状态：0:未审核;1:已审核;2:未通过
+                    var state_text='<td class="Not_Audited">未审核</td>';
+                    var state_btn = '';
+                    if(state==0){//未审核的情况
+                        state_text='<td class="Not_Audited">未审核</td>';
+                        state_btn ='<a class="examine_btn">审核</a>';
+                    }
+                    if(state==1){//已审核的情况
+                        state_text='<td>已审核</td>';
+                        state_btn ='';
+                    }
+                    if(state==1){//未通过的情况
+                        var Not_Pass_text = obj.failReason;
+                        state_text='<td class="Not_Pass" data-help="'+Not_Pass_text+'">未通过<div class="Not_Pass_help"></div></td>';
+                        state_btn ='<a class="examine_btn">重审</a>';
+                    }
+                    var commonTime ='';
+                    if(obj.submitTime == null){
+                    	commonTime ='';
+                    }else{
+                    	var timeData = obj.submitTime.time;//提交时间的时间戳
+                        var unixTimestamp = new Date( timeData ) ;
+                        commonTime = unixTimestamp.toLocaleString();
+                    }
                 	pageNewHtml += '<tr data-id="'+obj.id+'">'+
 	                    '<td><p>'+obj.restaurantName+'</p></td>'+
 	                    '<td><p>'+obj.restaurantProvince+'-'+obj.restaurantCity+'-'+obj.restaurantDistrict+'</p></td>'+
 	                    '<td>'+obj.restaurantType+'</td>'+
 	                    '<td>'+obj.restaurantTel+'</td>'+
-	                    '<td>'+obj.submitTime+'</td>'+
-	                    '<td class="Not_Pass">未通过<div class="Not_Pass_help"></div></td>'+
+	                    '<td>'+commonTime+'</td>'+
+                        state_text+
 	                    '<td class="table_btns">'+
-	                        '<a href="details?name='+obj.restaurantName+'" class="details_btn">详情</a><a class="examine_btn">审核</a>'+
+	                        '<a href="details?id='+obj.id+'" class="details_btn">详情</a><a class="examine_btn">审核</a>'+
 	                    '</td>'+
-	                    '<td>张三</td>'+                  
+	                    '<td>'+obj.examiner+'</td>'+                  
 	                '</tr>';
                 });
                 $('.indexTable tbody').html(pageNewHtml);
-	               	        
+                listEvenStyleFun();//表格偶数行背景变灰：
 	        }	       	        
 		}); 
 }

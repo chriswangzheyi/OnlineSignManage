@@ -2,6 +2,26 @@
  * 公用脚本(基于jQuery.js)
  */
 
+//重写toLocaleString()
+	Date.prototype.toLocaleString = function() {
+        var m = this.getMonth() + 1;//月
+        var d = this.getDate();//天
+        var h = this.getHours();//小时
+        var i = this.getMinutes();//分钟
+        var s = this.getSeconds();//秒杀
+        function timeFormat(t){
+            t = (t<10) ? ('0'+parseInt(t)) : t;
+            return t;
+        }
+        return this.getFullYear() + "-" + timeFormat(m) + "-" + timeFormat(d) + "&nbsp;&nbsp;" + timeFormat(h) + ":" + timeFormat(i) + ":" + timeFormat(s);
+    };
+
+//表格偶数行背景变灰：
+function listEvenStyleFun(){
+    $('.listBox tbody tr:nth-child(even)').css('background-color','#f7f7f7');
+}
+
+
 //决定定位的div 可以通过drag() 拖动元素。（封装到$）
 $.fn.extend({
     drag: function(){
@@ -133,9 +153,8 @@ $(function () {
     if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE8.0"){
         $('input, textarea').placeholder();
     }
-    //表格偶数行背景变灰：
-    $('.listBox tbody tr:nth-child(even)').css('background-color','#f7f7f7');
 
+    listEvenStyleFun();//表格偶数行背景变灰：
 
 
 //TODO 多图片上传（餐厅实拍）

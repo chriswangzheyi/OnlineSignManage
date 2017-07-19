@@ -50,14 +50,14 @@
 </div>
 <!--主体内容-->
 <div id="main">
-	<c:forEach var="detailform" items="${detailform}" >
-    <form id="setDetails">
+	<c:forEach var="detailform" items="${detailform}"  >
+    <form id="setDetails" action="UupdateSubmit" method = 'post'>
         <div id="details_Content">
 
             <div class="det_item">
                 <span class="det_label">餐厅名称：</span>
                 <div class="det_text">
-                    <input class="input_set_text" type="text" value="${detailform.restaurantName}" />
+                    <input class="input_set_text" type="text" value="${detailform.restaurantName}" name="restaurant_name" />
                 </div>
             </div>
 
@@ -89,7 +89,7 @@
             <div class="det_item">
                 <span class="det_label">餐厅类别：</span>
                 <div class="det_text">
-                    <select id="shop_class" >
+                    <select id="shop_class" name="restaurant_type">
                         
                     <c:forEach var="value" items="${allRestaurantType}">  
                         <option  value="${value.name}" 
@@ -115,7 +115,7 @@
             <div class="det_item">
                 <span class="det_label">餐厅地址：</span>
                 <div class="det_text">
-                    <input id="mapInput" class="input_set_text" type="text" data-lng="106.576547" 
+                    <input id="mapInput" name="restaurant_address" class="input_set_text" type="text" data-lng="106.576547" 
                     data-lat="29.646387" value="${detailform.restaurantAddress}"/><a title="点击查看地图中所在位置" class="map_icon"></a>
                     <div id="allMapBox">
                         <div id="allMapSet"><span class="map_loading">地图加载中…</span></div>
@@ -127,15 +127,15 @@
             <div class="det_item">
                 <span class="det_label">餐厅电话：</span>
                 <div class="det_text" >
-                    <input type="text" class="input_set_text" value="${detailform.restaurantTel}"/>
+                    <input type="text" class="input_set_text" value="${detailform.restaurantTel}" name="restaurant_tel"/>
                 </div>
             </div>
 
             <div class="det_item">
                 <span class="det_label">营业时间：</span>
                 <div class="det_text shopHours">
-                    <input type="text" readonly="readonly" value="${detailform.restaurantOpenTime}" class="shopHours_start" placeholder="开始时间"/><i class="time_bar">—</i>
-                    <input type="text" readonly="readonly"  value="${detailform.restaurantCloseTime}" class=" shopHours_end" placeholder="结束时间"/>
+                    <input type="text" readonly="readonly" name="restaurant_opentime" value="${detailform.restaurantOpenTime}" class="shopHours_start" placeholder="开始时间"/><i class="time_bar">—</i>
+                    <input type="text" readonly="readonly" name="restaurant_closetime" value="${detailform.restaurantCloseTime}" class=" shopHours_end" placeholder="结束时间"/>
 
                     <div class="shopHours_List">
                         <div class="shopHours_timeBox">
@@ -158,7 +158,7 @@
             <div class="det_item">
                 <span class="det_label">餐厅介绍：</span>
                 <div class="det_text">
-                    <textarea rows="5" class="testarea_set">${detailform.restaurantIndroduction}</textarea>
+                    <textarea rows="5" class="testarea_set" name="restaurant_indroduction">${detailform.restaurantIndroduction}</textarea>
                 </div>
             </div>
 
@@ -192,14 +192,14 @@
             <div class="det_item">
                 <span class="det_label">店长手机：</span>
                 <div class="det_text">
-                    <input type="text" class="input_set_text" value="${detailform.managerPhone}"/>
+                    <input type="text" class="input_set_text" value="${detailform.managerPhone}" name="manager_phone"/>
                 </div>
             </div>
 
             <div class="det_item">
                 <span class="det_label">老板手机：</span>
                 <div class="det_text">
-                    <input type="text" class="input_set_text" value="${detailform.bossPhone}"/>
+                    <input type="text" class="input_set_text" value="${detailform.bossPhone}" name="boss_phone"/>
                 </div>
             </div>
 
@@ -234,21 +234,21 @@
             <div class="det_item">
                 <span class="det_label">开户名称：</span>
                 <div class="det_text">
-                    <input type="text" class="input_set_text" value="${detailform.bankAccountName}"/>
+                    <input type="text" class="input_set_text" value="${detailform.bankAccountName}" name="bankaccount_name"/>
                 </div>
             </div>
 
             <div class="det_item">
                 <span class="det_label">开户银行：</span>
                 <div class="det_text">
-                    <input type="text" class="input_set_text" value="${detailform.bankAccountBank}"/>
+                    <input type="text" class="input_set_text" value="${detailform.bankAccountBank}" name="bankaccount_bank"/>
                 </div>
             </div>
 
             <div class="det_item">
                 <span class="det_label">银行账号：</span>
                 <div class="det_text">
-                    <input type="text" class="input_set_text" value="${detailform.bankAccountAccount}"/>
+                    <input type="text" class="input_set_text" value="${detailform.bankAccountAccount}" name="bankaccount_account"/>
                 </div>
             </div>
 
@@ -267,6 +267,7 @@
         </div>
         <div style="width: 100%;text-align: center;">
             <a class="submit">提交</a>
+               <input type="submit" value="测试提交"  />
         </div>
     </form>
     </c:forEach>
@@ -728,7 +729,6 @@ $(function () {
         if(!inputTestFun()){
             return false;
         }
-        console.log(987654321);
         //$('#setDetails').submit();//提交表单
     });
 
