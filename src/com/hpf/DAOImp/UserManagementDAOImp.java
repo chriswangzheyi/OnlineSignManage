@@ -22,7 +22,11 @@ public class UserManagementDAOImp implements UserManagementDAO {
 	public List<Map<String, Object>> UserList(UserManagementModel userManagementModel) {
 		//获取用户信息
 		String sql="select id, username, phone, createTime, lastLoginTime,status"
-				+ " from ec_online_sign_user limit"+(userManagementModel.getCurrentPage()-1)*10+" ,10";
+				+ " from ec_online_sign_user limit "+(userManagementModel.getCurrentPage()-1)*10+" ,10";
+		
+		System.out.println("userManagementModel.getCurrentPage()="+userManagementModel.getCurrentPage());
+		System.out.println("(userManagementModel.getCurrentPage()-1)*10="+(userManagementModel.getCurrentPage()-1)*10);
+		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		List<Map<String, Object>> userList =jdbcTemplate.queryForList(sql);
 		

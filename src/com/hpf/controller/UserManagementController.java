@@ -24,9 +24,13 @@ public class UserManagementController {
 
 	@RequestMapping(value="/userManagement")
 	public String Administration(HttpServletRequest request){
+		//设置默认为首页
+		UserManagementModel.setCurrentPage(1);
 		
+		//读取用户信息
 		List<Map<String, Object>> userInfoList=UserManagementService.getUserInfo();
 		request.setAttribute("userInfoList",userInfoList);
+		
 		
 
 		return "userManagement";

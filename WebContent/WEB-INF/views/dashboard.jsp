@@ -2,6 +2,13 @@
     pageEncoding="UTF-8"%>  
     <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
      <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+     <%
+     String path = request.getContextPath();
+     String basePath = request.getScheme() + "://"
+             + request.getServerName() + ":" + request.getServerPort()
+             + path + "/";
+     %>
+     
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -39,7 +46,7 @@
 
         var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致
         params.id=id
-        params.examineStatus=examineStatus; //0为未审核，1为已审核 2为审核不通过
+        params.examineStatus=examineStatus; //0为未审核，1为已审核 2为未通过
         params.failreason= failreason
 
         $.ajax({
@@ -162,7 +169,6 @@
                             <c:if test="${var.examineStatus == 2}">
                                 <a class="examine_btn">重审</a>
                             </c:if>
-                            <a href="javascript:void(0);" onclick="setExminer(${var.id},0,'test fail reason')">测试用审核</a>
 	                    </td>
 	                    <td>${var.examiner}</td>                    
 	                </tr>               
@@ -204,8 +210,9 @@ function changePage(p){
                         state_text='<td>已审核</td>';
                         state_btn ='';
                     }
-                    if(state==1){//未通过的情况
+                    if(state==2){//未通过的情况
                         var Not_Pass_text = obj.failReason;
+                        if(Not_Pass_text==null){Not_Pass_text='';}
                         state_text='<td class="Not_Pass" data-help="'+Not_Pass_text+'">未通过<div class="Not_Pass_help"></div></td>';
                         state_btn ='<a class="examine_btn">重审</a>';
                     }
@@ -225,7 +232,9 @@ function changePage(p){
 	                    '<td>'+commonTime+'</td>'+
                         state_text+
 	                    '<td class="table_btns">'+
-	                        '<a href="details?id='+obj.id+'" class="details_btn">详情</a><a class="examine_btn">审核</a>'+
+
+	                        '<a href="details?id='+obj.id+'" class="details_btn">详情</a>'+state_btn +
+
 	                    '</td>'+
 	                    '<td>'+obj.examiner+'</td>'+                  
 	                '</tr>';
@@ -381,6 +390,7 @@ function changePage(p){
             var tar = this;
             var text = $(tar).html();//自身的html
             var startTd = $($(tar).parents('tr').find('td')[5]);//状态的td
+            var dataId = $($(tar).parents('tr')[0]).attr('data-id');
             var exaLayer = layer.confirm('商家信息审核通过？', {
                 title:'提示',
                 closeBtn: 0,
@@ -391,7 +401,7 @@ function changePage(p){
                     type: 2,
                     closeBtn: 0,
                     title:false,//标题
-                    content: ['iframe/audit_information.html','no'],//iframe的路径(后面加‘no’表示禁用浏览器的滚动条)
+                    content: ['${basePath}resources/iframe/audit_information.jsp','no'],//iframe的路径(后面加‘no’表示禁用浏览器的滚动条)
 
                     success: function(layero, index){// 层弹出后的成功回调方法-将值传给弹层
                         var body = layer.getChildFrame('body', index);//获取iframe的DOM
@@ -406,6 +416,7 @@ function changePage(p){
                     end: function () {//弹层退出时的回调函数
 
                         if(parent.textareaT!="" && parent.textareaT != undefined){
+                            setExminer(dataId,2,parent.textareaT);//0为未审核，1为已审核 2为未通过
                             $(startTd).html('未通过<div class="Not_Pass_help"></div>').addClass('Not_Pass').attr('data-help',parent.textareaT);
                             $(tar).html('重审');
 
@@ -417,6 +428,7 @@ function changePage(p){
                 layer.close(exaLayer);
 
             }, function(){//通过按钮回调
+                setExminer(dataId,1,'');
                 $($(tar).parents('tr').find('td')[5]).html('已审核').removeAttr('class');
                 $(tar).remove();
                 layer.close(exaLayer);

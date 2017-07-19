@@ -2,4 +2,5 @@ eclipse.preferences.version=1
 encoding//WebContent/WEB-INF/views/login.jsp=UTF-8
 encoding//WebContent/WEB-INF/views/logout.jsp=UTF-8
 encoding//WebContent/WEB-INF/views/userManagement.jsp=UTF-8
+encoding//WebContent/resources/iframe/audit_information.jsp=UTF-8
 encoding/src=utf8
