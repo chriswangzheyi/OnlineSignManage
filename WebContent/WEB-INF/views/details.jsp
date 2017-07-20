@@ -38,7 +38,9 @@
         <a id="logo" href="dashboard">点餐猫商家网签管理后台</a>
         <div id="header_nav">
             <ul class="nav">
-                <li><a class="act" href="userManagement">用户管理</a></li>
+            <c:if test="${authLevel == 2}">
+                            <li><a href="userManagement">用户管理</a></li>
+            </c:if>
                 <li><a href="changePassword">修改密码</a></li>
                 |
                 <li><a href="export">数据导出</a></li>

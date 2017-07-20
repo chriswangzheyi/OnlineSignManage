@@ -31,8 +31,6 @@ public class UserManagementController {
 		List<Map<String, Object>> userInfoList=UserManagementService.getUserInfo(1);
 		request.setAttribute("userInfoList",userInfoList);
 		
-		
-
 		return "userManagement";
 	}
 	
@@ -43,7 +41,7 @@ public class UserManagementController {
 	public String  blcokAccount(String id){
 		
 		UserManagementModel.setBlockid(id);			
-		return UserManagementService.blockUser(UserManagementModel);
+		return UserManagementService.blockUser(UserManagementModel);//返回success或fail
 	}
 	
 	
@@ -53,7 +51,7 @@ public class UserManagementController {
 	public String  unblcokAccount(String id){
 		
 		UserManagementModel.setUnBlockId(id);			
-		return UserManagementService.unblockUser(UserManagementModel);
+		return UserManagementService.unblockUser(UserManagementModel);//返回success或fail
 	}
 	
 	
@@ -64,7 +62,7 @@ public class UserManagementController {
 				
 		UserManagementModel.setDeleteid(id);
 				
-		return UserManagementService.deleteUser(UserManagementModel);
+		return UserManagementService.deleteUser(UserManagementModel);//返回success或fail
 	}
 		
 	
@@ -80,10 +78,10 @@ public class UserManagementController {
 				
 		if(UserManagementService.isUserExisted(UserManagementModel)==false){
 			UserManagementService.newUser(UserManagementModel);
-			return "1";
+			return "success";
 		}
 		
-		return "0";
+		return "fail";
 	}
 	
 	

@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.hpf.DAO.MerchantDAO;
 import com.hpf.model.DetailsModifyModel;
+import com.hpf.model.LoginModel;
 import com.hpf.model.MerchantModel;
 import com.hpf.service.DetailsModifyService;
 import com.hpf.util.UUIDGenerator;
@@ -36,6 +37,9 @@ public class DetailsController {
 	@Autowired
 DetailsModifyService DetailsModifyService;
 	
+	@Autowired
+	LoginModel LoginModel;
+	
 	@RequestMapping(value="/details")
 	public String detailPage(HttpServletRequest request){
 		
@@ -54,6 +58,7 @@ DetailsModifyService DetailsModifyService;
 				
 		MerchantModel.setMerchantInfo(merchantList);		
 		request.setAttribute("detailform",merchantList);
+		request.setAttribute("authLevel",LoginModel.getAuthLevel());
 				
 		return "details";
 	}
@@ -68,13 +73,15 @@ DetailsModifyService DetailsModifyService;
 		//表格信息
 		request.setAttribute("detailform", MerchantModel.getMerchantInfo());
 		
+		//权限信息
+		request.setAttribute("authLevel",LoginModel.getAuthLevel());
 		
 		return "detailsModify";
 	}
 	
 	
 
-    @RequestMapping(value="/UupdateSubmit")
+    @RequestMapping(value="/updateSubmit")
     public String detailsUpdate(
     		@RequestParam(value = "viewfiles", required = false) MultipartFile[] viewfiles,
     	    @RequestParam(value = "licensefile", required = false) MultipartFile licensefile,
@@ -125,12 +132,90 @@ DetailsModifyService DetailsModifyService;
     	DetailsModifyModel.setBankaccountName(bankaccountName);
     	DetailsModifyModel.setBankaccountAccount(bankaccountAccount);
     	DetailsModifyModel.setBankaccountAccount(bankaccountAccount);
-    	  
     	
-    	//修改内容
-    	DetailsModifyService.updateDetails();
+    	/*上传文件 */   	
+    	//多个文件	
+        if(viewfiles!=null && viewfiles.length>0){  
+        	String viewfilenames = "";
+            for(int i = 0;i<viewfiles.length;i++){  
+                MultipartFile file = viewfiles[i];  
+
+                try {
+                    //获取存取路径
+                    String path = request.getSession().getServletContext().getRealPath("/") + "upload/";
+                    String filename=file.getOriginalFilename();         
+                    String prefix=filename.substring(filename.lastIndexOf(".")+1);
+                    filename=UUIDGenerator.UUIDGenerator()+"."+prefix;
+                    
+                    File FinalFile = new File(path, filename);
+                    if(!FinalFile.exists()){  
+                    	FinalFile.mkdirs();  
+                    }
+                    // 转存文件  
+                    file.transferTo(FinalFile); 
+
+                    viewfilenames+=filename+",";
+                    
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }  
+            }
+            DetailsModifyModel.setViewsPath(viewfilenames);
+        	}
+            
+           
+            //单个文件     
+            String path = request.getSession().getServletContext().getRealPath("/") + "upload/";  
+            
+            DetailsModifyModel.setBaseurl(path);
+            
+            String licenseName = licensefile.getOriginalFilename();
+            String prefix=licenseName.substring(licenseName.lastIndexOf(".")+1);
+            licenseName=UUIDGenerator.UUIDGenerator()+"."+prefix;
+            
+            String contractName= contractfile.getOriginalFilename();
+            prefix=contractName.substring(contractName.lastIndexOf(".")+1);
+            contractName=UUIDGenerator.UUIDGenerator()+"."+prefix;
+            
+            String attorneyName= attorneyfile.getOriginalFilename();
+            prefix=attorneyName.substring(attorneyName.lastIndexOf(".")+1);
+            attorneyName=UUIDGenerator.UUIDGenerator()+"."+prefix;
+            
+            
+            
+            File licenseFinalFile = new File(path, licenseName);
+            File contractFinalFile = new File(path, contractName);
+            File attorneyFinalFile = new File(path, attorneyName);
+            
+            if(!licenseFinalFile.exists()){  
+                licenseFinalFile.mkdirs();  
+            }
+            
+            if(!contractFinalFile.exists()){  
+            	contractFinalFile.mkdirs();  
+            }
+            
+            if(!attorneyFinalFile.exists()){  
+            	attorneyFinalFile.mkdirs();  
+            }
+            
+            try { 	
+            	 licensefile.transferTo(licenseFinalFile); 
+            	 contractfile.transferTo(contractFinalFile);
+            	 attorneyfile.transferTo(attorneyFinalFile);
+            	 
+            	 DetailsModifyModel.setLicensepath(licenseName);
+            	 DetailsModifyModel.setContractpath(contractName);
+            	 DetailsModifyModel.setAttorneypath(attorneyName);
+            	 
+            	 
+            	} catch (Exception e) {  
+            	 e.printStackTrace();
+            	}  
+                   	  
     	
-		return null; 	
+    	//修改内容详情并添加到数据库	
+		return DetailsModifyService.updateDetails();  //返回success 或者fail	
     } 
 	
 	

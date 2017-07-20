@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  
     pageEncoding="UTF-8"%>  
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -36,7 +37,9 @@
         <a id="logo" href="dashboard">点餐猫商家网签管理后台</a>
         <div id="header_nav">
             <ul class="nav">
-                <li><a href="userManagement">用户管理</a></li>
+            <c:if test="${authLevel == 2}">
+                            <li><a href="userManagement">用户管理</a></li>
+            </c:if>
                 <li><a class="act" href="changePassword">修改密码</a></li>
                 |
                 <li><a href="export">数据导出</a></li>

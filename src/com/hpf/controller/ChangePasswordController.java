@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hpf.model.ChangePasswordModel;
+import com.hpf.model.LoginModel;
 import com.hpf.service.ChangePasswordService;
 
 @Controller
@@ -18,9 +19,13 @@ public class ChangePasswordController {
 	
 	@Autowired
 	ChangePasswordModel changePasswordModel;
+	
+	@Autowired
+	LoginModel LoginModel;
 
 	@RequestMapping(value="/changePassword")
-	public String forgetPassword(){
+	public String forgetPassword(HttpServletRequest request){
+		request.setAttribute("authLevel",LoginModel.getAuthLevel());
 		
 		return "changePassword";
 	}

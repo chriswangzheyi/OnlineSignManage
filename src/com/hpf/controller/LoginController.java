@@ -46,8 +46,8 @@ public class LoginController {
 	
 	@RequestMapping(value="/login")
 	public String login(
-			@RequestParam("username") String username, 
-			@RequestParam("password") String password,
+			@RequestParam(value="username", required=false) String username, 
+			@RequestParam(value="password", required=false) String password,
 			HttpServletRequest request){
 		
 		
@@ -74,6 +74,7 @@ public class LoginController {
 			List<Map<String, Object>> formInfo=ReadFormInfoService.readForm(1);
 			FormModel.setFormList(formInfo);
 			
+			//总页数
 			int numberOfPages = ReadFormInfoService.numOfPages();
 			
 			
@@ -84,6 +85,7 @@ public class LoginController {
 			request.setAttribute("formInfo", formInfo);
 			request.setAttribute("numberOfPages", numberOfPages);
 			request.setAttribute("authLevel",accountInfo);
+			LoginModel.setAuthLevel(accountInfo);
 			
 			//读取地区
 			List<Map<String, Object>>regionList= MerchantDAO.getRestaurantType(MerchantModel);

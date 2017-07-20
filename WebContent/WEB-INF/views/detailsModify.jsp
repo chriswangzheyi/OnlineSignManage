@@ -39,7 +39,9 @@
         <a id="logo" href="dashboard">点餐猫商家网签管理后台</a>
         <div id="header_nav">
             <ul class="nav">
-                <li><a class="act" href="userManagement">用户管理</a></li>
+            <c:if test="${authLevel == 2}">
+                            <li><a href="userManagement">用户管理</a></li>
+            </c:if>
                 <li><a href="changePassword">修改密码</a></li>
                 |
                 <li><a href="export">数据导出</a></li>
@@ -50,8 +52,8 @@
 </div>
 <!--主体内容-->
 <div id="main">
-	<c:forEach var="detailform" items="${detailform}"  >
-    <form id="setDetails" action="UupdateSubmit" method = 'post'>
+	<c:forEach var="detailform" items="${detailform}"  > 
+    <form id="setDetails" action="updateSubmit" method = 'post' enctype="multipart/form-data"> <!-- 上传文件必须加enctype="multipart/form-data" -->
         <div id="details_Content">
 
             <div class="det_item">
@@ -168,7 +170,7 @@
                     <!--    照片添加    -->
                     <div class="z_photo">
                         <div class="z_file">
-                            <input type="file" name="file" id="file" class="shopimg" value="" multiple="multiple" name="viewfiles" />
+                            <input type="file" id="file" class="shopimg" multiple="multiple" name="viewfiles" />
                         </div>
                         <div class="z_addImg"><img src="img/images/IMG_3564.JPG"></div>
                         <div class="z_addImg"><img src="img/images/IMG_3564.JPG"></div>
@@ -209,7 +211,7 @@
                 <span class="det_label">餐厅工商营业执照：</span>
                 <div class="det_text">
                         <span class="busLic_text">更改照片</span>
-                        <input class="busLic" type="file"/>
+                        <input class="busLic" type="file" name="licensefile"/>
                         <span class="busLic_name"></span>
                         <div class="busLic_img">
                             <img src="img/images/IMG_3564.JPG"/>
@@ -221,10 +223,10 @@
                 <span class="det_label">餐厅卫生许可证：</span>
                 <div class="det_text">
                     <span class="DCMcontract_text">更改照片</span>
-                    <input class="DCMcontract" type="file"/>
+                    <input class="DCMcontract" type="file" name="contractfile"/>
                     <span class="DCMcontract_name"></span>
                     <div class="DCMcontract_img">
-                        <img src="img/images/IMG_3564.JPG"/>
+                    	<img src="img/images/IMG_3564.JPG"/>
                     </div>
                 </div>
             </div>
@@ -256,10 +258,10 @@
                 <span class="det_label" style="width: 105px">授权委托书：</span>
                 <div class="det_text" style="width: 695px">
                     <span class="proxy_text">更改照片</span>
-                    <input class="proxy" type="file"/>
+                    <input class="proxy" type="file" name="attorneyfile"/>
                     <span class="proxy_name"></span>
                     <div class="proxy_img">
-                        <img src="img/images/IMG_3564.JPG"/>
+                    	<img src="img/images/IMG_3564.JPG"/>
                     </div>
                 </div>
             </div>

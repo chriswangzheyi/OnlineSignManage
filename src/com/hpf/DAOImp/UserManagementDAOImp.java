@@ -42,9 +42,9 @@ public class UserManagementDAOImp implements UserManagementDAO {
 		
 		try {
 			jdbcTemplate.update(sql, userManagementModel.getBlockid());
-			return "1";
+			return "success";
 		} catch (Exception e) {
-			return "0";
+			return "fail";
 		}
 	}
 
@@ -55,9 +55,9 @@ public class UserManagementDAOImp implements UserManagementDAO {
 		
 		try {
 			jdbcTemplate.update(sql, userManagementModel.getDeleteid());
-			return "1";
+			return "success";
 		} catch (Exception e) {
-			return "0";
+			return "fail";
 
 		}
 		
@@ -73,9 +73,9 @@ public class UserManagementDAOImp implements UserManagementDAO {
 			jdbcTemplate.update(sql, userManagementModel.getNewAccountUsername(),
 					userManagementModel.getNewAccountPassword(),userManagementModel.getNewAccountPhone(),
 					userManagementModel.getNewAccountCreateTime());
-			return "1";
+			return "success";
 		} catch (Exception e) {
-			return "0";
+			return "fail";
 		}
 		
 	}
@@ -107,9 +107,9 @@ public class UserManagementDAOImp implements UserManagementDAO {
 		
 		try {
 			jdbcTemplate.update(sql, userManagementModel.getUnBlockId());
-			return "1";
+			return "success";
 		} catch (Exception e) {
-			return "0";
+			return "fail";
 		}
 	}
 

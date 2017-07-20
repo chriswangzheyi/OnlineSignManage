@@ -26,8 +26,10 @@ public class DetailsModifyModel {
 	private String contractpath;
 	private String attorneypath;
 	private String licensepath;
-	private String viewspath;
+	private String viewsPath;
 	private int id;
+
+
 	
 	public int getId() {
 		return id;
@@ -156,15 +158,12 @@ public class DetailsModifyModel {
 	public void setLicensepath(String licensepath) {
 		this.licensepath = licensepath;
 	}
-	public String getViewspath() {
-		return viewspath;
+	public String getViewsPath() {
+		return viewsPath;
 	}
-	public void setViewspath(String viewspath) {
-		this.viewspath = viewspath;
-	} 
-	
-	
-	
-	
+	public void setViewsPath(String viewsPath) {
+		this.viewsPath = viewsPath;
+	}
+
 
 }

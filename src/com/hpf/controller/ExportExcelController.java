@@ -51,10 +51,12 @@ public class ExportExcelController {
 		 
 		//This data needs to be written (Object[])
 		Map<String, Object[]> data = new TreeMap<String, Object[]>();
+		//设定title
 		data.put("1", new Object[] {"餐厅名称", "所在地区", "餐厅类别", "餐厅电话","提交时间", "状态", "审核人"});
 		
-		for(int i=0;i<FormModel.getFormList().size();i++){
-					
+		
+		//循环取值
+		for(int i=0;i<FormModel.getFormList().size();i++){	
 		data.put(String.valueOf(i+2), new Object[] {
 				FormModel.getFormList().get(i).get("restaurantName"),
 				FormModel.getFormList().get(i).get("restaurantProvince")+"-"+
@@ -96,21 +98,8 @@ public class ExportExcelController {
 		catch (Exception e) 
 		{
 		    e.printStackTrace();
-		}
-		
-		
-		
-		
+		}	
 		
 	}
-	
-		
-		
-		
-		
-		
-	
-		
-		
 		
 }

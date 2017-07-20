@@ -72,11 +72,15 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 				"where id=?";	
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
+		try {
+			jdbcTemplate.update(sql,loginModel.getUsername(),formModel.getExaminedStatus(),formModel.getFailReason(),
+		    formModel.getExaminedRestaurantId());	
+			return "success";
+		} catch (Exception e) {
 	
-		jdbcTemplate.update(sql,loginModel.getUsername(),formModel.getExaminedStatus(),formModel.getFailReason(),
-				formModel.getExaminedRestaurantId());	
+			return "fail";
+		}
 
-		return null;
 	}
 	
 	

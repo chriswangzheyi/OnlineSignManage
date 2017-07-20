@@ -1,6 +1,6 @@
 package com.hpf.controller;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hpf.model.DashboardModel;
-import com.hpf.model.ExportDataModel;
 import com.hpf.model.FormModel;
 import com.hpf.model.LoginModel;
 import com.hpf.service.ReadFormInfoService;
@@ -85,9 +84,9 @@ public class DashboardController {
 		FormModel.setExaminedStatus(examineStatus);
 		FormModel.setFailReason(failreason);
 		FormModel.setExaminer(LoginModel.getUsername());
-		ReadFormInfoService.updateExaminer();
 		
-		return null;	
+		//添加审核信息
+		return ReadFormInfoService.updateExaminer();	//返回success或者fail
 	}
 	
 }

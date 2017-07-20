@@ -16,10 +16,8 @@ public class DetailsModifyService {
 	DetailsModifyModel detailsModifyModel;
 	
 	public String updateDetails(){
-		
-		detailsModifyDAO.updateDetails(detailsModifyModel);
-				
-		return null;
+			
+		return detailsModifyDAO.updateDetails(detailsModifyModel);
 	}
 
 }
