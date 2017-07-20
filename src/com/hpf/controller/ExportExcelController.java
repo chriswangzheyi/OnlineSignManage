@@ -35,6 +35,7 @@ public class ExportExcelController {
 	
 	@Autowired
 	ExportDataModel ExportDataModel;
+
 	
 
 		//需要引入dom4j.ar,poi.jar,poi-ooxml.jar,poi-ooxml-schemas.jar,xmlbeans.jar
@@ -51,11 +52,21 @@ public class ExportExcelController {
 		//This data needs to be written (Object[])
 		Map<String, Object[]> data = new TreeMap<String, Object[]>();
 		data.put("1", new Object[] {"餐厅名称", "所在地区", "餐厅类别", "餐厅电话","提交时间", "状态", "审核人"});
-		data.put("2", new Object[] {1, "Amit", "Shukla1111"});
-		data.put("3", new Object[] {2, "Lokesh", "Gupta2222"});
-		data.put("4", new Object[] {3, "John", "Adwards3333"});
-		data.put("5", new Object[] {4, "Brian", "Schultz4444"});
-		 
+		
+		for(int i=0;i<FormModel.getFormList().size();i++){
+					
+		data.put(String.valueOf(i+2), new Object[] {
+				FormModel.getFormList().get(i).get("restaurantName"),
+				FormModel.getFormList().get(i).get("restaurantProvince")+"-"+
+						FormModel.getFormList().get(i).get("restaurantCity")+"-"+
+						FormModel.getFormList().get(i).get("restaurantDistrict"),
+				FormModel.getFormList().get(i).get("restaurantType"),
+				FormModel.getFormList().get(i).get("restaurantTel"),
+				FormModel.getFormList().get(i).get("submitTime"),
+				FormModel.getFormList().get(i).get("examineStatus"),
+				FormModel.getFormList().get(i).get("examiner")
+				}); 
+		}
 		
 		
 		//Iterate over data and write to sheet
