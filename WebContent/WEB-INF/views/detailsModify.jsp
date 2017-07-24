@@ -166,14 +166,19 @@
 
             <div class="det_item">
                 <span class="det_label">餐厅实拍：</span>
+               
+               
                 <div class="det_text">
                     <!--    照片添加    -->
                     <div class="z_photo">
                         <div class="z_file">
                             <input type="file" id="file" class="shopimg" multiple="multiple" name="viewfiles" />
-                        </div>
-                        <div class="z_addImg"><img src="img/images/IMG_3564.JPG"></div>
-                        <div class="z_addImg"><img src="img/images/IMG_3564.JPG"></div>
+                        </div>      
+                                     
+                        <c:forTokens items="${detailform.viewURL}" delims="," var="viewURL">
+			 				<div class="z_addImg"><img src="${detailform.baseURL}/${viewURL}"></div>		 				
+						</c:forTokens>
+                          
                     </div>
                     <!--遮罩层-->
                     <div class="z_mask">
@@ -214,7 +219,7 @@
                         <input class="busLic" type="file" name="licensefile"/>
                         <span class="busLic_name"></span>
                         <div class="busLic_img">
-                            <img src="img/images/IMG_3564.JPG"/>
+                            <img src="${detailform.baseURL}/${detailform.licenseURL}"/>
                         </div>
                 </div>
             </div>
@@ -226,7 +231,7 @@
                     <input class="DCMcontract" type="file" name="contractfile"/>
                     <span class="DCMcontract_name"></span>
                     <div class="DCMcontract_img">
-                    	<img src="img/images/IMG_3564.JPG"/>
+                    	<img src="${detailform.baseURL}/${detailform.contractURL}"/>
                     </div>
                 </div>
             </div>
@@ -261,7 +266,7 @@
                     <input class="proxy" type="file" name="attorneyfile"/>
                     <span class="proxy_name"></span>
                     <div class="proxy_img">
-                    	<img src="img/images/IMG_3564.JPG"/>
+                    	<img src="${detailform.baseURL}/${detailform.attorneyURL}"/>
                     </div>
                 </div>
             </div>
@@ -390,8 +395,10 @@ $(function () {
 
 <script>
 $(function () {
+	
+	//读取baseurl
 
-
+	
 //TODO 地区三级联动 （数据来至“data/cityJson.json”）
     //ajax加载省市
     var SS_init =$('#shopIp_SS').attr('data-initVal');

@@ -3,7 +3,7 @@
  @Name: layer
  
  **/
-*html{background-image: url(about:blank); background-attachment: fixed;}
+html{background-image: url(about:blank); background-attachment: fixed;}
 html #layuicss-skinlayercss{display: none; position: absolute; width: 1989px;}
 
 /* common */

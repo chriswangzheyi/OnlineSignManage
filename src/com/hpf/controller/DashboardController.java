@@ -77,7 +77,12 @@ public class DashboardController {
 	
 	//设置审核人和审核状态
 	@RequestMapping(value="/setExaminer")
+	@ResponseBody
 	public String setExaminer(int id, int examineStatus, String failreason){
+		
+		System.out.println("id="+id);
+		System.out.println("examineStatus="+examineStatus);
+		System.out.println("failreason="+failreason);
 
 		
 		FormModel.setExaminedRestaurantId(id);

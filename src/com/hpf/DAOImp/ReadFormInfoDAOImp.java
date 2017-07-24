@@ -51,11 +51,13 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 	@Override
 	public int ReadNumofPages() {
 		int numOfPages=0;
-		String sql ="select count(restaurantName) from ec_online_sign";
+		String sql ="select count(id) from ec_online_sign";
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
 		try {
-			numOfPages=(int) Math.ceil(jdbcTemplate.queryForObject(sql, int.class)/10);
+			double num= jdbcTemplate.queryForObject(sql, int.class);
+			double div=10;			
+			numOfPages=  (int) Math.ceil(num/div);		
 			
 		} catch (Exception e) {
 	

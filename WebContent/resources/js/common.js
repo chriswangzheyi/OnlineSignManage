@@ -2,6 +2,24 @@
  * 公用脚本(基于jQuery.js)
  */
 
+// todo 开启加载中的遮罩层
+function openLoadingFun(){
+    var _LoadingHtml = $('<div id="loadingDiv">' +
+        '<div>' +
+        '数据加载中，请等待...' +
+        '</div>' +
+        '</div>');
+//呈现loading效果
+    $('body').append(_LoadingHtml);
+}
+
+// 关闭加载中的遮罩层
+function closeLoadingFun(){
+    var loadingMask = $('#loadingDiv');
+    loadingMask.remove();
+}
+
+
 //重写toLocaleString()
 	Date.prototype.toLocaleString = function() {
         var m = this.getMonth() + 1;//月

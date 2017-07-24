@@ -48,16 +48,20 @@
         params.id=id
         params.examineStatus=examineStatus; //0为未审核，1为已审核 2为未通过
         params.failreason= failreason
-
+        
+        var isSuccess ='err';
+        openLoadingFun();//打开loading
         $.ajax({
             type: "POST",
             data: params,
             url: "setExaminer",
+            async: false,//同步
             success: function(data) {
-                console.log(data);
+            	isSuccess = 'success';
+            	closeLoadingFun();//关闭loading
             }
         });
-
+        return isSuccess;
     }
     </script>
 
@@ -186,10 +190,10 @@
 
 //换页
 function changePage(p){
-	
+	openLoadingFun();//打开loading
 	var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致  
 	params.targetPage=p
-	 		
+	
 		$.ajax({
 	        type: "POST",
 	        data: params,
@@ -197,6 +201,7 @@ function changePage(p){
 	        url: "changeFormPage",
 	        /* dataType:"json",   */
 	        success: function(data) {
+	        	closeLoadingFun();//关闭loading
 	        	var pageNewHtml = '';
                 $.each(JSON.parse(data), function(idx, obj) {
                     var state = obj.examineStatus //状态：0:未审核;1:已审核;2:未通过
@@ -416,10 +421,12 @@ function changePage(p){
                     end: function () {//弹层退出时的回调函数
 
                         if(parent.textareaT!="" && parent.textareaT != undefined){
-                            setExminer(dataId,2,parent.textareaT);//0为未审核，1为已审核 2为未通过
-                            $(startTd).html('未通过<div class="Not_Pass_help"></div>').addClass('Not_Pass').attr('data-help',parent.textareaT);
-                            $(tar).html('重审');
-
+                            //setExminer(dataId,2,parent.textareaT);//0为未审核，1为已审核 2为未通过
+                            if(setExminer(dataId,2,parent.textareaT) === 'success'){
+                            	$(startTd).html('未通过<div class="Not_Pass_help"></div>').addClass('Not_Pass').attr('data-help',parent.textareaT);
+                                $(tar).html('重审');
+                            }
+                          
                         }
 
                     }
@@ -428,11 +435,12 @@ function changePage(p){
                 layer.close(exaLayer);
 
             }, function(){//通过按钮回调
-                setExminer(dataId,1,'');
-                $($(tar).parents('tr').find('td')[5]).html('已审核').removeAttr('class');
-                $(tar).remove();
-                layer.close(exaLayer);
-                return;
+	            if(setExminer(dataId,1,'') === 'success'){
+	            	$($(tar).parents('tr').find('td')[5]).html('已审核').removeAttr('class');
+	                $(tar).remove();
+	                layer.close(exaLayer);
+	                return;
+	            }
             });
         });
 

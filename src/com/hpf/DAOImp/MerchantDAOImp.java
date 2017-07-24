@@ -32,7 +32,7 @@ public class MerchantDAOImp implements MerchantDAO {
 				+ "restaurantCity,restaurantDistrict, restaurantStreet, restaurantAddress,"
 				+ "restaurantType,restaurantTel,restaurantOpenTime,"
 				+ "restaurantCloseTime,restaurantIndroduction,"
-				+ "viewURL,managerPhone,bossPhone,licenseURL,"
+				+ "viewURL,managerPhone,bossPhone,baseURL,licenseURL,"
 				+ "contractURL,bankAccountName,bankAccountBank,"
 				+ "bankAccountAccount,attorneyURL "
 				+ "from ec_online_sign where id='"+MerchantDAO.getId()+"'";	
