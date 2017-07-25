@@ -31,6 +31,9 @@ public class UserManagementController {
 		List<Map<String, Object>> userInfoList=UserManagementService.getUserInfo(1);
 		request.setAttribute("userInfoList",userInfoList);
 		
+		//总共页面数
+		request.setAttribute("numberOfPages",UserManagementModel.getTotalPageNum());
+		
 		return "userManagement";
 	}
 	
@@ -92,11 +95,7 @@ public class UserManagementController {
 			
 		List<Map<String, Object>> userInfoList=UserManagementService.getUserInfo(targetPage);
 	
-		return JSONArray.fromObject(userInfoList).toString();
-					 
+		return JSONArray.fromObject(userInfoList).toString();				 
 	}
-
-	
-	
 	
 }
