@@ -1,6 +1,8 @@
 package com.hpf.controller;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -66,12 +68,23 @@ public class DashboardController {
 	}
 	
 	
-	@RequestMapping(value="/changeFormPageWithTime")
+	@RequestMapping(value="/changeFormWithParameter")
 	@ResponseBody
-	public String changePageWithTime(int targetPage, Date startTime, Date endTime){	
-		List<Map<String, Object>> formInfoList=ReadFormInfoService.readFormWithTime(targetPage, startTime, endTime);
+	public String changeFormWithParameter(
+			int targetPage, String startTime, String endTime,String keyword,String province,
+			String city, String district, String status){
+		
+		
+		//截取地区
+		province=province.substring(province.lastIndexOf(",")+1);
+		city=city.substring(city.lastIndexOf(",")+1);
+		district=district.substring(district.lastIndexOf(",")+1);
+		
+		List<Map<String, Object>> formInfoList=ReadFormInfoService.readFormWithParameter(
+				targetPage, startTime, endTime,keyword,province,city,district,status);
 		return JSONArray.fromObject(formInfoList).toString();
-					 
+			
+		
 	}
 	
 	
@@ -89,10 +102,6 @@ public class DashboardController {
 	@ResponseBody
 	public String setExaminer(int id, int examineStatus, String failreason){
 		
-		System.out.println("id="+id);
-		System.out.println("examineStatus="+examineStatus);
-		System.out.println("failreason="+failreason);
-
 		
 		FormModel.setExaminedRestaurantId(id);
 		FormModel.setExaminedStatus(examineStatus);

@@ -87,28 +87,67 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 
 
 	@Override
-	public List<Map<String, Object>> ReadFormInfoWithTime(FormModel formModel) {
+	public List<Map<String, Object>> ReadFormInfoWithParameter(FormModel formModel) {
 		
 		String sql ="select id, restaurantName, restaurantProvince, "
 				+ "restaurantCity,restaurantDistrict,"
 				+ "restaurantType,restaurantTel,submitTime,"
-				+ "examineStatus,examiner, failReason from ec_online_sign "
-				+ "where submitTime>"+formModel.getFilterStartTime()+" and"
-				+ "where submitTime<"+formModel.getFilterEndTime()+" "
-				+ "limit "+ 
+				+ "examineStatus,examiner, failReason from ec_online_sign where";
+				
+				//限制时间
+				if(!formModel.getFilterStartTime().equals("")&&formModel.getFilterStartTime()!=null){
+					sql +=  " submitTime>'"+formModel.getFilterStartTime()+"' and ";					
+				}
+
+				if(!formModel.getFilterEndTime().equals("")&&formModel.getFilterEndTime()!=null){
+					sql +=  " submitTime<'"+formModel.getFilterEndTime()+"' and ";					
+				}
+				
+				//限制地区
+				if(!formModel.getFilterProvince().equals("-1")){
+					sql +=  " restaurantProvince='"+formModel.getFilterProvince()+"' and ";		
+				}
+				
+				if(!formModel.getFilterCity().equals("-1")){
+					sql +=  " restaurantCity='"+formModel.getFilterCity()+"' and ";		
+				}
+				
+				if(!formModel.getFilterDistrict().equals("-1")){
+					sql +=  " restaurantDistrict='"+formModel.getFilterDistrict()+"' and ";		
+				}
+				
+				
+				//审核状态
+				if(!formModel.getFilterExaminedStatus().equals("")&&formModel.getFilterExaminedStatus()!=null){
+					sql +=  " examineStatus='"+formModel.getFilterExaminedStatus()+"' and ";					
+				}
+				
+				
+				//搜索关键字
+				if(!formModel.getFilterKeyword().equals("")&&formModel.getFilterKeyword()!=null){
+					sql +=  " restaurantName like '%"+formModel.getFilterKeyword()+"%' or ";
+					sql +=  " restaurantTel like '%"+formModel.getFilterKeyword()+"%' or ";
+					sql +=  " examiner like '% "+formModel.getFilterKeyword()+"%' or ";
+					sql +=  " restaurantType like '%"+formModel.getFilterKeyword()+"%' ";
+				}
+				
+
+				
+				
+				if(sql.endsWith("and ")){sql=sql.substring(0, sql.length()-4);}
+				
+				sql += "limit "+ 
 				(formModel.getCurrentPage()-1)*10+
 				" ,10";		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
 		
-		try {
+		
 			FormInfo=jdbcTemplate.queryForList(sql);
 			System.out.println("form="+FormInfo);
 
 			
-		} catch (Exception e) {
-			
-		}
+
 		
 		return FormInfo;
 		

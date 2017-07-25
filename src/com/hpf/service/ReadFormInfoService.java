@@ -1,6 +1,5 @@
 package com.hpf.service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -34,12 +33,19 @@ public class ReadFormInfoService {
 		return readFormInfoDAO.ReadFormInfo(formModel);		
 	}
 	
-	//读取列表信息加时间
-	public List<Map<String, Object>> readFormWithTime(int currentPage, Date StartTime, Date EndTime){
+	//读取列表信息带参数
+	public List<Map<String, Object>> readFormWithParameter(
+			int currentPage, String StartTime, String EndTime, String keyword, 
+			String province, String city, String district, String status){
 		formModel.setCurrentPage(currentPage);		
 		formModel.setFilterStartTime(StartTime);
-		formModel.setFilterEndTime(EndTime);		
-		return readFormInfoDAO.ReadFormInfoWithTime(formModel);		
+		formModel.setFilterEndTime(EndTime);
+		formModel.setFilterKeyword(keyword);
+		formModel.setFilterProvince(province);
+		formModel.setFilterCity(city);
+		formModel.setFilterDistrict(district);
+		formModel.setFilterExaminedStatus(status);
+		return readFormInfoDAO.ReadFormInfoWithParameter(formModel);		
 	} 
 	
 	

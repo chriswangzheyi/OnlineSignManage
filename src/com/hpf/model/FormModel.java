@@ -26,8 +26,13 @@ public class FormModel {
 	private int examinedRestaurantId;
 	private String failReason;
 	private int examinedStatus;
-	private Date filterStartTime;
-	private Date filterEndTime;
+	private String filterStartTime;
+	private String filterEndTime;
+	private String filterKeyword;
+	private String filterProvince;
+	private String filterCity;
+	private String filterDistrict;
+	private String filterExaminedStatus;
 	
 
 	//getter and setter	
@@ -127,20 +132,48 @@ public class FormModel {
 	public void setExaminedStatus(int examinedStatus) {
 		this.examinedStatus = examinedStatus;
 	}
-	public Date getFilterStartTime() {
+	
+	public String getFilterStartTime() {
 		return filterStartTime;
 	}
-	public void setFilterStartTime(Date filterStartTime) {
+	public void setFilterStartTime(String filterStartTime) {
 		this.filterStartTime = filterStartTime;
 	}
-	public Date getFilterEndTime() {
+	public String getFilterEndTime() {
 		return filterEndTime;
 	}
-	public void setFilterEndTime(Date filterEndTime) {
+	public void setFilterEndTime(String filterEndTime) {
 		this.filterEndTime = filterEndTime;
 	}
-	
-	
+	public String getFilterKeyword() {
+		return filterKeyword;
+	}
+	public void setFilterKeyword(String filterKeyword) {
+		this.filterKeyword = filterKeyword;
+	}
+	public String getFilterProvince() {
+		return filterProvince;
+	}
+	public void setFilterProvince(String filterProvince) {
+		this.filterProvince = filterProvince;
+	}
+	public String getFilterCity() {
+		return filterCity;
+	}
+	public void setFilterCity(String filterCity) {
+		this.filterCity = filterCity;
+	}
+	public String getFilterDistrict() {
+		return filterDistrict;
+	}
+	public void setFilterDistrict(String filterDistrict) {
+		this.filterDistrict = filterDistrict;
+	}
+	public String getFilterExaminedStatus() {
+		return filterExaminedStatus;
+	}
+	public void setFilterExaminedStatus(String filterExaminedStatus) {
+		this.filterExaminedStatus = filterExaminedStatus;
+	}
 
-	
 }

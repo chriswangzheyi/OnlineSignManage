@@ -114,9 +114,9 @@
         <div class="search_state">
             <span class="searchLable">状态：</span>
             <select>
-                <option>未审核</option>
-                <option>已审核</option>
-                <option>未通过</option>
+                <option value="0">未审核</option>
+                <option value="1">已审核</option>
+                <option value="2">未通过</option>
             </select>
         </div>
         <div class="search_input">
@@ -180,7 +180,7 @@
                 
             </tbody>
         </table>
-        
+
         <div class="pagediv"></div>
 </div>
 <script>
@@ -250,18 +250,23 @@ function changePage(p){
 
 
 
-//换页带时间
-function changePageWithTime(p,startTime, endTime){
+//搜索带参数
+function changePageWithParameter(p,startTime, endTime,keyword,province,city,district,status){
 	var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致  
 	params.targetPage=p
 	params.startTime=startTime
 	params.endTime=endTime
+	params.keyword=keyword
+	params.province=province
+	params.city=city
+	params.district=district
+	params.status=status
 	
 	$.ajax({
         type: "POST",
         data: params,
         contentType:"application/x-www-form-urlencoded;charset=utf-8", 
-        url: "changeFormPageWithTime",
+        url: "changeFormWithParameter",
         /* dataType:"json",   */
         success: function(data) {
         
@@ -269,8 +274,33 @@ function changePageWithTime(p,startTime, endTime){
 	})	
 }
 
+	//获取搜索值的方法
+	function searchLoadListFun(){
+		var startTime =$('#startTime').val();//开始时间
+		var endTime =$('#endTime').val();//结束时间
+		var province =$('#ip_SS').val();//省市
+		var city =$('#ip_DQ').val();//地区
+		var district =$('#ip_QX').val();//区县
+		var status =$('.search_state select').val();//状态
+		var keyword =$('.searchInput').val();//搜索内容
+	
+		changePageWithParameter(1/*当前页数，默认为1*/,startTime, endTime,keyword,province,city,district,status);
+	}
+
+
+
 
     $(function () {
+    	//input,select改变时 根据搜索加载列表
+    	$('.searchBox').on('change','input,select',function(){
+    		searchLoadListFun();
+    		
+    	});
+    	//关键字搜索内容改变时 根据搜索加载列表
+    	$('.icon_seach').click(function(){
+    		searchLoadListFun();
+    	});
+    	
     	
     	$(".pagediv").createPage({
             pageNum : ${numberOfPages},//总页数
@@ -299,6 +329,8 @@ function changePageWithTime(p,startTime, endTime){
             choose: function(datas){
                 end.min = datas; //开始日选好后，重置结束日的最小日期
                 end.start = datas; //将结束日的初始值设定为开始日
+                
+                searchLoadListFun();//搜索值改变了就更改列表内容
             }
         };
         var end = {
@@ -311,6 +343,7 @@ function changePageWithTime(p,startTime, endTime){
             max: getNowFormatDate(),//最大日期：此时此刻
             choose: function(datas){
                 start.max = datas; //结束日选好后，重置开始日的最大日期
+                searchLoadListFun();//搜索值改变了就更改列表内容
             }
         };
         laydate(start);
