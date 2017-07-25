@@ -274,6 +274,11 @@
         </div>
         <div style="width: 100%;text-align: center;">
             <a class="submit">提交</a>
+            
+         	<!--   记录被删除的view Pic -->
+            <input type="hidden" name="deletedViewPicURL" value="在这里放值"/>
+            
+            
                <input type="submit" value="测试提交"  />
         </div>
     </form>
@@ -738,7 +743,7 @@ $(function () {
         if(!inputTestFun()){
             return false;
         }
-        //$('#setDetails').submit();//提交表单
+        $('#setDetails').submit();//提交表单
     });
 
 

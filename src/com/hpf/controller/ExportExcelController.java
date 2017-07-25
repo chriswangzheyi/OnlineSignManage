@@ -12,6 +12,7 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.jasper.tagplugins.jstl.core.If;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -60,8 +61,8 @@ public class ExportExcelController {
 		data.put(String.valueOf(i+2), new Object[] {
 				FormModel.getFormList().get(i).get("restaurantName"),
 				FormModel.getFormList().get(i).get("restaurantProvince")+"-"+
-						FormModel.getFormList().get(i).get("restaurantCity")+"-"+
-						FormModel.getFormList().get(i).get("restaurantDistrict"),
+				FormModel.getFormList().get(i).get("restaurantCity")+"-"+
+				FormModel.getFormList().get(i).get("restaurantDistrict"),
 				FormModel.getFormList().get(i).get("restaurantType"),
 				FormModel.getFormList().get(i).get("restaurantTel"),
 				FormModel.getFormList().get(i).get("submitTime"),

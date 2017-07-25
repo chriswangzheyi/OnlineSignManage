@@ -112,21 +112,13 @@
         <div class="det_item">
             <span class="det_label">餐厅实拍：</span>  
             <div class="det_text">
-                <div class="det_imgBox">
-                    <img src="resources/img/images/IMG_3563.JPG"/>
-                </div>
-                <div class="det_imgBox">
-                    <img src="resources/img/images/IMG_3564.JPG"/>
-                </div>
-                <div class="det_imgBox">
-                    <img src="resources/img/images/news01.JPG"/>
-                </div>
-                <div class="det_imgBox">
-                    <img src="resources/img/images/IMG_3854.PNG"/>
-                </div>
-                <div class="det_imgBox">
-                    <img src="resources/img/icon_map_24px.png"/>
-                </div>
+                                
+                <c:forTokens items="${detailform.viewURL}" delims="," var="viewURL">
+				 	<div class="det_imgBox">
+	                    <img src="${detailform.baseURL}/${viewURL}"/>
+	                </div>	 				
+				</c:forTokens>
+                
             </div>
         </div>
 
@@ -152,7 +144,7 @@
             <span class="det_label">餐厅工商营业执照：</span>
             <div class="det_text">
                 <div class="det_imgBox">
-                    <img src="resources/img/images/IMG_3563.JPG"/>
+                    <img src="${detailform.baseURL}/${detailform.licenseURL}"/>
                 </div>
             </div>
         </div>
@@ -161,7 +153,7 @@
             <span class="det_label">餐厅卫生许可证：</span>
             <div class="det_text">
                 <div class="det_imgBox">
-                    <img src="resources/img/images/IMG_3563.JPG"/>
+                    <img src="${detailform.baseURL}/${detailform.contractURL}"/>
                 </div>
             </div>
         </div>
@@ -193,7 +185,7 @@
             <span class="det_label" style="width: 105px">授权委托书：</span>
             <div class="det_text" style="width: 695px">
                 <div class="det_imgBox">
-                    <img src="resources/img/images/IMG_3563.JPG"/>
+                    <img src="${detailform.baseURL}/${detailform.attorneyURL}"/>
                 </div>
             </div>
         </div>

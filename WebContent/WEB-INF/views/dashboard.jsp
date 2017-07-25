@@ -182,8 +182,6 @@
         </table>
         
         <div class="pagediv"></div>
-
-
 </div>
 <script>
 
@@ -250,6 +248,26 @@ function changePage(p){
 		}); 
 }
 
+
+
+//换页带时间
+function changePageWithTime(p,startTime, endTime){
+	var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致  
+	params.targetPage=p
+	params.startTime=startTime
+	params.endTime=endTime
+	
+	$.ajax({
+        type: "POST",
+        data: params,
+        contentType:"application/x-www-form-urlencoded;charset=utf-8", 
+        url: "changeFormPageWithTime",
+        /* dataType:"json",   */
+        success: function(data) {
+        
+        }
+	})	
+}
 
 
     $(function () {

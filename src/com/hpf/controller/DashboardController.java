@@ -1,6 +1,7 @@
 package com.hpf.controller;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -58,13 +59,21 @@ public class DashboardController {
 	@RequestMapping(value="/changeFormPage")
 	@ResponseBody
 	
-	public String changePage(int targetPage){
-			
+	public String changePage(int targetPage){	
 		List<Map<String, Object>> formInfoList=ReadFormInfoService.readForm(targetPage);
-	
 		return JSONArray.fromObject(formInfoList).toString();
 					 
 	}
+	
+	
+	@RequestMapping(value="/changeFormPageWithTime")
+	@ResponseBody
+	public String changePageWithTime(int targetPage, Date startTime, Date endTime){	
+		List<Map<String, Object>> formInfoList=ReadFormInfoService.readFormWithTime(targetPage, startTime, endTime);
+		return JSONArray.fromObject(formInfoList).toString();
+					 
+	}
+	
 	
 	@RequestMapping(value="/readNewPageNum")
 	@ResponseBody

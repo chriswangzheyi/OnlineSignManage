@@ -17,4 +17,6 @@ public interface ReadFormInfoDAO {
 	
 	public String setExaminer(FormModel formModel,LoginModel loginModel);
 	
+	public List<Map<String, Object>> ReadFormInfoWithTime(FormModel formModel);
+	
 }

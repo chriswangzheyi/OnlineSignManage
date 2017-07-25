@@ -1,5 +1,6 @@
 package com.hpf.model;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,8 @@ public class FormModel {
 	private int examinedRestaurantId;
 	private String failReason;
 	private int examinedStatus;
+	private Date filterStartTime;
+	private Date filterEndTime;
 	
 
 	//getter and setter	
@@ -123,6 +126,18 @@ public class FormModel {
 	}
 	public void setExaminedStatus(int examinedStatus) {
 		this.examinedStatus = examinedStatus;
+	}
+	public Date getFilterStartTime() {
+		return filterStartTime;
+	}
+	public void setFilterStartTime(Date filterStartTime) {
+		this.filterStartTime = filterStartTime;
+	}
+	public Date getFilterEndTime() {
+		return filterEndTime;
+	}
+	public void setFilterEndTime(Date filterEndTime) {
+		this.filterEndTime = filterEndTime;
 	}
 	
 	

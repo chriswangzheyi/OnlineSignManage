@@ -3,6 +3,7 @@ package com.hpf.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -55,7 +56,12 @@ DetailsModifyService DetailsModifyService;
 	
 		MerchantModel.setId(Integer.parseInt(id));
 		List <Map<String, Object>> merchantList= MerchantDAO.detailsForm(MerchantModel);
-				
+		
+		//设置原始viewurl
+		DetailsModifyModel.setViewsPath(merchantList.get(0).get("viewURL").toString());
+
+		
+	
 		MerchantModel.setMerchantInfo(merchantList);		
 		request.setAttribute("detailform",merchantList);
 		request.setAttribute("authLevel",LoginModel.getAuthLevel());
@@ -103,8 +109,9 @@ DetailsModifyService DetailsModifyService;
     		@RequestParam("boss_phone") String bossPhone,
     		@RequestParam("bankaccount_name") String bankaccountName,
     		@RequestParam("bankaccount_bank") String bankaccountBank,
-    		@RequestParam("bankaccount_account") String bankaccountAccount  
-    		 		
+    		@RequestParam("bankaccount_account") String bankaccountAccount,
+    		String deletedViewPicURL //删除的餐厅view图片
+    		
     		) {
     	
 	
@@ -113,38 +120,25 @@ DetailsModifyService DetailsModifyService;
     	restaurantCity=restaurantCity.substring(restaurantCity.lastIndexOf(",")+1);
     	restaurantDistrict=restaurantDistrict.substring(restaurantDistrict.lastIndexOf(",")+1);
     	restaurantStreet=restaurantStreet.substring(restaurantStreet.lastIndexOf(",")+1);
-    	
-    	
-    	//设置参数
-    	DetailsModifyModel.setRestaurantName(restaurantName);
-    	DetailsModifyModel.setRestaurantProvince(restaurantProvince);
-    	DetailsModifyModel.setRestaurantCity(restaurantCity);
-    	DetailsModifyModel.setRestaurantDistrict(restaurantDistrict);
-    	DetailsModifyModel.setRestaurantStreet(restaurantStreet);
-    	DetailsModifyModel.setRestaurantAddress(restaurantAddress);
-    	DetailsModifyModel.setRestaurantType(restaurantType);
-    	DetailsModifyModel.setRestaurantTel(restaurantTel);
-    	DetailsModifyModel.setRestaurantOpentime(restaurantOpentime);	
-    	DetailsModifyModel.setRestaurantClosetime(restaurantClosetime);
-    	DetailsModifyModel.setRestaurantIndroduction(restaurantIndroduction);
-    	DetailsModifyModel.setManagerPhone(managerPhone);
-    	DetailsModifyModel.setBossPhone(bossPhone);
-    	DetailsModifyModel.setBankaccountName(bankaccountName);
-    	DetailsModifyModel.setBankaccountAccount(bankaccountAccount);
-    	DetailsModifyModel.setBankaccountAccount(bankaccountAccount);
+    	  	
     	
     	/*上传文件 */   	
     	//多个文件	
         if(viewfiles!=null && viewfiles.length>0){  
         	String viewfilenames = "";
             for(int i = 0;i<viewfiles.length;i++){  
-                MultipartFile file = viewfiles[i];  
+                MultipartFile file = viewfiles[i];               
 
                 try {
                     //获取存取路径
                     String path = request.getSession().getServletContext().getRealPath("/") + "upload/";
-                    String filename=file.getOriginalFilename();         
+                    String filename=file.getOriginalFilename();
+                    
+
+                    
                     String prefix=filename.substring(filename.lastIndexOf(".")+1);
+                    if(prefix==null || prefix.equals("")){break;}
+                    
                     filename=UUIDGenerator.UUIDGenerator()+"."+prefix;
                     
                     File FinalFile = new File(path, filename);
@@ -153,8 +147,8 @@ DetailsModifyService DetailsModifyService;
                     }
                     // 转存文件  
                     file.transferTo(FinalFile); 
-
-                    viewfilenames+=filename+",";
+                    DetailsModifyModel.setViewsPath(DetailsModifyModel.getViewsPath().concat(filename));
+                    
                     
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -213,9 +207,30 @@ DetailsModifyService DetailsModifyService;
             	 e.printStackTrace();
             	}  
                    	  
+        	//设置参数
+        	DetailsModifyModel.setRestaurantName(restaurantName);
+        	DetailsModifyModel.setRestaurantProvince(restaurantProvince);
+        	DetailsModifyModel.setRestaurantCity(restaurantCity);
+        	DetailsModifyModel.setRestaurantDistrict(restaurantDistrict);
+        	DetailsModifyModel.setRestaurantStreet(restaurantStreet);
+        	DetailsModifyModel.setRestaurantAddress(restaurantAddress);
+        	DetailsModifyModel.setRestaurantType(restaurantType);
+        	DetailsModifyModel.setRestaurantTel(restaurantTel);
+        	DetailsModifyModel.setRestaurantOpentime(restaurantOpentime);	
+        	DetailsModifyModel.setRestaurantClosetime(restaurantClosetime);
+        	DetailsModifyModel.setRestaurantIndroduction(restaurantIndroduction);
+        	DetailsModifyModel.setManagerPhone(managerPhone);
+        	DetailsModifyModel.setBossPhone(bossPhone);
+        	DetailsModifyModel.setBankaccountName(bankaccountName);
+        	DetailsModifyModel.setBankaccountAccount(bankaccountAccount);
+        	DetailsModifyModel.setBankaccountAccount(bankaccountAccount);
+            
+            
     	
     	//修改内容详情并添加到数据库	
-		return DetailsModifyService.updateDetails();  //返回success 或者fail	
+		 DetailsModifyService.updateDetails();  //返回success 或者fail
+		 
+		 return "detailsModify";
     } 
 	
 	
