@@ -58,7 +58,7 @@ DetailsModifyService DetailsModifyService;
 		List <Map<String, Object>> merchantList= MerchantDAO.detailsForm(MerchantModel);
 		
 		//设置原始viewurl
-		DetailsModifyModel.setViewsPath(merchantList.get(0).get("viewURL").toString());
+		MerchantModel.setViewURL(merchantList.get(0).get("viewURL").toString());
 
 		
 	
@@ -125,19 +125,42 @@ DetailsModifyService DetailsModifyService;
     	/*上传文件 */   	
     	//多个文件	
         if(viewfiles!=null && viewfiles.length>0){  
-        	String viewfilenames = "";
+      
+       		String filename ="";
+       		String   modifiedURL =  MerchantModel.getViewURL(); 
+        	
+        	//取得被删除图片的url
+        	if(deletedViewPicURL!=null){
+        		//测试
+        		deletedViewPicURL="66eaca41e3fe45fca0af024ca51cfdab.png,66eaca41e3fe45fca0af024ca51cfdab.png,";
+        		//结束测试
+        		String[]url = deletedViewPicURL.split(",");        		
+        		
+        		for(int i=0;i<url.length;i++){
+        		
+        		
+        		modifiedURL = modifiedURL.replaceAll( url[i]+",","");  
+        		}
+        	}
+            
+        	
+        	
             for(int i = 0;i<viewfiles.length;i++){  
                 MultipartFile file = viewfiles[i];               
 
                 try {
                     //获取存取路径
                     String path = request.getSession().getServletContext().getRealPath("/") + "upload/";
-                    String filename=file.getOriginalFilename();
+                    filename=file.getOriginalFilename();
                     
 
                     
                     String prefix=filename.substring(filename.lastIndexOf(".")+1);
                     if(prefix==null || prefix.equals("")){break;}
+                    
+
+                    
+                    
                     
                     filename=UUIDGenerator.UUIDGenerator()+"."+prefix;
                     
@@ -147,66 +170,79 @@ DetailsModifyService DetailsModifyService;
                     }
                     // 转存文件  
                     file.transferTo(FinalFile); 
-                    DetailsModifyModel.setViewsPath(DetailsModifyModel.getViewsPath().concat(filename));
-                    
+                    modifiedURL=modifiedURL+filename+",";          
                     
                 } catch (IOException e) {
                     e.printStackTrace();
                 }  
+                DetailsModifyModel.setViewsPath(modifiedURL);
             }
-            DetailsModifyModel.setViewsPath(viewfilenames);
         	}
             
            
             //单个文件     
             String path = request.getSession().getServletContext().getRealPath("/") + "upload/";  
+            //String path ="/data/hpf/images/onlineSign/";
             
             DetailsModifyModel.setBaseurl(path);
             
-            String licenseName = licensefile.getOriginalFilename();
+            //餐厅执照
+            String licenseName = licensefile.getOriginalFilename(); 
             String prefix=licenseName.substring(licenseName.lastIndexOf(".")+1);
-            licenseName=UUIDGenerator.UUIDGenerator()+"."+prefix;
+            if(prefix!=null && !prefix.equals("")){
+	            licenseName=UUIDGenerator.UUIDGenerator()+"."+prefix;
+	            File licenseFinalFile = new File(path, licenseName);
+	            if(!licenseFinalFile.exists()){  
+	                licenseFinalFile.mkdirs();  
+	            }
+	            
+	            try {
+	            	licensefile.transferTo(licenseFinalFile);
+					DetailsModifyModel.setLicensepath(licenseName);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}   
+            }
             
+            //餐厅合同
             String contractName= contractfile.getOriginalFilename();
             prefix=contractName.substring(contractName.lastIndexOf(".")+1);
-            contractName=UUIDGenerator.UUIDGenerator()+"."+prefix;
-            
+            if(prefix!=null && !prefix.equals("")){
+	            contractName=UUIDGenerator.UUIDGenerator()+"."+prefix;
+	            File contractFinalFile = new File(path, contractName);
+	            
+	            if(!contractFinalFile.exists()){  
+	            	contractFinalFile.mkdirs();  
+	            }
+	            
+	            try {
+	            	contractfile.transferTo(contractFinalFile);
+	           	 DetailsModifyModel.setContractpath(contractName);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+            }
+            //委托书
             String attorneyName= attorneyfile.getOriginalFilename();
             prefix=attorneyName.substring(attorneyName.lastIndexOf(".")+1);
+      
+            if(prefix!=null && !prefix.equals("")){            
             attorneyName=UUIDGenerator.UUIDGenerator()+"."+prefix;
-            
-            
-            
-            File licenseFinalFile = new File(path, licenseName);
-            File contractFinalFile = new File(path, contractName);
             File attorneyFinalFile = new File(path, attorneyName);
-            
-            if(!licenseFinalFile.exists()){  
-                licenseFinalFile.mkdirs();  
-            }
-            
-            if(!contractFinalFile.exists()){  
-            	contractFinalFile.mkdirs();  
-            }
             
             if(!attorneyFinalFile.exists()){  
             	attorneyFinalFile.mkdirs();  
             }
             
-            try { 	
-            	 licensefile.transferTo(licenseFinalFile); 
-            	 contractfile.transferTo(contractFinalFile);
+            try { 	          	 
             	 attorneyfile.transferTo(attorneyFinalFile);
-            	 
-            	 DetailsModifyModel.setLicensepath(licenseName);
-            	 DetailsModifyModel.setContractpath(contractName);
             	 DetailsModifyModel.setAttorneypath(attorneyName);
-            	 
-            	 
+	 
             	} catch (Exception e) {  
             	 e.printStackTrace();
             	}  
-                   	  
+            }
+            
         	//设置参数
         	DetailsModifyModel.setRestaurantName(restaurantName);
         	DetailsModifyModel.setRestaurantProvince(restaurantProvince);
@@ -228,7 +264,7 @@ DetailsModifyService DetailsModifyService;
             
     	
     	//修改内容详情并添加到数据库	
-		 DetailsModifyService.updateDetails();  //返回success 或者fail
+		DetailsModifyService.updateDetails();  //返回success 或者fail
 		 
 		 return "detailsModify";
     } 

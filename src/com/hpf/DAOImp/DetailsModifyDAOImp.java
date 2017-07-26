@@ -29,11 +29,28 @@ public class DetailsModifyDAOImp implements DetailsModifyDAO {
 				+ "restaurantDistrict=?,restaurantStreet=?,restaurantType=?,restaurantAddress=?,"
 				+ "restaurantTel=?,restaurantOpenTime=?,restaurantCloseTime=?,restaurantIndroduction=?,"
 				+ "managerPhone=?,bossPhone=?,bankAccountName=?,bankAccountBank=?,"
-				+ "bankAccountAccount=?"+
-				"where id=?";		
+				+ "bankAccountAccount=? ";
+				
+				if(DetailsModifyModel.getViewsPath()!=null){
+				sql+=", viewURL='"+DetailsModifyModel.getViewsPath()+"'";	
+				}
+				
+				if(DetailsModifyModel.getLicensepath()!=null){
+				sql+=", licenseURL='"+DetailsModifyModel.getLicensepath()+"'";	
+				}
+				
+				if(DetailsModifyModel.getContractpath()!=null){
+				sql+=", contractURL='"+DetailsModifyModel.getContractpath()+"'";	
+				}
+				
+				if(DetailsModifyModel.getAttorneypath()!=null){
+				sql+=", attorneyURL='"+DetailsModifyModel.getAttorneypath()+"'";	
+				}
 	
-		try {
-			
+				sql+="where id=?";		
+	
+/*		try {*/
+			System.out.println("进来了");
 			jdbcTemplate.update(sql,DetailsModifyModel.getRestaurantName(),DetailsModifyModel.getRestaurantProvince(),
 					DetailsModifyModel.getRestaurantCity(),DetailsModifyModel.getRestaurantDistrict(),
 					DetailsModifyModel.getRestaurantStreet(),
@@ -47,10 +64,10 @@ public class DetailsModifyDAOImp implements DetailsModifyDAO {
 					DetailsModifyModel.getId());
 			return "success";
 			
-		} catch (Exception e) {
-			// TODO: handle exception
+/*		} catch (Exception e) {
+			System.out.println("出错了");
 			return "fail";
-		}
+		}*/
 	}
 
 }

@@ -51,6 +51,7 @@ public class UserManagementDAOImp implements UserManagementDAO {
 	@Override
 	public String deleteUser(UserManagementModel userManagementModel) {
 		String sql="delete from ec_online_sign_user where id=? ";
+		sql +="limit "+(userManagementModel.getCurrentPage()-1)*10+" ,10";
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
 		try {

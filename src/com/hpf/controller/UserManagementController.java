@@ -61,9 +61,10 @@ public class UserManagementController {
 	//删除账户
 	@RequestMapping(value="/deleteAccount")
 	@ResponseBody
-	public String  deleteAccount(String id){
+	public String  deleteAccount(String id, int currentPage){
 				
 		UserManagementModel.setDeleteid(id);
+		UserManagementModel.setCurrentPage(currentPage);
 				
 		return UserManagementService.deleteUser(UserManagementModel);//返回success或fail
 	}

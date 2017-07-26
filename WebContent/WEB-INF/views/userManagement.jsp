@@ -164,10 +164,11 @@
 		
 		
 		//删除用户
-		function deleteuser(id){
+		function deleteuser(id,p){
 			
 			var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致   
 		    params.id =id;
+			params.currentPage=p
 			 		
 				$.ajax({
 			        type: "POST",
