@@ -114,6 +114,7 @@
         <div class="search_state">
             <span class="searchLable">状态：</span>
             <select>
+                <option value="-1" style="color:#999;">请选择</option>
                 <option value="0">未审核</option>
                 <option value="1">已审核</option>
                 <option value="2">未通过</option>
@@ -181,6 +182,7 @@
             </tbody>
         </table>
         <div class="pagediv"></div>
+                        
 </div>
 <script>
 
@@ -269,7 +271,6 @@ function changePageWithParameter(p,startTime, endTime,keyword,province,city,dist
         url: "changeFormWithParameter",
         /* dataType:"json",   */
         success: function(data) {
-        	console.log(data);
         	closeLoadingFun();//关闭loading
         	var pageNewHtml = '';
             $.each(JSON.parse(data), function(idx, obj) {
@@ -330,17 +331,19 @@ function readPageNumWithParameter(startTime, endTime,keyword,province,city,distr
 	params.city=city
 	params.district=district
 	params.status=status
-	
+	var pages= 0;
 	$.ajax({
         type: "POST",
         data: params,
         contentType:"application/x-www-form-urlencoded;charset=utf-8", 
         url: "readNewPageNumWithParameter",
+        async: false,//同步
         /* dataType:"json",   */
         success: function(data) {
-        
+        	pages=JSON.parse(data)[0];
         }
-	})	
+	});	
+	return pages;
 }
 
 
@@ -372,21 +375,67 @@ function updateRegion(){
 		changePageWithParameter(p/*当前页数，默认为1*/,startTime, endTime,keyword,province,city,district,status);
 	}
 
+	function eachPageDataFun(){
+		var startTime =$('#startTime').val();//开始时间
+		var endTime =$('#endTime').val();//结束时间
+		var province =$('#ip_SS').val();//省市
+		var city =$('#ip_DQ').val();//地区
+		var district =$('#ip_QX').val();//区县
+		var status =$('.search_state select').val();//状态
+		var keyword =$('.searchInput').val();//搜索内容
+		
 
+    	if(startTime=='' //开始时间
+   			&& endTime == '' //结束时间
+   			&& province =='-1'//结束时间
+   			&& city =='-1'//省市
+   			&& district =='-1'//地区
+   			&& status =='-1'//区县
+   			&& keyword ==''//状态
+   			){
+    		
+    	}else{
+    		
+    	}
+		
+	}
 
+	//根据搜索值加载数据和分页初始化
+	function eachClickDataFun(){
+		var startTime =$('#startTime').val();//开始时间
+		var endTime =$('#endTime').val();//结束时间
+		var province =$('#ip_SS').val();//省市
+		var city =$('#ip_DQ').val();//地区
+		var district =$('#ip_QX').val();//区县
+		var status =$('.search_state select').val();//状态
+		var keyword =$('.searchInput').val();//搜索内容
+		
+		searchLoadListFun(1);
+		var pages = readPageNumWithParameter(startTime, endTime,keyword,province,city,district,status);
+
+		$(".pagediv").createPage({
+            pageNum : pages,//总页数
+            current : 1,//当前页数
+            shownum: 9,//最多显示的页数项
+            activepage: "current",//activepage当前页选中样式
+            activepaf: "",//默认class是“nextpage”//activepaf下一页选中样式
+            backfun:function(p){
+            	changePageWithParameter(p.current/*当前页数，默认为1*/,startTime, endTime,keyword,province,city,district,status);
+            } 
+
+		});
+	}
 
     $(function () {
     	//input,select改变时 根据搜索加载列表
     	$('.searchBox').on('change','input,select',function(){
-    		searchLoadListFun(1);
-    		
+    		eachClickDataFun();//根据搜索值加载数据和分页初始化
     	});
     	//关键字搜索内容改变时 根据搜索加载列表
     	$('.icon_seach').click(function(){
-    		searchLoadListFun(1);
+    		eachClickDataFun();//根据搜索值加载数据和分页初始化
     	});
     	
-    	console.log(${numberOfPages});
     	$(".pagediv").createPage({
             pageNum : ${numberOfPages},//总页数
             current : 1,//当前页数
@@ -412,9 +461,10 @@ function updateRegion(){
            			&& keyword ==''//状态
            			){
             		
-            		changePage(p.current);
+            		changePage(p.current);//加载全部的分页数据
             		
             	}else{
+            		
             		changePageWithParameter(p.current/*当前页数，默认为1*/,startTime, endTime,keyword,province,city,district,status);
             	}
             	
@@ -468,7 +518,7 @@ function updateRegion(){
             data: "json",
             success: function(data){
 
-                $.each(data, function(idx, obj) {
+                $.each(JSON.parse(data), function(idx, obj) {
                     if(obj.regLevel == 1){
                         var optionEL = $('<option data-id="'
                                 +obj.id+'" '
@@ -498,7 +548,7 @@ function updateRegion(){
                     url: "resources/data/cityJson.json",
                     data: "json",
                     success: function(data){
-                        $.each(data, function(idx, obj) {
+                        $.each(JSON.parse(data), function(idx, obj) {
                             if(obj.pid == datPid){
                                 optionHTML +=
                                         '<option data-id="'
@@ -529,7 +579,7 @@ function updateRegion(){
                     url: "resources/data/cityJson.json",
                     data: "json",
                     success: function(data){
-                        $.each(data, function(idx, obj) {
+                        $.each(JSON.parse(data), function(idx, obj) {
                             if(obj.pid == datPid){
                                 optionHTML +=
                                         '<option data-id="'

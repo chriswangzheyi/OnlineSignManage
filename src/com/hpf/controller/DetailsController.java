@@ -21,6 +21,7 @@ import com.hpf.model.DetailsModifyModel;
 import com.hpf.model.LoginModel;
 import com.hpf.model.MerchantModel;
 import com.hpf.service.DetailsModifyService;
+import com.hpf.util.DeleteFile;
 import com.hpf.util.UUIDGenerator;
 
 @Controller
@@ -122,6 +123,9 @@ DetailsModifyService DetailsModifyService;
     	restaurantStreet=restaurantStreet.substring(restaurantStreet.lastIndexOf(",")+1);
     	  	
     	
+    	 //获取存取路径
+        String path = request.getSession().getServletContext().getRealPath("/") + "upload/";
+    	
     	/*上传文件 */   	
     	//多个文件	
         if(viewfiles!=null && viewfiles.length>0){  
@@ -131,14 +135,11 @@ DetailsModifyService DetailsModifyService;
         	
         	//取得被删除图片的url
         	if(deletedViewPicURL!=null){
-        		//测试
-        		deletedViewPicURL="66eaca41e3fe45fca0af024ca51cfdab.png,66eaca41e3fe45fca0af024ca51cfdab.png,";
-        		//结束测试
         		String[]url = deletedViewPicURL.split(",");        		
         		
         		for(int i=0;i<url.length;i++){
-        		
-        		
+        		//删除文件
+        		DeleteFile.deleteFile(path+url[i]); 		
         		modifiedURL = modifiedURL.replaceAll( url[i]+",","");  
         		}
         	}
@@ -149,8 +150,7 @@ DetailsModifyService DetailsModifyService;
                 MultipartFile file = viewfiles[i];               
 
                 try {
-                    //获取存取路径
-                    String path = request.getSession().getServletContext().getRealPath("/") + "upload/";
+                   
                     filename=file.getOriginalFilename();
                     
 
@@ -180,10 +180,7 @@ DetailsModifyService DetailsModifyService;
         	}
             
            
-            //单个文件     
-            String path = request.getSession().getServletContext().getRealPath("/") + "upload/";  
-            //String path ="/data/hpf/images/onlineSign/";
-            
+            //单个文件           
             DetailsModifyModel.setBaseurl(path);
             
             //餐厅执照

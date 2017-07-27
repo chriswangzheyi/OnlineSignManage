@@ -1,6 +1,7 @@
 package com.hpf.controller;
 
 
+import java.text.Normalizer.Form;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +37,7 @@ public class DashboardController {
 	
 	@Autowired
 	ReadFormInfoService ReadFormInfoService;
+
 
 	@RequestMapping(value="/dashboard")
 	public String dashboard(HttpServletRequest request){
@@ -79,6 +81,8 @@ public class DashboardController {
 		
 		List<Map<String, Object>> formInfoList=ReadFormInfoService.readFormWithParameter(
 				targetPage, startTime, endTime,keyword,province,city,district,status);
+		
+		FormModel.setFormList(formInfoList);
 		return JSONArray.fromObject(formInfoList).toString();			
 		
 	}
@@ -95,11 +99,11 @@ public class DashboardController {
 	//读取搜索条件下的页面数量
 	@RequestMapping(value="/readNewPageNumWithParameter")
 	@ResponseBody
-	public int readNewPageNumWithParameter(String startTime, String endTime,String keyword,String province,
+	public String readNewPageNumWithParameter(String startTime, String endTime,String keyword,String province,
 			String city, String district, String status){
-		
-		return ReadFormInfoService.readPageNumWithParameter(startTime, endTime, keyword, province, city, district, status);
 	
+		int numOfPage= ReadFormInfoService.readPageNumWithParameter(startTime, endTime, keyword, province, city, district, status);		
+		return JSONArray.fromObject(numOfPage).toString();
 	}
 	
 	

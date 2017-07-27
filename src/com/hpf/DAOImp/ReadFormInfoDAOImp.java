@@ -121,23 +121,23 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 				
 				
 				//审核状态
-				if(!formModel.getFilterExaminedStatus().equals("")&&formModel.getFilterExaminedStatus()!=null){
+				if(!formModel.getFilterExaminedStatus().equals("-1")){
 					sql +=  " examineStatus='"+formModel.getFilterExaminedStatus()+"' and ";					
 				}
 				
 				
 				//搜索关键字
 				if(!formModel.getFilterKeyword().equals("")&&formModel.getFilterKeyword()!=null){
-					sql +=  " restaurantName like '%"+formModel.getFilterKeyword()+"%' or ";
+					sql +=  " ( restaurantName like '%"+formModel.getFilterKeyword()+"%' or ";
 					sql +=  " restaurantTel like '%"+formModel.getFilterKeyword()+"%' or ";
 					sql +=  " examiner like '% "+formModel.getFilterKeyword()+"%' or ";
-					sql +=  " restaurantType like '%"+formModel.getFilterKeyword()+"%' ";
+					sql +=  " restaurantType like '%"+formModel.getFilterKeyword()+"%' ) ";
 				}
 				
-
-				
+			
 				
 				if(sql.endsWith("and ")){sql=sql.substring(0, sql.length()-4);}
+				if(sql.endsWith("where")){sql=sql.substring(0, sql.length()-5);}
 				
 				sql += "limit "+ 
 				(formModel.getCurrentPage()-1)*10+
@@ -147,6 +147,7 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 		
 		
 			FormInfo=jdbcTemplate.queryForList(sql);
+			System.out.println("form="+FormInfo);
 		
 		return FormInfo;
 		
@@ -156,8 +157,7 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 	@Override
 	public int ReadNumOfPageWithParameter(FormModel formModel) {
 		int numOfPages=0;
-				
-		String sql ="select count (id) where";
+		String sql ="select count(id) from ec_online_sign where";
 				
 				//限制时间
 				if(!formModel.getFilterStartTime().equals("")&&formModel.getFilterStartTime()!=null){
@@ -183,31 +183,33 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 				
 				
 				//审核状态
-				if(!formModel.getFilterExaminedStatus().equals("")&&formModel.getFilterExaminedStatus()!=null){
+				if(!formModel.getFilterExaminedStatus().equals("-1")){
 					sql +=  " examineStatus='"+formModel.getFilterExaminedStatus()+"' and ";					
 				}
 				
 				
 				//搜索关键字
 				if(!formModel.getFilterKeyword().equals("")&&formModel.getFilterKeyword()!=null){
-					sql +=  " restaurantName like '%"+formModel.getFilterKeyword()+"%' or ";
+					sql +=  " (restaurantName like '%"+formModel.getFilterKeyword()+"%' or ";
 					sql +=  " restaurantTel like '%"+formModel.getFilterKeyword()+"%' or ";
 					sql +=  " examiner like '% "+formModel.getFilterKeyword()+"%' or ";
-					sql +=  " restaurantType like '%"+formModel.getFilterKeyword()+"%' ";
+					sql +=  " restaurantType like '%"+formModel.getFilterKeyword()+"%' ) ";
 				}
 				
 				
 				if(sql.endsWith("and ")){sql=sql.substring(0, sql.length()-4);}
+				if(sql.endsWith("where")){sql=sql.substring(0, sql.length()-5);}
 							
 				JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 				
 				try {
 					double num= jdbcTemplate.queryForObject(sql, int.class);
 					double div=10;			
-					numOfPages=  (int) Math.ceil(num/div);		
+					numOfPages=  (int) Math.ceil(num/div);	
 					return numOfPages;
 					
 				} catch (Exception e) {
+					System.out.println("出错了");
 						return -1;
 				}
 		

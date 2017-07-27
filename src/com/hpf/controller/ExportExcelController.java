@@ -17,6 +17,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.hpf.model.ExportDataModel;
 import com.hpf.model.FormModel;
 import com.hpf.service.ExcelFormatService;
+import com.hpf.test.test;
 
 @Controller
 public class ExportExcelController {
@@ -37,6 +39,15 @@ public class ExportExcelController {
 	@Autowired
 	ExportDataModel ExportDataModel;
 
+		//转换审核状态的数字为汉字
+		public String convertStatus(Object status){
+			
+			if(status.equals(0)){return "未审核";}
+			if(status.equals(1)){return "已审核";}
+			if(status.equals(2)){return "审核未通过";}
+			
+			return null;
+		}
 	
 
 		//需要引入dom4j.ar,poi.jar,poi-ooxml.jar,poi-ooxml-schemas.jar,xmlbeans.jar
@@ -56,6 +67,7 @@ public class ExportExcelController {
 		data.put("1", new Object[] {"餐厅名称", "所在地区", "餐厅类别", "餐厅电话","提交时间", "状态", "审核人"});
 		
 
+
 				
 		
 		//循环取值
@@ -68,10 +80,13 @@ public class ExportExcelController {
 				FormModel.getFormList().get(i).get("restaurantType"),
 				FormModel.getFormList().get(i).get("restaurantTel"),
 				FormModel.getFormList().get(i).get("submitTime"),
-				FormModel.getFormList().get(i).get("examineStatus"),
+				//FormModel.getFormList().get(i).get("examineStatus"),
+				convertStatus(FormModel.getFormList().get(i).get("examineStatus"))
+				,
 				FormModel.getFormList().get(i).get("examiner")
 				}); 
 		}
+		
 		
 		
 		//Iterate over data and write to sheet
