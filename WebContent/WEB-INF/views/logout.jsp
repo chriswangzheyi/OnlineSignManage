@@ -7,6 +7,7 @@
 <title></title>
 </head>
 <body>
-登出
+you alreaddy logout
+
 </body>
 </html>

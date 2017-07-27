@@ -180,7 +180,6 @@
                 
             </tbody>
         </table>
-
         <div class="pagediv"></div>
 </div>
 <script>
@@ -262,6 +261,7 @@ function changePageWithParameter(p,startTime, endTime,keyword,province,city,dist
 	params.district=district
 	params.status=status
 	
+	openLoadingFun();//打开loading
 	$.ajax({
         type: "POST",
         data: params,
@@ -269,13 +269,98 @@ function changePageWithParameter(p,startTime, endTime,keyword,province,city,dist
         url: "changeFormWithParameter",
         /* dataType:"json",   */
         success: function(data) {
+        	console.log(data);
+        	closeLoadingFun();//关闭loading
+        	var pageNewHtml = '';
+            $.each(JSON.parse(data), function(idx, obj) {
+                var state = obj.examineStatus //状态：0:未审核;1:已审核;2:未通过
+                var state_text='<td class="Not_Audited">未审核</td>';
+                var state_btn = '';
+                if(state==0){//未审核的情况
+                    state_text='<td class="Not_Audited">未审核</td>';
+                    state_btn ='<a class="examine_btn">审核</a>';
+                }
+                if(state==1){//已审核的情况
+                    state_text='<td>已审核</td>';
+                    state_btn ='';
+                }
+                if(state==2){//未通过的情况
+                    var Not_Pass_text = obj.failReason;
+                    if(Not_Pass_text==null){Not_Pass_text='';}
+                    state_text='<td class="Not_Pass" data-help="'+Not_Pass_text+'">未通过<div class="Not_Pass_help"></div></td>';
+                    state_btn ='<a class="examine_btn">重审</a>';
+                }
+                var commonTime ='';
+                if(obj.submitTime == null){
+                	commonTime ='';
+                }else{
+                	var timeData = obj.submitTime.time;//提交时间的时间戳
+                    var unixTimestamp = new Date( timeData ) ;
+                    commonTime = unixTimestamp.toLocaleString();
+                }
+            	pageNewHtml += '<tr data-id="'+obj.id+'">'+
+                    '<td><p>'+obj.restaurantName+'</p></td>'+
+                    '<td><p>'+obj.restaurantProvince+'-'+obj.restaurantCity+'-'+obj.restaurantDistrict+'</p></td>'+
+                    '<td>'+obj.restaurantType+'</td>'+
+                    '<td>'+obj.restaurantTel+'</td>'+
+                    '<td>'+commonTime+'</td>'+
+                    state_text+
+                    '<td class="table_btns">'+
+
+                        '<a href="details?id='+obj.id+'" class="details_btn">详情</a>'+state_btn +
+
+                    '</td>'+
+                    '<td>'+obj.examiner+'</td>'+                  
+                '</tr>';
+            });
+            $('.indexTable tbody').html(pageNewHtml);
+            listEvenStyleFun();//表格偶数行背景变灰：
+        }
+	})	
+}
+
+
+//读取搜索页面数
+function readPageNumWithParameter(startTime, endTime,keyword,province,city,district,status){
+	var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致  
+	params.startTime=startTime
+	params.endTime=endTime
+	params.keyword=keyword
+	params.province=province
+	params.city=city
+	params.district=district
+	params.status=status
+	
+	$.ajax({
+        type: "POST",
+        data: params,
+        contentType:"application/x-www-form-urlencoded;charset=utf-8", 
+        url: "readNewPageNumWithParameter",
+        /* dataType:"json",   */
+        success: function(data) {
+        
+        }
+	})	
+}
+
+
+//读取最新地区
+function updateRegion(){
+	
+	$.ajax({
+        type: "POST",
+        contentType:"application/x-www-form-urlencoded;charset=utf-8", 
+        url: "updateRegion",
+        /* dataType:"json",   */
+        success: function(data) {
+        	alert(data);
         
         }
 	})	
 }
 
 	//获取搜索值的方法
-	function searchLoadListFun(){
+	function searchLoadListFun(p/*加载到的分页数*/){
 		var startTime =$('#startTime').val();//开始时间
 		var endTime =$('#endTime').val();//结束时间
 		var province =$('#ip_SS').val();//省市
@@ -284,7 +369,7 @@ function changePageWithParameter(p,startTime, endTime,keyword,province,city,dist
 		var status =$('.search_state select').val();//状态
 		var keyword =$('.searchInput').val();//搜索内容
 	
-		changePageWithParameter(1/*当前页数，默认为1*/,startTime, endTime,keyword,province,city,district,status);
+		changePageWithParameter(p/*当前页数，默认为1*/,startTime, endTime,keyword,province,city,district,status);
 	}
 
 
@@ -293,15 +378,15 @@ function changePageWithParameter(p,startTime, endTime,keyword,province,city,dist
     $(function () {
     	//input,select改变时 根据搜索加载列表
     	$('.searchBox').on('change','input,select',function(){
-    		searchLoadListFun();
+    		searchLoadListFun(1);
     		
     	});
     	//关键字搜索内容改变时 根据搜索加载列表
     	$('.icon_seach').click(function(){
-    		searchLoadListFun();
+    		searchLoadListFun(1);
     	});
     	
-    	
+    	console.log(${numberOfPages});
     	$(".pagediv").createPage({
             pageNum : ${numberOfPages},//总页数
             current : 1,//当前页数
@@ -309,7 +394,30 @@ function changePageWithParameter(p,startTime, endTime,keyword,province,city,dist
             activepage: "current",//activepage当前页选中样式
             activepaf: "",//默认class是“nextpage”//activepaf下一页选中样式
             backfun:function(p){
-            	changePage(p.current);
+            	var startTime =$('#startTime').val();//开始时间
+        		var endTime =$('#endTime').val();//结束时间
+        		var province =$('#ip_SS').val();//省市
+        		var city =$('#ip_DQ').val();//地区
+        		var district =$('#ip_QX').val();//区县
+        		var status =$('.search_state select').val();//状态
+        		var keyword =$('.searchInput').val();//搜索内容
+        		
+            	if(
+           			startTime=='' //开始时间
+           			&& endTime == '' //结束时间
+           			&& province =='-1'//结束时间
+           			&& city =='-1'//省市
+           			&& district =='-1'//地区
+           			&& status =='-1'//区县
+           			&& keyword ==''//状态
+           			){
+            		
+            		changePage(p.current);
+            		
+            	}else{
+            		changePageWithParameter(p.current/*当前页数，默认为1*/,startTime, endTime,keyword,province,city,district,status);
+            	}
+            	
             }
         });
 
@@ -330,7 +438,7 @@ function changePageWithParameter(p,startTime, endTime,keyword,province,city,dist
                 end.min = datas; //开始日选好后，重置结束日的最小日期
                 end.start = datas; //将结束日的初始值设定为开始日
                 
-                searchLoadListFun();//搜索值改变了就更改列表内容
+                searchLoadListFun(1);//搜索值改变了就更改列表内容
             }
         };
         var end = {
@@ -343,7 +451,7 @@ function changePageWithParameter(p,startTime, endTime,keyword,province,city,dist
             max: getNowFormatDate(),//最大日期：此时此刻
             choose: function(datas){
                 start.max = datas; //结束日选好后，重置开始日的最大日期
-                searchLoadListFun();//搜索值改变了就更改列表内容
+                searchLoadListFun(1);//搜索值改变了就更改列表内容
             }
         };
         laydate(start);

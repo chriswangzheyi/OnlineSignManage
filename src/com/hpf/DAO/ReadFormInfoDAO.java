@@ -19,4 +19,8 @@ public interface ReadFormInfoDAO {
 	
 	public List<Map<String, Object>> ReadFormInfoWithParameter(FormModel formModel);
 	
+	public int ReadNumOfPageWithParameter(FormModel formModel);
+	
+	public String updateRegion(String currentPath);
+	
 }

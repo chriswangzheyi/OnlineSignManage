@@ -1,15 +1,12 @@
 package com.hpf.controller;
 
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -82,8 +79,7 @@ public class DashboardController {
 		
 		List<Map<String, Object>> formInfoList=ReadFormInfoService.readFormWithParameter(
 				targetPage, startTime, endTime,keyword,province,city,district,status);
-		return JSONArray.fromObject(formInfoList).toString();
-			
+		return JSONArray.fromObject(formInfoList).toString();			
 		
 	}
 	
@@ -93,6 +89,16 @@ public class DashboardController {
 	public int readNewPageNum(){
 		
 		return ReadFormInfoService.numOfPages();
+	
+	}
+	
+	//读取搜索条件下的页面数量
+	@RequestMapping(value="/readNewPageNumWithParameter")
+	@ResponseBody
+	public int readNewPageNumWithParameter(String startTime, String endTime,String keyword,String province,
+			String city, String district, String status){
+		
+		return ReadFormInfoService.readPageNumWithParameter(startTime, endTime, keyword, province, city, district, status);
 	
 	}
 	
@@ -111,5 +117,15 @@ public class DashboardController {
 		//添加审核信息
 		return ReadFormInfoService.updateExaminer();	//返回success或者fail
 	}
+	
+	
+	//更新地区信息
+	@RequestMapping(value="/updateRegion")
+	@ResponseBody
+	public String updateRegion(HttpServletRequest request) {
+		String path = request.getSession().getServletContext().getRealPath("/"+"resources/data");
+        return ReadFormInfoService.updateRegion(path); //返回success或者fail
+    }
+	
 	
 }
