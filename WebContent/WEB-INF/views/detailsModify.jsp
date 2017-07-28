@@ -176,7 +176,7 @@
                         </div>      
                                      
                         <c:forTokens items="${detailform.viewURL}" delims="," var="viewURL">
-			 				<div class="z_addImg"><img src="${detailform.baseURL}/${viewURL}"></div>		 				
+			 				<div class="z_addImg"><img src="http://119.23.149.153/onlineSign/${viewURL}"></div>		 				
 						</c:forTokens>
                           
                     </div>
@@ -219,7 +219,7 @@
                         <input class="busLic" type="file" name="licensefile"/>
                         <span class="busLic_name"></span>
                         <div class="busLic_img">
-                            <img src="${detailform.baseURL}/${detailform.licenseURL}"/>
+                            <img src="http://119.23.149.153/onlineSign/${detailform.licenseURL}"/>
                         </div>
                 </div>
             </div>
@@ -231,7 +231,7 @@
                     <input class="DCMcontract" type="file" name="contractfile"/>
                     <span class="DCMcontract_name"></span>
                     <div class="DCMcontract_img">
-                    	<img src="${detailform.baseURL}/${detailform.contractURL}"/>
+                    	<img src="http://119.23.149.153/onlineSign/${detailform.contractURL}"/>
                     </div>
                 </div>
             </div>
@@ -266,7 +266,7 @@
                     <input class="proxy" type="file" name="attorneyfile"/>
                     <span class="proxy_name"></span>
                     <div class="proxy_img">
-                    	<img src="${detailform.baseURL}/${detailform.attorneyURL}"/>
+                    	<img src="http://119.23.149.153/onlineSign/${detailform.attorneyURL}"/>
                     </div>
                 </div>
             </div>

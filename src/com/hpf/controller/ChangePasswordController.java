@@ -31,7 +31,7 @@ public class ChangePasswordController {
 	}
 	
 	
-	
+	//提交修改密码
 	@RequestMapping(value="/changePasswordSubmit")
 	public String changePasswordsubmit(
 			@RequestParam("originalPwdTyped") String originalPwdTyped,
@@ -46,6 +46,7 @@ public class ChangePasswordController {
 		
 		String returnMsg =changePasswordService.changePassword(changePasswordModel);
 		request.setAttribute("statusMsg", returnMsg);
+		request.setAttribute("authLevel",LoginModel.getAuthLevel());
 		
 		return "changePassword";
 	}

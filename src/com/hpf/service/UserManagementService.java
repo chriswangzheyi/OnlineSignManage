@@ -79,4 +79,9 @@ public class UserManagementService {
 		
 		return userManagementDAO.isUserExisted(userManagementModel);
 	}
+	
+	//读取新页面数
+	public String getNewPageNum(){
+		return userManagementDAO.getNewPageNum(userManagementModel);
+	}
 }

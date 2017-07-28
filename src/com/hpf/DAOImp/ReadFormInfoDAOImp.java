@@ -200,6 +200,7 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 				if(sql.endsWith("and ")){sql=sql.substring(0, sql.length()-4);}
 				if(sql.endsWith("where")){sql=sql.substring(0, sql.length()-5);}
 							
+				System.out.println("sql="+sql);
 				JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 				
 				try {

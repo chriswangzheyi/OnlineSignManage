@@ -99,4 +99,13 @@ public class UserManagementController {
 		return JSONArray.fromObject(userInfoList).toString();				 
 	}
 	
+	
+	//新页数
+	@RequestMapping(value="/getNewUserManagePageNum")
+	@ResponseBody
+	public String getNewUserManagePageNum(){
+
+		return UserManagementService.getNewPageNum();
+	}
+	
 }

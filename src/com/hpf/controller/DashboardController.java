@@ -53,7 +53,7 @@ public class DashboardController {
 	@RequestMapping(value="/logout")
 	public String logout (){
 		
-		return "logout";
+		return "login";
 	}
 	
 	
@@ -101,6 +101,11 @@ public class DashboardController {
 	@ResponseBody
 	public String readNewPageNumWithParameter(String startTime, String endTime,String keyword,String province,
 			String city, String district, String status){
+		
+		//截取地区
+		province=province.substring(province.lastIndexOf(",")+1);
+		city=city.substring(city.lastIndexOf(",")+1);
+		district=district.substring(district.lastIndexOf(",")+1);
 	
 		int numOfPage= ReadFormInfoService.readPageNumWithParameter(startTime, endTime, keyword, province, city, district, status);		
 		return JSONArray.fromObject(numOfPage).toString();

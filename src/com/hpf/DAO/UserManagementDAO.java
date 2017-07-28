@@ -22,4 +22,6 @@ public interface UserManagementDAO {
 	
 	public boolean isUserExisted(UserManagementModel userManagementModel);
 	
+	public String getNewPageNum(UserManagementModel userManagementModel);
+	
 }

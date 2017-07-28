@@ -115,7 +115,7 @@
                                 
                 <c:forTokens items="${detailform.viewURL}" delims="," var="viewURL">
 				 	<div class="det_imgBox">
-	                    <img src="${detailform.baseURL}/${viewURL}"/>
+	                    <img src="http://119.23.149.153/onlineSign/${viewURL}"/>
 	                </div>	 				
 				</c:forTokens>
                 
@@ -144,7 +144,7 @@
             <span class="det_label">餐厅工商营业执照：</span>
             <div class="det_text">
                 <div class="det_imgBox">
-                    <img src="${detailform.baseURL}/${detailform.licenseURL}"/>
+                    <img src="http://119.23.149.153/onlineSign/${detailform.licenseURL}"/>
                 </div>
             </div>
         </div>
@@ -153,7 +153,7 @@
             <span class="det_label">餐厅卫生许可证：</span>
             <div class="det_text">
                 <div class="det_imgBox">
-                    <img src="${detailform.baseURL}/${detailform.contractURL}"/>
+                    <img src="http://119.23.149.153/onlineSign/${detailform.contractURL}"/>
                 </div>
             </div>
         </div>
@@ -185,7 +185,7 @@
             <span class="det_label" style="width: 105px">授权委托书：</span>
             <div class="det_text" style="width: 695px">
                 <div class="det_imgBox">
-                    <img src="${detailform.baseURL}/${detailform.attorneyURL}"/>
+                    <img src="http://119.23.149.153/onlineSign/${detailform.attorneyURL}"/>
                 </div>
             </div>
         </div>

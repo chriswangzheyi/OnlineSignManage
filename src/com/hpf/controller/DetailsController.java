@@ -124,7 +124,8 @@ DetailsModifyService DetailsModifyService;
     	  	
     	
     	 //获取存取路径
-        String path = request.getSession().getServletContext().getRealPath("/") + "upload/";
+        //String path = request.getSession().getServletContext().getRealPath("/") + "upload/";  //本地测试用
+        String path ="/data/hpf/images/onlineSign/";
     	
     	/*上传文件 */   	
     	//多个文件	

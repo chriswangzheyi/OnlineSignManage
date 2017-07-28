@@ -29,7 +29,11 @@ public class UserManagementDAOImp implements UserManagementDAO {
 		
 		//获取用户信息页总页数
 		String sqlForTotalPage=" select count(id) from ec_online_sign_user";
-		userManagementModel.setTotalPageNum(jdbcTemplate.queryForObject(sqlForTotalPage, int.class)/10);
+		
+		double num= jdbcTemplate.queryForObject(sqlForTotalPage, int.class);
+		double div=10;			
+		int numOfPages=  (int) Math.ceil(num/div);		
+		userManagementModel.setTotalPageNum(numOfPages);
 				
 		return userList;
 	}
@@ -112,6 +116,19 @@ public class UserManagementDAOImp implements UserManagementDAO {
 		} catch (Exception e) {
 			return "fail";
 		}
+	}
+
+	@Override
+	public String getNewPageNum(UserManagementModel userManagementModel) {
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		//获取用户信息页x新的总页数
+				String sqlForTotalPage=" select count(id) from ec_online_sign_user";
+							
+				double num= jdbcTemplate.queryForObject(sqlForTotalPage, int.class);
+				double div=10;			
+				int numOfPages=  (int) Math.ceil(num/div);		
+				
+				return numOfPages+"";
 	}
 
 	

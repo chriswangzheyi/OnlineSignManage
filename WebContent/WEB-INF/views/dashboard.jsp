@@ -375,31 +375,6 @@ function updateRegion(){
 		changePageWithParameter(p/*当前页数，默认为1*/,startTime, endTime,keyword,province,city,district,status);
 	}
 
-	function eachPageDataFun(){
-		var startTime =$('#startTime').val();//开始时间
-		var endTime =$('#endTime').val();//结束时间
-		var province =$('#ip_SS').val();//省市
-		var city =$('#ip_DQ').val();//地区
-		var district =$('#ip_QX').val();//区县
-		var status =$('.search_state select').val();//状态
-		var keyword =$('.searchInput').val();//搜索内容
-		
-
-    	if(startTime=='' //开始时间
-   			&& endTime == '' //结束时间
-   			&& province =='-1'//结束时间
-   			&& city =='-1'//省市
-   			&& district =='-1'//地区
-   			&& status =='-1'//区县
-   			&& keyword ==''//状态
-   			){
-    		
-    	}else{
-    		
-    	}
-		
-	}
-
 	//根据搜索值加载数据和分页初始化
 	function eachClickDataFun(){
 		var startTime =$('#startTime').val();//开始时间
@@ -412,6 +387,7 @@ function updateRegion(){
 		
 		searchLoadListFun(1);
 		var pages = readPageNumWithParameter(startTime, endTime,keyword,province,city,district,status);
+		console.log('总页数：'+pages);
 
 		$(".pagediv").createPage({
             pageNum : pages,//总页数
@@ -488,7 +464,7 @@ function updateRegion(){
                 end.min = datas; //开始日选好后，重置结束日的最小日期
                 end.start = datas; //将结束日的初始值设定为开始日
                 
-                searchLoadListFun(1);//搜索值改变了就更改列表内容
+                eachClickDataFun();//根据搜索值加载数据和分页初始化
             }
         };
         var end = {
@@ -501,7 +477,8 @@ function updateRegion(){
             max: getNowFormatDate(),//最大日期：此时此刻
             choose: function(datas){
                 start.max = datas; //结束日选好后，重置开始日的最大日期
-                searchLoadListFun(1);//搜索值改变了就更改列表内容
+                
+                eachClickDataFun();//根据搜索值加载数据和分页初始化
             }
         };
         laydate(start);
@@ -518,7 +495,7 @@ function updateRegion(){
             data: "json",
             success: function(data){
 
-                $.each(JSON.parse(data), function(idx, obj) {
+                $.each(data, function(idx, obj) {
                     if(obj.regLevel == 1){
                         var optionEL = $('<option data-id="'
                                 +obj.id+'" '
@@ -548,7 +525,7 @@ function updateRegion(){
                     url: "resources/data/cityJson.json",
                     data: "json",
                     success: function(data){
-                        $.each(JSON.parse(data), function(idx, obj) {
+                        $.each(data, function(idx, obj) {
                             if(obj.pid == datPid){
                                 optionHTML +=
                                         '<option data-id="'
@@ -579,7 +556,7 @@ function updateRegion(){
                     url: "resources/data/cityJson.json",
                     data: "json",
                     success: function(data){
-                        $.each(JSON.parse(data), function(idx, obj) {
+                        $.each(data, function(idx, obj) {
                             if(obj.pid == datPid){
                                 optionHTML +=
                                         '<option data-id="'

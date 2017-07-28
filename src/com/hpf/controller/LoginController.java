@@ -51,6 +51,7 @@ public class LoginController {
 			HttpServletRequest request){
 		
 		
+		
 		//读取用户登录及权限信息
 		String accountInfo=LoginService.passowrdValidation(username, password);
 			

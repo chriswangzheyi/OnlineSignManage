@@ -96,32 +96,16 @@
         </table>
 
         <!--分页-->
-        <div class="pagingbox">
-            <div class="jumppag">
-                <form class="inputpag">
-                    <label for="pagNum">跳至</label>
-                    <input id="pagNum" type='text' onkeyup="this.value=this.value.replace(/[^0-9-]+/,'');" />
-                </form>
-                <a class="jumppagBtn" href="javascript:;">跳转</a>
-            </div>
-            <div class="paging">
-                <span class="prevpag"><i></i></span>
-                <a class="active">1</a>
-                <a>2</a>
-                <a>3</a>
-                <a>4</a>
-                <a>5</a>
-                <span class="ellipsis">…</span>
-                <a>100</a>
-                <span class="nextpag"><i></i></span>
-            </div>
-        </div>
+        <div class="pagediv"></div>
+        
+        
         <iframe id="id_iframe" name="add_iframe" style="display:none;"></iframe>
     </div>
 
 </div>
 
 <script>
+
 
 		//冻结用户
 		function blockuser(id){
@@ -221,9 +205,24 @@
 			        }	       	        
 				})  
 		}
+		
+	
 
 
     $(function () {
+    
+        $(".pagediv").createPage({
+            pageNum : ${numberOfPages},//总页数
+            current : 1,//当前页数
+            shownum: 9,//最多显示的页数项
+            activepage: "current",//activepage当前页选中样式
+            activepaf: "",//默认class是“nextpage”//activepaf下一页选中样式
+            backfun:function(p){
+            	//p.current// 总页数
+            }
+        });
+
+
         //删除交互
         $('.userTable').on('click','.del_btn', function () {
            var tr = $(this).parents('tr');
