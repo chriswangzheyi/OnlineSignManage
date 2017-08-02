@@ -46,7 +46,7 @@ public class UserManagementService {
 	//解冻账户
 	public String unblockUser(UserManagementModel userManagementModel){
 		//成功状态1 未成功状态0
-		String returnStatus=userManagementDAO.blockUser(userManagementModel);
+		String returnStatus=userManagementDAO.unblockUser(userManagementModel);
 				
 		return returnStatus;
 	}
@@ -55,8 +55,7 @@ public class UserManagementService {
 	//删除账户
 	public String deleteUser(UserManagementModel userManagementModel){
 		
-		//成功状态1 未成功状态0
-		String returnStatus=userManagementDAO.deleteUser(userManagementModel);
+		String returnStatus=userManagementDAO.deleteUser(userManagementModel); //成功返回success,不成功返回fail
 		
 		
 		return returnStatus;		
@@ -65,12 +64,12 @@ public class UserManagementService {
 	//新建账户
 	public String newUser(UserManagementModel userManagementModel){
 		
-		//成功状态1 未成功状态0
+		
 		userManagementModel.setNewAccountCreateTime(format.format(date));
 		String returnStatus= userManagementDAO.newUser(userManagementModel);
 		
 		
-		return returnStatus;
+		return returnStatus; //成功返回success,不成功返回fail
 	}
 	
 	//确认用户是否已经存在

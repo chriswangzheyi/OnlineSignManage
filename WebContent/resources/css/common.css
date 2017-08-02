@@ -64,27 +64,25 @@ input::-webkit-input-placeholder{
     z-index: 9999;
 }
 #loadingDiv>div{
-    width: 236px;
-    height: 57px;
+    padding-left:40px;
+    height: 50px;
     border-radius:8px;
     position: absolute;
     cursor: wait;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    top: 50%;
+    left: 50%;
     z-index: 10000;
-    margin: auto;
+    margin-top: -25px;
+    transform: translate(-50%,0);
     font-size: 16px;
-    line-height: 57px;
-    padding-left: 60px;
-    padding-right: 20px;
+    line-height: 52px;
+    padding-right: 10px;
     background-color: rgba(0,0,0,0.7);
     background-image: url("../img/loading.gif");
     background-size: 32px 32px;
     background-repeat: no-repeat;
     background-attachment: scroll;
-    background-position: 15px 14px;
+    background-position: 10px 10px;
     color: #fff;
     font-family:"Microsoft YaHei", arial;
 }
@@ -1186,4 +1184,20 @@ input.DCMcontract::-webkit-file-upload-button{
 .submit:active{
     border: 1px solid #b32e2e;
     background-color: #b32e2e;
+}
+
+
+/*地区四级联动*/
+#citys{
+    width:100%;
+}
+#citys .shopClass{
+    float: left;
+    height: 30px;
+    width: 120px;
+    border: 1px solid #ccc;
+    line-height: 28px;
+    font-size: 14px;
+    padding: 0 5px;
+    margin-right: 10px;
 }

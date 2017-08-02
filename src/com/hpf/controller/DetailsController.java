@@ -3,14 +3,13 @@ package com.hpf.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,6 +41,9 @@ DetailsModifyService DetailsModifyService;
 	@Autowired
 	LoginModel LoginModel;
 	
+	@Value("${config.imageBaseURL}")  
+	 private String imageBaseURL;
+	
 	@RequestMapping(value="/details")
 	public String detailPage(HttpServletRequest request){
 		
@@ -60,17 +62,21 @@ DetailsModifyService DetailsModifyService;
 		
 		//设置原始viewurl
 		MerchantModel.setViewURL(merchantList.get(0).get("viewURL").toString());
+		MerchantModel.setContractURL(merchantList.get(0).get("contractURL").toString());
+		MerchantModel.setAttorneyURL(merchantList.get(0).get("attorneyURL").toString());
+		MerchantModel.setLicenseURL(merchantList.get(0).get("attorneyURL").toString());
 
-		
-	
+		//设置表单内容
 		MerchantModel.setMerchantInfo(merchantList);		
 		request.setAttribute("detailform",merchantList);
 		request.setAttribute("authLevel",LoginModel.getAuthLevel());
+		request.setAttribute("imageBaseURL", imageBaseURL);
 				
 		return "details";
 	}
 	
 	
+
 	@RequestMapping(value="/detailsModify")
 	public String detailModifyPage(HttpServletRequest request){
 
@@ -79,15 +85,18 @@ DetailsModifyService DetailsModifyService;
 		
 		//表格信息
 		request.setAttribute("detailform", MerchantModel.getMerchantInfo());
+		request.setAttribute("imageBaseURL", imageBaseURL);
 		
 		//权限信息
 		request.setAttribute("authLevel",LoginModel.getAuthLevel());
+		
 		
 		return "detailsModify";
 	}
 	
 	
 
+   
     @RequestMapping(value="/updateSubmit")
     public String detailsUpdate(
     		@RequestParam(value = "viewfiles", required = false) MultipartFile[] viewfiles,
@@ -114,14 +123,16 @@ DetailsModifyService DetailsModifyService;
     		String deletedViewPicURL //删除的餐厅view图片
     		
     		) {
+
+    	//截取餐厅实拍的内容  如果图片地址变化请修改此处
+    	 deletedViewPicURL=deletedViewPicURL.replaceAll(imageBaseURL, "");
     	
-	
     	//截取地址内容
     	restaurantProvince=restaurantProvince.substring(restaurantProvince.lastIndexOf(",")+1);
     	restaurantCity=restaurantCity.substring(restaurantCity.lastIndexOf(",")+1);
     	restaurantDistrict=restaurantDistrict.substring(restaurantDistrict.lastIndexOf(",")+1);
     	restaurantStreet=restaurantStreet.substring(restaurantStreet.lastIndexOf(",")+1);
-    	  	
+    	
     	
     	 //获取存取路径
         //String path = request.getSession().getServletContext().getRealPath("/") + "upload/";  //本地测试用
@@ -133,10 +144,12 @@ DetailsModifyService DetailsModifyService;
       
        		String filename ="";
        		String   modifiedURL =  MerchantModel.getViewURL(); 
+
         	
         	//取得被删除图片的url
-        	if(deletedViewPicURL!=null){
-        		String[]url = deletedViewPicURL.split(",");        		
+        	if(deletedViewPicURL!=null && !deletedViewPicURL.equals("")){
+        		
+        		String[]url = deletedViewPicURL.split(",");  
         		
         		for(int i=0;i<url.length;i++){
         		//删除文件
@@ -171,13 +184,14 @@ DetailsModifyService DetailsModifyService;
                     }
                     // 转存文件  
                     file.transferTo(FinalFile); 
-                    modifiedURL=modifiedURL+filename+",";          
-                    
+                    modifiedURL=modifiedURL+filename+",";   
                 } catch (IOException e) {
                     e.printStackTrace();
                 }  
-                DetailsModifyModel.setViewsPath(modifiedURL);
             }
+            
+            DetailsModifyModel.setViewsPath(modifiedURL);
+            
         	}
             
            
@@ -188,6 +202,7 @@ DetailsModifyService DetailsModifyService;
             String licenseName = licensefile.getOriginalFilename(); 
             String prefix=licenseName.substring(licenseName.lastIndexOf(".")+1);
             if(prefix!=null && !prefix.equals("")){
+            	
 	            licenseName=UUIDGenerator.UUIDGenerator()+"."+prefix;
 	            File licenseFinalFile = new File(path, licenseName);
 	            if(!licenseFinalFile.exists()){  
@@ -197,6 +212,7 @@ DetailsModifyService DetailsModifyService;
 	            try {
 	            	licensefile.transferTo(licenseFinalFile);
 					DetailsModifyModel.setLicensepath(licenseName);
+					 DeleteFile.deleteFile(path+MerchantModel.getLicenseURL());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}   
@@ -206,6 +222,7 @@ DetailsModifyService DetailsModifyService;
             String contractName= contractfile.getOriginalFilename();
             prefix=contractName.substring(contractName.lastIndexOf(".")+1);
             if(prefix!=null && !prefix.equals("")){
+            	
 	            contractName=UUIDGenerator.UUIDGenerator()+"."+prefix;
 	            File contractFinalFile = new File(path, contractName);
 	            
@@ -216,6 +233,7 @@ DetailsModifyService DetailsModifyService;
 	            try {
 	            	contractfile.transferTo(contractFinalFile);
 	           	 DetailsModifyModel.setContractpath(contractName);
+	           	DeleteFile.deleteFile(path+MerchantModel.getContractURL());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -224,7 +242,8 @@ DetailsModifyService DetailsModifyService;
             String attorneyName= attorneyfile.getOriginalFilename();
             prefix=attorneyName.substring(attorneyName.lastIndexOf(".")+1);
       
-            if(prefix!=null && !prefix.equals("")){            
+            if(prefix!=null && !prefix.equals("")){     
+            	
             attorneyName=UUIDGenerator.UUIDGenerator()+"."+prefix;
             File attorneyFinalFile = new File(path, attorneyName);
             
@@ -235,6 +254,7 @@ DetailsModifyService DetailsModifyService;
             try { 	          	 
             	 attorneyfile.transferTo(attorneyFinalFile);
             	 DetailsModifyModel.setAttorneypath(attorneyName);
+            	 DeleteFile.deleteFile(path+MerchantModel.getAttorneyURL());
 	 
             	} catch (Exception e) {  
             	 e.printStackTrace();
@@ -257,14 +277,14 @@ DetailsModifyService DetailsModifyService;
         	DetailsModifyModel.setBossPhone(bossPhone);
         	DetailsModifyModel.setBankaccountName(bankaccountName);
         	DetailsModifyModel.setBankaccountAccount(bankaccountAccount);
-        	DetailsModifyModel.setBankaccountAccount(bankaccountAccount);
+        	DetailsModifyModel.setBankaccountBank(bankaccountBank);
             
             
     	
     	//修改内容详情并添加到数据库	
 		DetailsModifyService.updateDetails();  //返回success 或者fail
 		 
-		 return "detailsModify";
+		 return "updateSubmit";
     } 
 	
 	

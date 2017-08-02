@@ -2,6 +2,8 @@ package com.hpf.DAOImp;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,6 +14,8 @@ import com.hpf.model.DetailsModifyModel;
 @Repository("DetailsModifyDAO")
 public class DetailsModifyDAOImp implements DetailsModifyDAO {
 	
+	private static Log logger = LogFactory.getLog(DetailsModifyDAOImp.class.getName());
+	
 
 	@Autowired
 	DataSource dataSource;
@@ -19,6 +23,7 @@ public class DetailsModifyDAOImp implements DetailsModifyDAO {
 	@Autowired
 	DetailsModifyModel DetailsModifyModel;
 
+	/*更新商户信息*/
 	@Override
 	public String updateDetails(DetailsModifyModel detailsModifyModel) {
 		
@@ -49,8 +54,7 @@ public class DetailsModifyDAOImp implements DetailsModifyDAO {
 	
 				sql+="where id=?";		
 	
-/*		try {*/
-			System.out.println("进来了");
+		try {
 			jdbcTemplate.update(sql,DetailsModifyModel.getRestaurantName(),DetailsModifyModel.getRestaurantProvince(),
 					DetailsModifyModel.getRestaurantCity(),DetailsModifyModel.getRestaurantDistrict(),
 					DetailsModifyModel.getRestaurantStreet(),
@@ -64,10 +68,10 @@ public class DetailsModifyDAOImp implements DetailsModifyDAO {
 					DetailsModifyModel.getId());
 			return "success";
 			
-/*		} catch (Exception e) {
-			System.out.println("出错了");
+		} catch (Exception e) {
+			logger.error("网签管理后台更新商户信息时出错: ",e);
 			return "fail";
-		}*/
+		}
 	}
 
 }

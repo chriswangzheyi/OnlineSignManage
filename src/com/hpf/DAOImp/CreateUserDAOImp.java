@@ -2,6 +2,8 @@ package com.hpf.DAOImp;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -13,6 +15,8 @@ import com.hpf.model.CreateUserModel;
 
 @Repository("CreateDAO")
 public class CreateUserDAOImp implements CreateUserDAO {
+	
+	private static Log logger = LogFactory.getLog(CreateUserDAOImp.class.getName());
 	
 	@Autowired  
 	DataSource dataSource;
@@ -31,7 +35,7 @@ public class CreateUserDAOImp implements CreateUserDAO {
 					createUserModel.getPassword(),createUserModel.getPhone());
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			logger.error("网签管理后台新建用户出错:",e);
 		}
 
 

@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  
     pageEncoding="UTF-8"%>  
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
     <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
-     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+    
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -19,6 +20,7 @@
     <script type="text/javascript" src="resources/js/jquery.min.js"></script>
     <script type="text/javascript" src="resources/js/jquery.nicescroll.min.js"></script><!--浏览器滚动条样式修改-->
     <script type="text/javascript" src="resources/js/jquery.placeholder.js"></script>
+    <script type="text/javascript" src="resources/js/jquery.citys.js"></script><!--jquery地区插件 -->
 
     <script type="text/javascript" src="resources/css/layui/layer.js"></script><!--弹层-->
     <link rel="stylesheet" href="resources/css/layer_Style.css"/><!--layer弹层样式修改-->
@@ -52,8 +54,8 @@
 </div>
 <!--主体内容-->
 <div id="main">
-	<c:forEach var="detailform" items="${detailform}"  > 
-    <form id="setDetails" action="updateSubmit" method = 'post' enctype="multipart/form-data"> <!-- 上传文件必须加enctype="multipart/form-data" -->
+	<c:forEach var="detailform" items="${detailform}"> 
+         <form id="setDetails" action="updateSubmit" method = 'post' enctype="multipart/form-data"> <!-- 上传文件必须加enctype="multipart/form-data" -->
         <div id="details_Content">
 
             <div class="det_item">
@@ -66,25 +68,18 @@
             <div class="det_item">
                 <span class="det_label">所在地区：</span>
                 <div class="det_text">
-                    <select id="shopIp_SS" data-initVal ='0-2472,重庆市' name="restaurant_province">
-                        <option value="-1">请选择省市</option>
-                        <option data-id="2472" data-pid="0" value="0-2472,重庆市"  selected="selected">${detailform.restaurantProvince}</option>
-                    </select>
-
-                    <select id="shopIp_DQ" data-initVal ='2472-2473,重庆市' name="restaurant_city">
-                        <option value="-1">全部</option>
-                        <option data-id="2473" data-pid="2472" value="2472-2473,重庆市" selected="selected">${detailform.restaurantCity}</option>
-                    </select>
-
-                    <select id="shopIp_QX" data-initVal ='2473-2485,渝北区' name="restaurant_district">
-                        <option value="-1">区/县</option>
-                        <option data-id="2485" data-pid="2473" value="2473-2485,渝北区" selected="selected">${detailform.restaurantDistrict}</option>
-                    </select>
-
-                    <select id="shopIp_JD" data-initVal ='2485-3629,汽博中心' name="restaurant_street">
-                        <option value="-1">街道</option>
-                        <option data-id="3629" data-pid="2485" value="2485-3629,汽博中心" selected="selected">${detailform.restaurantStreet}</option>
-                    </select>
+                    <div id="citys">
+						<div class="form_box">
+					        <select name="province" class="shopClass"></select>
+					        <select name="city" class="shopClass"></select>
+					        <select name="district" class="shopClass"></select>
+					        <select name="street" class="shopClass"></select>
+    					</div>
+					    <input type="hidden" name="restaurant_province">
+					    <input type="hidden" name="restaurant_city">
+					    <input type="hidden" name="restaurant_district">
+					    <input type="hidden" name="restaurant_street">                    
+                    </div>
                 </div>
             </div>
 
@@ -94,20 +89,13 @@
                     <select id="shop_class" name="restaurant_type">
                         
                     <c:forEach var="value" items="${allRestaurantType}">  
-                        <option  value="${value.name}" 
-                        
-                         <c:if test="${value.name==detailform.restaurantType}">
-    
-                          selected="selected" 
-         
-                        </c:if>
-                        
-                          >  
-                        ${value.name}  
-                        </option>  
+    						<c:if test="${value.name==detailform.restaurantType}">
+								<option  value="${value.name}" selected="selected">${value.name}</option>
+    						</c:if>
+    						<c:if test="${value.name!=detailform.restaurantType}">
+								<option  value="${value.name}">${value.name}</option>
+    						</c:if>
                     </c:forEach> 
-                        
-
                     </select>
                 </div>
             </div>
@@ -176,7 +164,7 @@
                         </div>      
                                      
                         <c:forTokens items="${detailform.viewURL}" delims="," var="viewURL">
-			 				<div class="z_addImg"><img src="http://119.23.149.153/onlineSign/${viewURL}"></div>		 				
+			 				<div class="z_addImg"><img class="imgUrl" src="${imageBaseURL}${viewURL}"></div>		 				
 						</c:forTokens>
                           
                     </div>
@@ -219,7 +207,7 @@
                         <input class="busLic" type="file" name="licensefile"/>
                         <span class="busLic_name"></span>
                         <div class="busLic_img">
-                            <img src="http://119.23.149.153/onlineSign/${detailform.licenseURL}"/>
+                            <img src="${imageBaseURL}${detailform.licenseURL}"/>
                         </div>
                 </div>
             </div>
@@ -231,7 +219,7 @@
                     <input class="DCMcontract" type="file" name="contractfile"/>
                     <span class="DCMcontract_name"></span>
                     <div class="DCMcontract_img">
-                    	<img src="http://119.23.149.153/onlineSign/${detailform.contractURL}"/>
+                    	<img src="${imageBaseURL}${detailform.contractURL}"/>
                     </div>
                 </div>
             </div>
@@ -266,7 +254,7 @@
                     <input class="proxy" type="file" name="attorneyfile"/>
                     <span class="proxy_name"></span>
                     <div class="proxy_img">
-                    	<img src="http://119.23.149.153/onlineSign/${detailform.attorneyURL}"/>
+                    	<img src="${imageBaseURL}${detailform.attorneyURL}"/>
                     </div>
                 </div>
             </div>
@@ -276,13 +264,19 @@
             <a class="submit">提交</a>
             
          	<!--   记录被删除的view Pic -->
-            <input type="hidden" name="deletedViewPicURL" value="在这里放值"/>
+            <input type="hidden" name="deletedViewPicURL" value=""/>
             
-            
-               <input type="submit" value="测试提交"  />
         </div>
     </form>
+    <!-- 默认的地区 -->
+    <input type="hidden" class="val_Province" value="${detailform.restaurantProvince}"/>
+    <input type="hidden" class="val_City" value="${detailform.restaurantCity}"/>
+    <input type="hidden" class="val_District" value="${detailform.restaurantDistrict}"/>
+    <input type="hidden" class="val_Street" value="${detailform.restaurantStreet}"/>
     </c:forEach>
+    
+
+    
 </div>
 
 
@@ -401,195 +395,95 @@ $(function () {
 <script>
 $(function () {
 	
-	//读取baseurl
+	//餐厅实拍删除的图片交互
+	$('.det_item').on('click','.z_addImg',function(){
+		var delImgStr = $('input[name="deletedViewPicURL"]').val();
+		var tar =this;
+		if($(this).find('.imgUrl').size()>0){
+			
+			var imgSrc = $(this).find('.imgUrl').attr('src');
+			var tarImgBox = $(this);
+			 var lay_img01=layer.confirm('你确定要删除这张图片吗？', {
+	             closeBtn: 0,
+	             title:false,//标题
+	             btn: ['取消','确定'] //按钮
+	         }, function(){//取消
+	             layer.close(lay_img01);
+	             return;
+	         }, function(){//确定
+	        	 delImgStr += imgSrc+',';
+	        	 $('input[name="deletedViewPicURL"]').val(delImgStr);
+	        	 console.log(delImgStr);
+	        	 
+	        	 layer.close(lay_img01);
+	        	 layer.msg('图片删除成功！',{time:1000});
+	        	 setTimeout(function(){
+	        		 tarImgBox.remove();
+	        	 },1000);
+	      		
+	         });
+			
+		}else{
+			var lay_img02=layer.confirm('你确定要删除这张图片吗？', {
+	            closeBtn: 0,
+	            title:false,//标题
+	            btn: ['取消','确定'] //按钮
+	        }, function(){//取消
+	            layer.close(lay_img02);
+	            return;
+	        }, function(){//确定
+	       	
+	       	 layer.close(lay_img02);
+	       	 $('input[name="deletedViewPicURL"]').val(delImgStr);
+	       	 layer.msg('图片删除成功！',{time:1000});
+	       	 setTimeout(function(){
+	       		 $(tar).remove();
+	       		 /*此处需对input里的value进行处理*/
+	       	 },1000);
+	     			
+	        });
+		}
+		
+	});
+
+	 	var _province 	= $('.val_Province').val();
+	    var _city 		= $('.val_City').val();
+	    var _district 	= $('.val_District').val();
+	    var _street 	= $('.val_Street').val();
 
 	
-//TODO 地区三级联动 （数据来至“data/cityJson.json”）
-    //ajax加载省市
-    var SS_init =$('#shopIp_SS').attr('data-initVal');
-    var DQ_init =$('#shopIp_DQ').attr('data-initVal');
-    var QX_init =$('#shopIp_QX').attr('data-initVal');
-    var JD_init =$('#shopIp_JD').attr('data-initVal');
-    $.ajax({
-        type: "POST",
-        url: "resources/data/cityJson.json",
-        data: "json",
-        success: function(data){
-            $.each(data, function(idx, obj) {
-            //加载全国省市
-                if(obj.regLevel == 1){
-                    if((obj.pid+'-'+obj.id+','+obj.name) != SS_init ){
-                        var optionEL_01 = $('<option data-id="'
-                                +obj.id+'" '
-                                +'data-pid="'+obj.pid +'"'
-                                +'value="'+obj.pid+'-'+obj.id+','+obj.name+'">'
-                                +obj.name+''
-                                +'</option>');
-                        $('#shopIp_SS').append(optionEL_01);
-                    }
-                }
-            //市区级 根据其 data-initVal的值 确定加载的列表
-                if(obj.regLevel == 2){
-                    var datid_2 = DQ_init.substring(
-                            0,
-                            DQ_init.indexOf('-')
-                    );
-                    if(obj.pid.toString() == datid_2){
-                        if((obj.pid+'-'+obj.id+','+obj.name) != DQ_init ){
-                            var optionEL_02 = $('<option data-id="'
-                                    +obj.id+'" '
-                                    +'data-pid="'+obj.pid +'"'
-                                    +'value="'+obj.pid+'-'+obj.id+','+obj.name+'">'
-                                    +obj.name+''
-                                    +'</option>');
-                            $('#shopIp_DQ').append(optionEL_02);
+//TODO 地区三级联动 （需要引用jquery.citys.js）
+	 var $town = $('#citys select[name$="street"]');
+	    var townFormat = function(info){
+	        $town.hide().empty();
+	        if(info['code']%1e4&&info['code']<7e6){	//是否为“区”且不是港澳台地区
 
-                        }
-                    }
-
-                }
-            //区县级 根据其 data-initVal的值 确定加载的列表
-                if(obj.regLevel == 3){
-                    var datPid_3 = QX_init.substring(
-                            0,
-                            QX_init.indexOf('-')
-                    );
-                    if(obj.pid.toString() == datPid_3){
-                        if((obj.pid+'-'+obj.id+','+obj.name) != QX_init ){
-                            var optionEL_03 = $('<option data-id="'
-                                    +obj.id+'" '
-                                    +'data-pid="'+obj.pid +'"'
-                                    +'value="'+obj.pid+'-'+obj.id+','+obj.name+'">'
-                                    +obj.name+''
-                                    +'</option>');
-                            $('#shopIp_QX').append(optionEL_03);
-
-                        }
-                    }
-
-                }
-            //街道级 根据其 data-initVal的值 确定加载的列表
-                if(obj.regLevel == 4){
-                    var datPid_4 = JD_init.substring(
-                            0,
-                            JD_init.indexOf('-')
-                    );
-                    if(obj.pid.toString() == datPid_4){
-                        if((obj.pid+'-'+obj.id+','+obj.name) != JD_init ){
-                            var optionEL_04 = $('<option data-id="'
-                                    +obj.id+'" '
-                                    +'data-pid="'+obj.pid +'"'
-                                    +'value="'+obj.pid+'-'+obj.id+','+obj.name+'">'
-                                    +obj.name+''
-                                    +'</option>');
-                            $('#shopIp_JD').append(optionEL_04);
-
-                        }
-                    }
-
-                }
-            });
-        }
-    });
-
-    $('#shopIp_SS').on('change', function () {
-        $('#shopIp_DQ').html('<option value="-1">全部</option>');//清空城市
-        $('#shopIp_QX').html('<option value="-1">区/县</option>');//清空区县
-        $('#shopIp_JD').html('<option value="-1">街道</option>');//清空街道
-
-        if(this.value !=='-1'){
-            var datPid = $(this).val().substring(
-                    $(this).val().indexOf('-')+1,
-                    $(this).val().indexOf(',')
-            );
-            var optionHTML = '<option value="-1">全部</option>';
-            $.ajax({
-                type: "POST",
-                url: "resources/data/cityJson.json",
-                data: "json",
-                success: function(data){
-                    $.each(data, function(idx, obj) {
-                        if(obj.pid == datPid){
-                            optionHTML +=
-                                    '<option data-id="'
-                                    +obj.id+'" '
-                                    +'data-pid="'+obj.pid +'"'
-                                    +'value="'+obj.pid+'-'+obj.id+','+obj.name+'">'
-                                    +obj.name+''
-                                    +'</option>';
-                        }
-                    });
-                    $('#shopIp_DQ').html(optionHTML);
-                }
-            });
-        }
-    });
-
-    //点击地区时加载区县
-    $('#shopIp_DQ').on('change', function () {
-        $('#shopIp_QX').html('<option value="-1">区/县</option>');//清空区县
-        $('#shopIp_JD').html('<option value="-1">街道</option>');//清空街道
-
-        if(this.value !=='-1'){
-            var datPid = $(this).val().substring(
-                    $(this).val().indexOf('-')+1,
-                    $(this).val().indexOf(',')
-            );
-            var optionHTML = '<option value="-1">区/县</option>';
-            $.ajax({
-                type: "POST",
-                url: "resources/data/cityJson.json",
-                data: "json",
-                success: function(data){
-                    $.each(data, function(idx, obj) {
-                        if(obj.pid == datPid){
-                            optionHTML +=
-                                    '<option data-id="'
-                                    +obj.id+'" '
-                                    +'data-pid="'+obj.pid +'"'
-                                    +'value="'+obj.pid+'-'+obj.id+','+obj.name+'">'
-                                    +obj.name+''
-                                    +'</option>';
-                        }
-                    });
-                    $('#shopIp_QX').html(optionHTML);
-                }
-            });
-        }
-    });
-
-
-    //点击区县时加载街道
-    $('#shopIp_QX').on('change', function () {
-        $('#shopIp_JD').html('<option value="-1">街道</option>');//清空街道
-        if(this.value !=='-1'){
-            var datPid = $(this).val().substring(
-                    $(this).val().indexOf('-')+1,
-                    $(this).val().indexOf(',')
-            );
-            var optionHTML = '<option value="-1">街道</option>';
-            $.ajax({
-                type: "POST",
-                url: "resources/data/cityJson.json",
-                data: "json",
-                success: function(data){
-                    $.each(data, function(idx, obj) {
-                        if(obj.pid == datPid){
-                            optionHTML +=
-                                    '<option data-id="'
-                                    +obj.id+'" '
-                                    +'data-pid="'+obj.pid +'"'
-                                    +'value="'+obj.pid+'-'+obj.id+','+obj.name+'">'
-                                    +obj.name+''
-                                    +'</option>';
-                        }
-                    });
-                    $('#shopIp_JD').html(optionHTML);
-                }
-            });
-        }
-    });
-
+	            $.ajax({
+	                url:'http://passer-by.com/data_location/town/'+info['code']+'.json',
+	                dataType:'json',
+	                success:function(town){
+	                    $town.show();
+	                    for(i in town){
+	                        $town.append('<option value="'+town[i]+'">'+town[i]+'</option>');
+	                    }
+	                }
+	            });
+	        }
+	    };
+	   
+	   
+	    $('#citys').citys({
+	    	province:_province,
+	        city:_city,
+	        area:_district,
+	        onChange:function(info){
+	            townFormat(info);
+	        }
+	    },function(api){
+	        var info = api.getInfo();
+	        townFormat(info);
+	    });
+   
 //TODO end----地区三级联动
 
 
@@ -730,15 +624,26 @@ $(function () {
             }
         }
 
-        //如果餐厅实拍里没有上床图片，必填
+        //如果餐厅实拍里没有上传图片，必填
         if($('.z_addImg img').size() == 0){
             layer.msg('请至少上传一张图片！',{time:3000});
+            var _top =$('.z_file').offset().top;
+            //滚动至相应位置
+            $('html,body').animate({
+                scrollTop: $('.z_file').offset().top
+            }, 200);
+            //当前闪烁提示
+            setTimeout(function () {
+            	var label = $($('.z_file').parents('.det_item')[0]).find('.det_label')
+                twinkleFun(label);
+            },200);
             return false;
         }
+        
+
 
         return true;
     }
-    inputTestFun();
     $('.submit').click(function () {
         if(!inputTestFun()){
             return false;

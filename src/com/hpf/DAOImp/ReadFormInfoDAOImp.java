@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -18,6 +20,8 @@ import net.sf.json.JSONArray;
 
 @Repository("ReadFormInfoDAO")
 public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
+	
+	private static Log logger = LogFactory.getLog(ReadFormInfoDAOImp.class.getName());
 	
 	@Autowired
 	DataSource dataSource;
@@ -44,7 +48,7 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 
 			
 		} catch (Exception e) {
-			
+			logger.error("商家管理后台，读取首页页面列表时出错:",e);
 		}
 		
 		return FormInfo;
@@ -63,7 +67,7 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 			numOfPages=  (int) Math.ceil(num/div);		
 			
 		} catch (Exception e) {
-	
+			logger.error("商家管理后台，读取首页页面总数时出错:",e);
 		}
 		
 		return numOfPages;
@@ -82,7 +86,7 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 		    formModel.getExaminedRestaurantId());	
 			return "success";
 		} catch (Exception e) {
-	
+			logger.error("网签管理后台，读取首页页面审核信息时出错:",e);
 			return "fail";
 		}
 
@@ -142,14 +146,18 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 				sql += "limit "+ 
 				(formModel.getCurrentPage()-1)*10+
 				" ,10";		
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		
-		
-		
-			FormInfo=jdbcTemplate.queryForList(sql);
-			System.out.println("form="+FormInfo);
-		
-		return FormInfo;
+				
+
+				JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+				
+				try {
+					FormInfo=jdbcTemplate.queryForList(sql);
+					return FormInfo;
+				} catch (Exception e) {
+					logger.error("网签管理后台，读取带参数的列表出错:",e);
+					return null;
+				}
+			
 		
 	}
 
@@ -200,7 +208,6 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 				if(sql.endsWith("and ")){sql=sql.substring(0, sql.length()-4);}
 				if(sql.endsWith("where")){sql=sql.substring(0, sql.length()-5);}
 							
-				System.out.println("sql="+sql);
 				JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 				
 				try {
@@ -210,12 +217,13 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 					return numOfPages;
 					
 				} catch (Exception e) {
-					System.out.println("出错了");
+					logger.error("网签管理后台，读取带参数的总页数出错:",e);
 						return -1;
 				}
 		
 	}
 
+	/*更新地区并存入resource/data里面*/
 	@Override
 	public String updateRegion(String currentPath) {
 		
@@ -230,14 +238,10 @@ public class ReadFormInfoDAOImp implements ReadFormInfoDAO {
 	        return "success";
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error("更新地区");
 			return "fail";
 		}
-	
-	
 	}
-	
-	
-	
 	
 	
 

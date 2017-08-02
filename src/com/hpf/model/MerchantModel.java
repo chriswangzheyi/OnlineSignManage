@@ -3,7 +3,7 @@ package com.hpf.model;
 import java.util.List;
 import java.util.Map;
 
-import org.codehaus.jackson.annotate.JsonTypeInfo.Id;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,6 +24,7 @@ public class MerchantModel {
 	private String baseURL;
 	private String viewURL;
 	private String contractURL;
+	private String licenseURL;
 	private String attorneyURL;
 	private String bossPhone;
 	private String managerPhone;
@@ -165,6 +166,12 @@ public class MerchantModel {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String getLicenseURL() {
+		return licenseURL;
+	}
+	public void setLicenseURL(String licenseURL) {
+		this.licenseURL = licenseURL;
 	}
 	
 }

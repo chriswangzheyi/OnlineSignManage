@@ -1,7 +1,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:task="http://www.springframework.org/schema/task"   
+	xmlns:task="http://www.springframework.org/schema/task"  
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 	  http://www.springframework.org/schema/aop 
@@ -43,9 +43,12 @@
      <bean id="dataSource"
         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
    		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://115.29.164.111:14610/ecdb3" />  
-        <property name="username" value="wzy" />
-         <property name="password" value="wzy" /> 
+        <property name="url" value="jdbc:mysql://${config.dbURL}/ecdb3" /> 
+      
+         <property name="username" value="${config.dbUserName}" />
+         <property name="password" value="${config.dbPassword}" /> 
+
+         
     </bean> 	 
     
     
@@ -68,7 +71,13 @@
 	</bean>  
           
        <!--   配置定时任务的线程池 -->
-     <task:annotation-driven scheduler="myScheduler" mode="proxy" />  
-	 <task:scheduler id="myScheduler" pool-size="10"/>     
+<!--      <task:annotation-driven scheduler="myScheduler" mode="proxy" />  
+	 <task:scheduler id="myScheduler" pool-size="10"/>  -->   
+	 	
 	
+	<!-- 根据不同环境加载不同properties -->
+	<context:property-placeholder location="/resources/properties/product/config.properties" ignore-resource-not-found="true" /> 
+	<!-- <context:property-placeholder location="/resources/properties/${env.target}/config.properties" ignore-resource-not-found="true" /> 
+	 -->
+
 </beans>

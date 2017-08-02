@@ -5,6 +5,8 @@ import java.io.File;
 public class DeleteFile {
 	
 	public static boolean deleteFile(String PathAndfileName){
+		System.out.println("path and filename="+PathAndfileName);
+		
 		   File file = new File(PathAndfileName);
 		   if (file.isFile() && file.exists()) {
 		  file.delete();//"删除单个文件"+name+"成功！"

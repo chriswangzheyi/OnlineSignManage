@@ -3,10 +3,16 @@
  */
 
 // todo 开启加载中的遮罩层
-function openLoadingFun(){
+
+function openLoadingFun(str){
+    if(str==null || typeof(str) == "undefined"){
+        str='';
+    }else{
+        str='&nbsp;&nbsp;&nbsp;'+str;
+    }
     var _LoadingHtml = $('<div id="loadingDiv">' +
         '<div>' +
-        '数据加载中，请等待...' +
+        str+
         '</div>' +
         '</div>');
 //呈现loading效果
@@ -204,10 +210,10 @@ $(function () {
                 imgWidthHeigthSET(img,100,100);//显示显示的宽高
             }
         }
-        imgRemove();
+        //imgRemove();
     };
 
-    function imgRemove() {
+   /* function imgRemove() {
         var imgList = document.getElementsByClassName("z_addImg");
         var mask = document.getElementsByClassName("z_mask")[0];
         var cancel = document.getElementsByClassName("z_cancel")[0];
@@ -228,8 +234,8 @@ $(function () {
             }
         };
     };
-    imgRemove();
-
+    //imgRemove();
+*/
     $('#details_Content').on('change','.shopimg',function () {
         imgChange('z_photo','z_file');
     });
@@ -238,7 +244,7 @@ $(function () {
     //TODO 餐厅工商营业执照
     imgWidthHeigthSET($('.busLic_img img'),150,150);
     $('#details_Content').on('change','.busLic',function () {
-        console.log(456456);
+
         var _Url = window.URL.createObjectURL(this.files[0]);//图片地址
         var img_name = this.files[0].name;//选择的图片的名称
         if (!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(img_name)){
@@ -258,7 +264,6 @@ $(function () {
     //TODO 餐厅卫生许可证
     imgWidthHeigthSET($('.DCMcontract_img img'),150,150);
     $('#details_Content').on('change','.DCMcontract',function () {
-        console.log(456456);
         var _Url = window.URL.createObjectURL(this.files[0]);//图片地址
         var img_name = this.files[0].name;//选择的图片的名称
         if (!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(img_name)){

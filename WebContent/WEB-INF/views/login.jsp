@@ -24,6 +24,14 @@
     <script type="text/javascript" src="resources/js/common.js"></script>
 
     <style>
+    	body{	
+    		height: 100%;
+    		background: #fff;
+    		position: absolute;
+    		left: 0;
+    		right: 0;
+    		background-color: #f0ece7;
+    		}
         #login{
             width: 680px;
             height: 430px;
@@ -152,7 +160,7 @@
     </script>
 
 </head>
-<body onkeydown="keyLogin();" style="background-color: #f0ece7;">
+<body onkeydown="keyLogin();">
     <div id="login">
         <div id="loginBox">
             <h2>登录</h2>

@@ -43,7 +43,6 @@
     <script>
     //审核Ajax
     function setExminer(id,examineStatus,failreason){
-
         var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致
         params.id=id
         params.examineStatus=examineStatus; //0为未审核，1为已审核 2为未通过
@@ -189,7 +188,7 @@
 
 //换页
 function changePage(p){
-	openLoadingFun();//打开loading
+	openLoadingFun('数据加载中...');//打开loading
 	var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致  
 	params.targetPage=p
 	
@@ -252,6 +251,7 @@ function changePage(p){
 
 
 //搜索带参数
+
 function changePageWithParameter(p,startTime, endTime,keyword,province,city,district,status){
 	var params = {};  //params.XX必须与Spring Mvc controller中的参数名称一致  
 	params.targetPage=p
@@ -263,7 +263,7 @@ function changePageWithParameter(p,startTime, endTime,keyword,province,city,dist
 	params.district=district
 	params.status=status
 	
-	openLoadingFun();//打开loading
+	openLoadingFun('数据加载中...');//打开loading
 	$.ajax({
         type: "POST",
         data: params,
@@ -357,9 +357,8 @@ function updateRegion(){
         /* dataType:"json",   */
         success: function(data) {
         	alert(data);
-        
         }
-	})	
+	});	
 }
 
 	//获取搜索值的方法

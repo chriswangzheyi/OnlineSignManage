@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,10 +14,11 @@ import org.springframework.stereotype.Repository;
 import com.hpf.DAO.MerchantDAO;
 import com.hpf.model.MerchantModel;
 
-import net.sf.json.JSONArray;
 
 @Repository("MerchantDAO")
 public class MerchantDAOImp implements MerchantDAO {
+	
+	private static Log logger = LogFactory.getLog(MerchantDAOImp.class.getName());
 	
 	@Autowired
 	DataSource dataSource;
@@ -24,6 +27,7 @@ public class MerchantDAOImp implements MerchantDAO {
 	MerchantModel MerchantDAO;
 	
 
+	/*读取某一个商户信息，以id为filter*/
 	@Override
 	public List<Map<String, Object>> detailsForm(MerchantModel merchantModel) {
 		List<Map<String, Object>> detailForm = null;
@@ -41,13 +45,14 @@ public class MerchantDAOImp implements MerchantDAO {
 		try {
 			detailForm=jdbcTemplate.queryForList(sql);
 		} catch (Exception e) {
-			// TODO: handle exception
+			logger.error("网签管理后台,在查看商户详情时出错:", e);
 		}		
 		
 		return detailForm;
 	}
 
 
+	/*读取所有餐厅类型*/
 	@Override
 	public List<Map<String, Object>> getRestaurantType(MerchantModel merchantModel) {
 		String sql ="select name from ec_bus_shop_type";
@@ -58,31 +63,13 @@ public class MerchantDAOImp implements MerchantDAO {
 					   
 			   return restaurantTypeList;
 		} catch (Exception e) {
+			logger.error("商家网签后台，读取餐厅类型时出错:",e);
+			return null;
+		}
+
+	}
+
+
 	
-		}
-
-		return null;
-	}
-
-
-	@Override
-	public List<Map<String, Object>> getRegion(MerchantModel merchantModel) {
-		
-		String sql ="select id, name, pid,regLevel from ec_sys_region"; 
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		
-		
-		try {
-			//读取地区信息并存入Json
-			List<Map<String, Object>> regionList=jdbcTemplate.queryForList(sql);
-	        String regionJson =JSONArray.fromObject(regionList).toString();
-	        
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-		return null;
-	}
 
 }

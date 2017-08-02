@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -14,6 +16,8 @@ import com.hpf.model.UserManagementModel;
 
 @Repository("userManagementDAO")
 public class UserManagementDAOImp implements UserManagementDAO {
+	
+	private static Log logger = LogFactory.getLog(UserManagementDAOImp.class.getName());
 
 	@Autowired
 	DataSource dataSource;
@@ -38,6 +42,7 @@ public class UserManagementDAOImp implements UserManagementDAO {
 		return userList;
 	}
 
+	/*冻结用户*/
 	@Override
 	public String blockUser(UserManagementModel userManagementModel) {
 		String sql="update ec_online_sign_user set status = 0 "
@@ -48,20 +53,22 @@ public class UserManagementDAOImp implements UserManagementDAO {
 			jdbcTemplate.update(sql, userManagementModel.getBlockid());
 			return "success";
 		} catch (Exception e) {
+			logger.error("商家网签后台，冻结用户时候出错:",e);
 			return "fail";
 		}
 	}
 
+	/*删除用户*/
 	@Override
 	public String deleteUser(UserManagementModel userManagementModel) {
 		String sql="delete from ec_online_sign_user where id=? ";
-		sql +="limit "+(userManagementModel.getCurrentPage()-1)*10+" ,10";
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
 		try {
 			jdbcTemplate.update(sql, userManagementModel.getDeleteid());
 			return "success";
 		} catch (Exception e) {
+			logger.error("商家网签后台，删除用户时候出错:",e);
 			return "fail";
 
 		}
@@ -69,6 +76,7 @@ public class UserManagementDAOImp implements UserManagementDAO {
 	
 	}
 
+	/*新增用户*/
 	@Override
 	public String newUser(UserManagementModel userManagementModel) {
 		String sql="insert into ec_online_sign_user(username,password,phone,createTime)values(?,?,?,?) ";
@@ -80,11 +88,13 @@ public class UserManagementDAOImp implements UserManagementDAO {
 					userManagementModel.getNewAccountCreateTime());
 			return "success";
 		} catch (Exception e) {
+			logger.error("商家网签后台，新增用户时候出错:",e);
 			return "fail";
 		}
 		
 	}
 
+	/*检查是否用户已经存在*/
 	@Override
 	public boolean isUserExisted(UserManagementModel userManagementModel) {
 		
@@ -99,11 +109,13 @@ public class UserManagementDAOImp implements UserManagementDAO {
 			return false;
 		}
 	} catch (Exception e) {
+		logger.error("商家网签后台，检查用户是否存在时候出错:",e);
 		return false;
 	}
 			
 	}
 
+	/*解冻用户*/
 	@Override
 	public String unblockUser(UserManagementModel userManagementModel) {
 		String sql="update ec_online_sign_user set status = 1 "
@@ -114,10 +126,12 @@ public class UserManagementDAOImp implements UserManagementDAO {
 			jdbcTemplate.update(sql, userManagementModel.getUnBlockId());
 			return "success";
 		} catch (Exception e) {
+			logger.error("商家网签后台，解冻用户时出错:",e);
 			return "fail";
 		}
 	}
-
+	
+	/*更新最新页面*/
 	@Override
 	public String getNewPageNum(UserManagementModel userManagementModel) {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);

@@ -21,12 +21,9 @@ public class ExcelFormatService {
 
 	public List<ExportDataModel> convertToExcelList(){
 		
-		List formList = formModel.getFormList();
+		List formList = formModel.getFormList();	
 		
-		
-		
-		
-		return null;	
+		return formList;	
 	}
 	
 }
