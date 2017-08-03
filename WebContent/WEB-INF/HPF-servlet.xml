@@ -75,9 +75,12 @@
 	 <task:scheduler id="myScheduler" pool-size="10"/>  -->   
 	 	
 	
-	<!-- 根据不同环境加载不同properties -->
+	<!-- 根据不同环境加载不同properties -->	
+	<!-- 产品环境 -->
+ 	<context:property-placeholder location="/resources/properties/product/config.properties" ignore-resource-not-found="true" /> 
+	   
+<!-- 	开发环境
 	<context:property-placeholder location="/resources/properties/product/config.properties" ignore-resource-not-found="true" /> 
-	<!-- <context:property-placeholder location="/resources/properties/${env.target}/config.properties" ignore-resource-not-found="true" /> 
 	 -->
 
 </beans>

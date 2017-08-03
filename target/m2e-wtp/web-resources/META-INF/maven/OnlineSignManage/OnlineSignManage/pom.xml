@@ -151,15 +151,11 @@
 	
 	
   </dependencies>
-    
-<!--   
+
 	  <profiles>
-	    开发环境
+	    <!-- 开发环境 -->
 	    <profile>
 	        <id>dev</id>
-	        <activation>
-	            <activeByDefault>true</activeByDefault>
-	        </activation>
 	        <build>
 	            <filters>
 	                <filter>WebContent/resources/properties/dev/config.properties</filter>
@@ -167,9 +163,12 @@
 	        </build>
 	    </profile>
 	
-	    生产环境
+	   <!--  生产环境 -->
 	    <profile>
 	        <id>product</id>
+	        <activation>
+	            <activeByDefault>true</activeByDefault>
+	        </activation>
 	        <build>
 	            <filters>
 	                <filter>WebContent/resources/properties/product/config.properties</filter>
@@ -177,9 +176,5 @@
 	        </build>
 	    </profile>      
 	</profiles>
- -->
-  
 
-  
-  
 </project>
